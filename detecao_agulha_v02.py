@@ -55,6 +55,6 @@ def funcao_detecao_agulhas(name, threshold = 10., resize = 0.7, d_blur = 0.02 , 
 
 if __name__ == "__main__":
     start = time.time()
-    print(funcao_detecao_agulhas("3.jpg",grafico="sim"))
+    print(funcao_detecao_agulhas("1.jpg",grafico="sim"))
     end = time.time()
     print(end-start)
