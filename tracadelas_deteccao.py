@@ -37,7 +37,7 @@ def image_analyzer(name, threshold=10, resize=0.7, d_blur=0.02, N_linhas_vertica
 
     M = rotate(dim, angle)
 
-    im = signal.convolve2d(im_inicial, M, mode="valid")  # convolucao (passo mais demorado)
+    im = signal.fftconvolve(im_inicial, M, mode="valid")  # convolucao (passo mais demorado)
 
     picos = 0
     derivadas = []
@@ -81,5 +81,5 @@ def image_analyzer(name, threshold=10, resize=0.7, d_blur=0.02, N_linhas_vertica
 
 
 if __name__ == "__main__":
-    print(image_analyzer("9.jpg", grafico="sim"))
+    print(image_analyzer("3.jpg", grafico="sim"))
 
