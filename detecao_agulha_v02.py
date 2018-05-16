@@ -41,7 +41,6 @@ def funcao_detecao_agulhas(name, threshold = 10., resize = 0.7, d_blur = 0.02 , 
         noise = np.mean(derivada) + np.std(derivada)*threshold
 
         lista_picos = np.where(derivada >= noise)[0]
-        print(i, lista_picos)
 
         if len(lista_picos) > 0:
             picos += 1
