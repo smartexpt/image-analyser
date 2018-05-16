@@ -1,5 +1,6 @@
 from scipy import ndimage, misc, signal
 import numpy as np
+import time
 
 def rotate( dimensao , angle):
     slope = np.tan(np.deg2rad(angle))
@@ -26,7 +27,8 @@ def funcao_detecao_agulhas(name, threshold = 10., resize = 0.7, d_blur = 0.02 , 
 
     M = rotate(dim, angle)
 
-    im = signal.convolve2d(im, M, mode="valid")  # convolucao (passo mais demorado)
+    im = signal.fftconvolve(im, M, mode="valid")  # convolucao (passo mais demorado)
+
 
     picos = 0
     derivadas = []
@@ -52,4 +54,7 @@ def funcao_detecao_agulhas(name, threshold = 10., resize = 0.7, d_blur = 0.02 , 
 
 
 if __name__ == "__main__":
-    print(funcao_detecao_agulhas("5.jpg",grafico="sim"))
+    start = time.time()
+    print(funcao_detecao_agulhas("3.jpg",grafico="sim"))
+    end = time.time()
+    print(end-start)
