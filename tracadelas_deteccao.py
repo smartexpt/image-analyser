@@ -28,7 +28,7 @@ def identifica_picos_seguidos(lista_de_picos):
     return coord_repetidos
 
 
-def image_analyzer(name, threshold=4.1, resize=0.7, d_blur=0.02, N_linhas_verticais=45, angle=0,grafico="nao"):  # name corresponde ao nome da imagem a analisar ... deve conter o '.jpg'
+def image_analyzer(name, threshold=10, resize=0.7, d_blur=0.02, N_linhas_verticais=50, angle=0,grafico="nao"):  # name corresponde ao nome da imagem a analisar ... deve conter o '.jpg'
 
     im_inicial = misc.imresize(np.uint8(ndimage.imread(name, flatten=True)), resize)  # reading image
 
@@ -39,8 +39,6 @@ def image_analyzer(name, threshold=4.1, resize=0.7, d_blur=0.02, N_linhas_vertic
 
     im = signal.convolve2d(im_inicial, M, mode="valid")  # convolucao (passo mais demorado)
 
-    print("analysing %s" % name)
-
     picos = 0
     derivadas = []
     passo = int(np.shape(im)[1] / (N_linhas_verticais - 1))
@@ -49,17 +47,24 @@ def image_analyzer(name, threshold=4.1, resize=0.7, d_blur=0.02, N_linhas_vertic
 
     for i in range(0, np.shape(im)[1], passo):  # percorrer todas as linhas verticais igualmente espacadas
         plot_profile = im[:, i]
-        derivada = np.diff(plot_profile)  # derivada do perfil duma linha vertical
+        derivada = np.diff(plot_profile)**2  # derivada do perfil duma linha vertical
         derivadas.append(derivada)
 
-        noise = np.mean(derivada) - np.std(derivada) * threshold
+        noise = np.mean(derivada) + np.std(derivada) * threshold
         noises.append(noise)
 
-        lista_picos = np.where(derivada <= noise)[0]
+        #plt.figure(i)
+        #plt.plot(derivada)
+        #plt.plot(np.ones(len(derivada))*noise)
+
+        lista_picos = np.where(derivada >= noise)[0]
 
         if len(lista_picos) > 0:
             picos += 1
             todos_picos.append([lista_picos, i / passo])
+
+    if picos >= 0.8 * N_linhas_verticais:  # and suposto == "nao") or (picos < N_linhas_verticais and suposto == "sim"):    # Se passou do threshold em todas as linhas - sera defeito
+        return True, 'lycra normal'
 
 
     if len(todos_picos) >= 3:
@@ -69,14 +74,12 @@ def image_analyzer(name, threshold=4.1, resize=0.7, d_blur=0.02, N_linhas_vertic
         picos_repetidos = []
 
 
-    if picos >= 0.9 * N_linhas_verticais:  # and suposto == "nao") or (picos < N_linhas_verticais and suposto == "sim"):    # Se passou do threshold em todas as linhas - sera defeito
-        return 'lycra normal'
-    elif len(picos_repetidos) >= 1:
-        return 'tracadelas'
+    if len(picos_repetidos) >= 1:
+        return True, 'tracadelas'
     else:
         return False
 
 
 if __name__ == "__main__":
-    print(image_analyzer("4.jpg", grafico="sim"))
+    print(image_analyzer("9.jpg", grafico="sim"))
 
