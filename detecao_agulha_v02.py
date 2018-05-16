@@ -1,6 +1,5 @@
 from scipy import ndimage, misc, signal
 import numpy as np
-import pylab as plt
 
 def rotate( dimensao , angle):
     slope = np.tan(np.deg2rad(angle))
@@ -49,8 +48,8 @@ def funcao_detecao_agulhas(name, threshold = 10., resize = 0.7, d_blur = 0.02 , 
     if picos >= 0.8*N_linhas_verticais: # and suposto == "nao") or (picos < N_linhas_verticais and suposto == "sim"):    # Se passou do threshold em todas as linhas - sera defeito
         return True
     else:
-        False
+        return False
 
 
 if __name__ == "__main__":
-    print(funcao_detecao_agulhas("1.jpg",grafico="sim"))
+    print(funcao_detecao_agulhas("5.jpg",grafico="sim"))
