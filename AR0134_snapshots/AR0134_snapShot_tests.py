@@ -242,6 +242,66 @@ def show(bufferData):
 		cv2.waitKey(100)
 	else:
 		cv2.waitKey(1)
+
+def show2():
+	global flag,regArr,handle
+	global W_zoom,H_zoom,V_value,H_value,lx,ly,downFlag,saveFlag,saveNum
+	regNum = 0
+	res,handle = ArducamSDK.Py_ArduCam_autoopen(cfg)
+	if res == 0:
+		openFlag = True
+		print "device open success!"
+		while (regArr[regNum][0] != 0xFFFF):
+			ArducamSDK.Py_ArduCam_writeSensorReg(handle,regArr[regNum][0],regArr[regNum][1])
+			regNum = regNum + 1
+		res = ArducamSDK.Py_ArduCam_beginCapture(handle)
+		if res == 0 and flag:
+			print "transfer task create success!"
+			res = ArducamSDK.Py_ArduCam_capture(handle)
+			if ArducamSDK.Py_ArduCam_available(handle) > 0:
+				print "estou available"
+				res,data = ArducamSDK.Py_ArduCam_read(handle,Width * Height)
+
+				image = Image.frombuffer("L",(Width,Height),data)
+				img = np.array(image)
+				height,width = img.shape[:2]
+				img2 = cv2.cvtColor(img,COLOR_BYTE2RGB)
+
+				
+				if args.name and capture:
+					cv2.imwrite(args.name + "." + args.type,img2)
+				if not args.show:
+					return
+				if saveFlag:
+					saveFlag = False
+					saveNum += 1
+					name = ""
+					if "bmp" == args.type:
+						name = str(saveNum) + ".bmp"
+					if "png" == args.type:
+						name = str(saveNum) + ".png"
+					if "jpg" == args.type:
+						name = str(saveNum) + ".jpg"
+					cv2.imwrite(name,img2)
+
+			if res != 0:
+				print "capture fail!"
+				return
+			if flag == False:		
+				return
+		else:
+			print "transfer task create fail!"
+		res = ArducamSDK.Py_ArduCam_close(handle)
+		
+
+		if res == 0:
+			openFlag = False
+			print "device close success!"
+		else:
+			print "device close fail!"
+	else:
+		print "device open fail!"
+
 	
 def video():
 	global flag,regArr,handle
@@ -279,11 +339,11 @@ def video():
 		print "device open fail!"
 
 if __name__ == "__main__":		
-	video()
+	show2()
 	
-	if isCompletePicture and capture and args.show:
-		while True:
-			time.sleep(5)
+	# if isCompletePicture and capture and args.show:
+	# 	while True:
+	# 		time.sleep(5)
 
 
 
