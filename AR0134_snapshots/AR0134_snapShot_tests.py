@@ -86,10 +86,9 @@ regArr=[
 	[0x3064, 0x1802],
 	[0x31C6, 0x8008],		#//HISPI_CONTROL_STATUS = 32776
 	[0x301E, 0x0000],		#//data_pedestal
-	#//{0x3100, 0x0001},		#//auto exposure
-
+	# [0x3100, 0x0001],		#//auto exposure	
 	[0x3002, 0],			#// Y_ADDR_START
-	[0x3012, 150],
+	[0x3012, 150],		#//exposure
 	
 	[0x3056, 0x004A],		#// Gr_GAIN 
 	[0x3058, 0x0070],		#// BLUE_GAIN
