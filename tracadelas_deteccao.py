@@ -28,7 +28,7 @@ def identifica_picos_seguidos(lista_de_picos):
     return coord_repetidos
 
 
-def image_analyzer(name, threshold=10, resize=0.7, d_blur=0.02, N_linhas_verticais=50, angle=0,grafico="nao"):  # name corresponde ao nome da imagem a analisar ... deve conter o '.jpg'
+def funcao_deteccao_lycra_tracadelas(name, threshold=11, resize=0.6, d_blur=0.02, N_linhas_verticais=50, angle=0,grafico="nao"):  # name corresponde ao nome da imagem a analisar ... deve conter o '.jpg'
 
     im_inicial = misc.imresize(np.uint8(ndimage.imread(name, flatten=True)), resize)  # reading image
 
@@ -63,6 +63,7 @@ def image_analyzer(name, threshold=10, resize=0.7, d_blur=0.02, N_linhas_vertica
             picos += 1
             todos_picos.append([lista_picos, i / passo])
 
+
     if picos >= 0.8 * N_linhas_verticais:  # and suposto == "nao") or (picos < N_linhas_verticais and suposto == "sim"):    # Se passou do threshold em todas as linhas - sera defeito
         return True, 'lycra normal'
 
@@ -77,9 +78,9 @@ def image_analyzer(name, threshold=10, resize=0.7, d_blur=0.02, N_linhas_vertica
     if len(picos_repetidos) >= 1:
         return True, 'tracadelas'
     else:
-        return False
+        return False, 'nothing'
 
 
 if __name__ == "__main__":
-    print(image_analyzer("3.jpg", grafico="sim"))
+    print(funcao_deteccao_lycra_tracadelas("5.jpg", grafico="sim"))
 
