@@ -98,7 +98,7 @@ def cam_deffect_detection():
                 GPIO.setup(output_port, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
                 break
 
-        db.insert_one(fabric)
+        db['fabrics'].insert_one(fabric)
         sleep(.8)
 
 if __name__ == "__main__":
