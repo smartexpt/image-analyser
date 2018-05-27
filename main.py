@@ -66,7 +66,8 @@ def cam_deffect_detection():
         #print('Saved: ' + path1) 
         img, meta = cam.next()                      # Get image as a Numpy array
         pil_img = Image.fromarray(img)
-        path2 = directory +'/image_ueye%s.jpg' % datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+	nome_imagem = 'imagem_%s.jpg' % datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S') 
+        path2 = directory + nome_imagem
         pil_img.save(path2, quality = 100)
         pil_img.save('/teste_domingo_migusta/last_image.jpg', quality = 100)
         print('Saved: ' + path2)
@@ -75,7 +76,7 @@ def cam_deffect_detection():
             'id': i,
             'defect': 'None',
             'date': datetime.datetime.now(),
-            'imageUrl': path2,
+            'imageUrl': nome_imagem,
             'deviceID' : 'GJjybzAy5V'
         }
 
