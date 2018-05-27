@@ -52,7 +52,7 @@ def cam_deffect_detection():
     #for shutters in range(50,60,5):
     #shutters /= 10.
     #cam.exposure = shutters                            # Set initial exposure to 5ms
-    directory = 'teste_domingo_migusta/imagens_ueye_auto_exposure_%s' %  now.strftime('%Y_%m_%d_%H_%M_%S')
+    directory = 'teste_domingo_migusta/'
     if not os.path.exists(directory):
         os.makedirs(directory)
     #directory2 = 'imagens/%s' %  now.strftime('%Y_%m_%d_%H_%M_%S') 
