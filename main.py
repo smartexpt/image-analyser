@@ -8,6 +8,11 @@ from tracadelas_deteccao.py import funcao_deteccao_lycra_tracadelas
 from detecao_agulha_v02.py import funcao_detecao_agulhas
 import RPi.GPIO as GPIO
 
+import pymongo
+from pymongo import MongoClient
+connection = MongoClient()
+db = connection['boilerplate-test']
+
 #camera = PiCamera()
 
 #for shutters in range(2000, 10*500, 500):
@@ -66,17 +71,33 @@ def cam_deffect_detection():
         pil_img.save('/teste_domingo_migusta/last_image.jpg', quality = 100)
         print('Saved: ' + path2)
 
+        fabric = {
+            'id': i,
+            'defect': 'None',
+            'date': datetime.datetime.now(),
+            'imageUrl': path2,
+            'deviceID' : 'GJjybzAy5V'
+        }
+
         if detectionOn == 'on':
-            deffect_lycra = funcao_deteccao_lycra_tracadelas(path2)[0]
+            deffect_lycra = funcao_deteccao_lycra_tracadelas(path2)
             deffect_agulha = funcao_detecao_agulhas(path2)
 
-            if stopMachineOn == 'on' and (deffect_lycra or deffect_agulha):
+            if stopMachineOn == 'on' and (deffect_lycra[0] or deffect_agulha):
+
+                if deffect_agulha:
+                    fabric['defect'] = 'agulha'
+                if deffect_lycra[0]:
+                    fabric['defect'] = deffect_lycra[1]
+
                 GPIO.setmode(GPIO.BCM)
                 GPIO.setup(output_port, GPIO.OUT, initial=GPIO.LOW)
                 GPIO.output(output_port,GPIO.LOW)
                 sleep(1)
                 GPIO.setup(output_port, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
                 break
+
+        db.insert_one(fabric)
         sleep(.8)
 
 if __name__ == "__main__":
