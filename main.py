@@ -69,7 +69,7 @@ def cam_deffect_detection():
 	nome_imagem = 'imagem_%s.jpg' % datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S') 
         path2 = directory + nome_imagem
         pil_img.save(path2, quality = 100)
-        pil_img.save('/teste_domingo_migusta/last_image.jpg', quality = 100)
+        pil_img.save('teste_domingo_migusta/last_image.jpg', quality = 100)
         print('Saved: ' + path2)
 
         fabric = {
