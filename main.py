@@ -4,7 +4,8 @@ from time import sleep
 import datetime
 import os
 #from picamera import PiCamera
-from analyzer_only_deffects import image_analyzer
+from tracadelas_deteccao.py import funcao_deteccao_lycra_tracadelas
+from detecao_agulha_v02.py import funcao_detecao_agulhas
 import RPi.GPIO as GPIO
 
 #camera = PiCamera()
@@ -46,7 +47,7 @@ def cam_deffect_detection():
     #for shutters in range(50,60,5):
     #shutters /= 10.
     #cam.exposure = shutters                            # Set initial exposure to 5ms
-    directory = 'imagens_ueye/imagens_ueye_auto_exposure_%s' %  now.strftime('%Y_%m_%d_%H_%M_%S')
+    directory = 'teste_domingo_migusta/imagens_ueye_auto_exposure_%s' %  now.strftime('%Y_%m_%d_%H_%M_%S')
     if not os.path.exists(directory):
         os.makedirs(directory)
     #directory2 = 'imagens/%s' %  now.strftime('%Y_%m_%d_%H_%M_%S') 
@@ -62,11 +63,14 @@ def cam_deffect_detection():
         pil_img = Image.fromarray(img)
         path2 = directory +'/image_ueye%s.jpg' % datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
         pil_img.save(path2, quality = 100)
-        pil_img.save('/home/pi/FlaskApp/static/last_image.jpg', quality = 100)
+        pil_img.save('/teste_domingo_migusta/last_image.jpg', quality = 100)
         print('Saved: ' + path2)
+
         if detectionOn == 'on':
-            deffect = image_analyzer(path2)
-            if stopMachineOn == 'on' and deffect:
+            deffect_lycra = funcao_deteccao_lycra_tracadelas(path2)[0]
+            deffect_agulha = funcao_detecao_agulhas(path2)
+
+            if stopMachineOn == 'on' and (deffect_lycra or deffect_agulha):
                 GPIO.setmode(GPIO.BCM)
                 GPIO.setup(output_port, GPIO.OUT, initial=GPIO.LOW)
                 GPIO.output(output_port,GPIO.LOW)
