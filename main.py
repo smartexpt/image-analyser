@@ -4,8 +4,8 @@ from time import sleep
 import datetime
 import os
 #from picamera import PiCamera
-from tracadelas_deteccao.py import funcao_deteccao_lycra_tracadelas
-from detecao_agulha_v02.py import funcao_detecao_agulhas
+from tracadelas_deteccao import funcao_deteccao_lycra_tracadelas
+from detecao_agulha_v02 import funcao_detecao_agulhas
 import RPi.GPIO as GPIO
 
 import pymongo
