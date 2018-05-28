@@ -73,7 +73,7 @@ def cam_deffect_detection():
         print('Saved: ' + path2)
 
         fabric = {
-            'id': i,
+            '_id': i,
             'defect': 'None',
             'date': datetime.datetime.now(),
             'imageUrl': nome_imagem,
