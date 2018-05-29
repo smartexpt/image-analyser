@@ -1,9 +1,9 @@
-import ids
+#import ids
 from PIL import Image
 from time import sleep
 import datetime
 import os
-#from picamera import PiCamera
+from picamera import PiCamera
 from tracadelas_deteccao import funcao_deteccao_lycra_tracadelas
 from detecao_agulha_v02 import funcao_detecao_agulhas
 import RPi.GPIO as GPIO
@@ -13,7 +13,7 @@ from pymongo import MongoClient
 connection = MongoClient()
 db = connection['boilerplate-test']
 
-#camera = PiCamera()
+camera = PiCamera()
 
 #for shutters in range(2000, 10*500, 500):
 #    print(shutters)
@@ -42,11 +42,11 @@ def cam_deffect_detection():
         print('Input not recognized, not gonna stop.')    
     now = datetime.datetime.now()
 
-    cam = ids.Camera()
-    cam.color_mode = ids.ids_core.COLOR_RGB8    # Get images in RGB format
+    #cam = ids.Camera()
+    #cam.color_mode = ids.ids_core.COLOR_RGB8    # Get images in RGB format
 
-    cam.auto_exposure = True
-    cam.continuous_capture = True               # Start image capture
+    #cam.auto_exposure = True
+    #cam.continuous_capture = True               # Start image capture
 
     #for shutters in range(115, 150 ,5):
     #for shutters in range(50,60,5):
@@ -61,16 +61,16 @@ def cam_deffect_detection():
     #print(shutters)
     N = int(raw_input('Number of photos: ')) or 15
     for i in range(N):
-        #path1 = directory2 +'/image%s.jpg' % now.strftime('%Y_%m_%d_%H_%M_%S')
-        #camera.capture(path1)
-        #print('Saved: ' + path1) 
-        img, meta = cam.next()                      # Get image as a Numpy array
-        pil_img = Image.fromarray(img)
-	nome_imagem = 'imagem_%s.jpg' % datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S') 
-        path2 = directory + nome_imagem
-        pil_img.save(path2, quality = 100)
-        pil_img.save('teste_domingo_migusta/last_image.jpg', quality = 100)
-        print('Saved: ' + path2)
+        path1 = directory +'/image%s.jpg' % now.strftime('%Y_%m_%d_%H_%M_%S')
+        camera.capture(path1)
+        print('Saved: ' + path1) 
+        #img, meta = cam.next()                      # Get image as a Numpy array
+        #pil_img = Image.fromarray(img)
+	#nome_imagem = 'imagem_%s.jpg' % datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S') 
+        #path2 = directory + nome_imagem
+        #pil_img.save(path1, quality = 100)
+        #pil_img.save('teste_domingo_migusta/last_image.jpg', quality = 100)
+        #print('Saved: ' + path2)
 
         fabric = {
             '_id': i,
