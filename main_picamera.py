@@ -93,7 +93,7 @@ def cam_deffect_detection():
 
                 GPIO.setmode(GPIO.BCM)
                 GPIO.setup(output_port, GPIO.OUT, initial=GPIO.LOW)
-                GPIO.output(output_port,GPIO.LOW)
+                GPIO.output(output_port,GPIO.HIGH)
                 sleep(1)
                 GPIO.setup(output_port, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
                 #break
