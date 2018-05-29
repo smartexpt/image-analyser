@@ -76,13 +76,13 @@ def cam_deffect_detection():
             '_id': i,
             'defect': 'None',
             'date': datetime.datetime.now(),
-            'imageUrl': nome_imagem,
+            'imageUrl': path1,
             'deviceID' : 'GJjybzAy5V'
         }
 
         if detectionOn == 'on':
-            deffect_lycra = funcao_deteccao_lycra_tracadelas(path2)
-            deffect_agulha = funcao_detecao_agulhas(path2)
+            deffect_lycra = funcao_deteccao_lycra_tracadelas(path1)
+            deffect_agulha = funcao_detecao_agulhas(path1)
 
             if stopMachineOn == 'on' and (deffect_lycra[0] or deffect_agulha):
 
