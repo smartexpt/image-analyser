@@ -30,10 +30,8 @@ cfg ={"u32CameraType":CAMERA_AR0134,
       "u32SensorShipAddr":SensorShipAddr,
       "emI2cMode":I2C_MODE_16_16 }
 
-global saveNum,saveFlag,downFlag,flag,H_value,V_value,lx,ly,mx,my,dx,dy,W_zoom,H_zooM,handle,openFlag,isCompletePicture,capture
+global saveNum,saveFlag,downFlag,flag,H_value,V_value,lx,ly,mx,my,dx,dy,W_zoom,H_zooM,handle,openFlag
 openFlag = False
-isCompletePicture = False
-capture = False
 saveNum = 0
 handle = {}
 downFlag = False
@@ -86,9 +84,10 @@ regArr=[
 	[0x3064, 0x1802],
 	[0x31C6, 0x8008],		#//HISPI_CONTROL_STATUS = 32776
 	[0x301E, 0x0000],		#//data_pedestal
-	# [0x3100, 0x0001],		#//auto exposure	
+	#//{0x3100, 0x0001},		#//auto exposure
+
 	[0x3002, 0],			#// Y_ADDR_START
-	[0x3012, 150],		#//exposure
+	[0x3012, 150],
 	
 	[0x3056, 0x004A],		#// Gr_GAIN 
 	[0x3058, 0x0070],		#// BLUE_GAIN
@@ -168,8 +167,7 @@ thread.start_new_thread( detectInputKey,("Thread-1", flag,))
 pass
 
 def readThread(threadName,read_Flag):
-	
-	global flag,handle,isCompletePicture 
+	global flag,handle
 	count = 0
 	time0 = time.time()
 	time1 = time.time()
@@ -195,11 +193,6 @@ def readThread(threadName,read_Flag):
 				count = 0
 				time0 = time1
 			show(data)
-			if count >= 1 and capture:
-				isCompletePicture = True
-				flag = False
-				break
-
 		else:
 			print "data length is not enough!"
 		if flag == False:		
@@ -327,8 +320,6 @@ def video():
 		else:
 			print "transfer task create fail!"
 		res = ArducamSDK.Py_ArduCam_close(handle)
-		
-
 		if res == 0:
 			openFlag = False
 			print "device close success!"
