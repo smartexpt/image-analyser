@@ -1,5 +1,4 @@
 #import ids
-from PIL import Image
 from time import sleep
 import datetime
 import os
@@ -40,7 +39,7 @@ def cam_deffect_detection():
         print('Stop mode: OFF')
     else:
         print('Input not recognized, not gonna stop.')    
-    now = datetime.datetime.now()
+   
 
     #cam = ids.Camera()
     #cam.color_mode = ids.ids_core.COLOR_RGB8    # Get images in RGB format
@@ -61,7 +60,9 @@ def cam_deffect_detection():
     #print(shutters)
     N = int(raw_input('Number of photos: ')) or 15
     for i in range(N):
-        path1 = directory +'/image%s.jpg' % now.strftime('%Y_%m_%d_%H_%M_%S')
+	now = datetime.datetime.now()   
+	imgName = 'image%s.jpg' % now.strftime('%Y_%m_%d_%H_%M_%S') 
+	path1 = directory + imgName
         camera.capture(path1)
         print('Saved: ' + path1) 
         #img, meta = cam.next()                      # Get image as a Numpy array
@@ -73,10 +74,10 @@ def cam_deffect_detection():
         #print('Saved: ' + path2)
 
         fabric = {
-            '_id': i,
+            '_id': (i+15),
             'defect': 'None',
             'date': datetime.datetime.now(),
-            'imageUrl': path1,
+            'imageUrl': 'imgs/'+imgName,
             'deviceID' : 'GJjybzAy5V'
         }
 

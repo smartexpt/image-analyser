@@ -7,6 +7,7 @@ import os
 from tracadelas_deteccao import funcao_deteccao_lycra_tracadelas
 from detecao_agulha_v02 import funcao_detecao_agulhas
 import RPi.GPIO as GPIO
+from scipy import misc
 
 import pymongo
 from pymongo import MongoClient
@@ -65,15 +66,21 @@ def cam_deffect_detection():
         #camera.capture(path1)
         #print('Saved: ' + path1) 
         img, meta = cam.next()                      # Get image as a Numpy array
-        pil_img = Image.fromarray(img)
+        #pil_img = Image.fromarray(img)
 	nome_imagem = 'imagem_%s.jpg' % datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S') 
         path2 = directory + nome_imagem
-        pil_img.save(path2, quality = 100)
-        pil_img.save('teste_domingo_migusta/last_image.jpg', quality = 100)
-        print('Saved: ' + path2)
+        #pil_img.save(path2, quality = 100)
+	
+	misc.imsave(path2,img)
+        
+	#pil_img.save('teste_domingo_migusta/last_image.jpg', quality = 100)
+        
+	misc.imsave('teste_domingo_migusta/last_image.jpg',img)	
+
+	print('Saved: ' + path2)
 
         fabric = {
-            '_id': i,
+            '_id': i+50,
             'defect': 'None',
             'date': datetime.datetime.now(),
             'imageUrl': nome_imagem,
