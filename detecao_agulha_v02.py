@@ -18,7 +18,7 @@ def rotate( dimensao , angle):
 
 
 
-def funcao_detecao_agulhas(name, threshold = 10., resize = 0.7, d_blur = 0.02 , N_linhas_verticais = 10, angle = 0 , grafico = "nao"):   #name corresponde ao nome da imagem a analisar ... deve conter o '.jpg'
+def funcao_detecao_agulhas(name, threshold = 12., resize = 0.6, d_blur = 0.04 , N_linhas_verticais = 70, angle = 0 , grafico = "nao"):   #name corresponde ao nome da imagem a analisar ... deve conter o '.jpg'
 
     im = misc.imresize( np.uint8( ndimage.imread( name , flatten=True) ) , resize)     #reading image
 
