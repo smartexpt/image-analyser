@@ -81,10 +81,10 @@ def cam_deffect_detection():
 	print('Saved: ' + path2)
 
         fabric = {
-            '_id': i+50,
+            '_id': i,
             'defect': 'None',
             'date': datetime.datetime.now(),
-            'imageUrl': nome_imagem,
+            'imageUrl': "imgs/"+nome_imagem,
             'deviceID' : 'GJjybzAy5V'
         }
 
@@ -99,8 +99,7 @@ def cam_deffect_detection():
                 if deffect_lycra[0]:
                     fabric['defect'] = deffect_lycra[1]
 
-                contents = urllib2.urlopen("192.168.0.105:8080/api/stop").read()
-                break
+                contents = urllib2.urlopen("http://192.168.0.105:8080/api/stop").read()
 
         db['fabrics'].insert_one(fabric)
         sleep(.8)

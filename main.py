@@ -80,10 +80,10 @@ def cam_deffect_detection():
 	print('Saved: ' + path2)
 
         fabric = {
-            '_id': i+50,
+            '_id': i,
             'defect': 'None',
             'date': datetime.datetime.now(),
-            'imageUrl': nome_imagem,
+            'imageUrl': 'imgs/'+nome_imagem,
             'deviceID' : 'GJjybzAy5V'
         }
 
@@ -94,16 +94,18 @@ def cam_deffect_detection():
             if stopMachineOn == 'on' and (deffect_lycra[0] or deffect_agulha):
 
                 if deffect_agulha:
-                    fabric['defect'] = 'agulha'
-                if deffect_lycra[0]:
+                    fabric['defect'] = 'Agulha'
+                    print("Defeito agulha!")
+		if deffect_lycra[0]:
                     fabric['defect'] = deffect_lycra[1]
+		    print("Defeito lycra!")
 
                 GPIO.setmode(GPIO.BCM)
                 GPIO.setup(output_port, GPIO.OUT, initial=GPIO.LOW)
                 GPIO.output(output_port,GPIO.LOW)
                 sleep(1)
                 GPIO.setup(output_port, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-                break
+                #break
 
         db['fabrics'].insert_one(fabric)
         sleep(.8)
