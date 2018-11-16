@@ -11,6 +11,8 @@ from scipy import misc
 from pymongo import MongoClient
 import base64
 import pijuice
+from pyueye import ueye
+import ctypes
 
 class Smartex:
     
@@ -42,7 +44,7 @@ class Smartex:
             
     def connectMongoDB(self):
         try:
-            con = MongoClient(MONGO_HOST, MONGO_PORT)
+            con = MongoClient(self.MONGO_HOST, self.MONGO_PORT)
             self.db = con[self.DBNAME]
         except:
             print('Error in connectMongoDB!\n')
