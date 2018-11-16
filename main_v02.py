@@ -137,24 +137,24 @@ class Smartex:
             }
 
             if self.deffectDetectionMode == 'on':
-                lycraDeffectDetected = funcao_deteccao_lycra_tracadelas(imagePath)
-                agulhaDeffectDetected = funcao_detecao_agulhas(imagePath)
+                lycraDeffectDetected = funcao_deteccao_lycra_tracadelas(self.imagePath)
+                agulhaDeffectDetected = funcao_detecao_agulhas(self.imagePath)
 
                 if agulhaDeffectDetected:
-                    fabric['defect'] = 'Agulha'
+                    self.fabric['defect'] = 'Agulha'
                     print("Defeito agulha!")
 
                 if lycraDeffectDetected[0]:
-                    fabric['defect'] = lycraDeffectDetected[1]
+                    self.fabric['defect'] = lycraDeffectDetected[1]
                     print("Defeito lycra!")
 
                 if self.stopMachineMode == 'on' and (lycraDeffectDetected[0] or agulhaDeffectDetected):
                     
                     GPIO.setmode(GPIO.BCM)
-                    GPIO.setup(outputPort, GPIO.OUT, initial=GPIO.LOW)
-                    GPIO.output(outputPort, GPIO.LOW)
+                    GPIO.setup(self.outputPort, GPIO.OUT, initial=GPIO.LOW)
+                    GPIO.output(self.outputPort, GPIO.LOW)
                     sleep(1)
-                    GPIO.setup(outputPort, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+                    GPIO.setup(self.outputPort, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
             
             #por try except
                     
