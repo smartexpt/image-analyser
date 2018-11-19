@@ -77,13 +77,13 @@ class Smartex:
         else:
             print('Input not recognized, not gonna detect.')
             
-    def setSavingDirectory(self, directory='teste_tojo/'):
+    def setSavingDirectory(self, directory='/home/smartex/teste_tojo/'):
         self.savingDirectory = directory
         
         if not os.path.exists(self.savingDirectory):
             os.makedirs(self.savingDirectory)
             
-    def setSavingDirectoryLastImage(self, directory='teste_tojo/'):
+    def setSavingDirectoryLastImage(self, directory='/home/smartex/teste_tojo/'):
         self.savingDirectoryLastImage = directory
         
         if not os.path.exists(self.savingDirectoryLastImage):
