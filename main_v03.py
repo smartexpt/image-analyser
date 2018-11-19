@@ -126,7 +126,7 @@ class Smartex:
             ueye.is_FreeImageMem(self.hcam, self.pccmem, self.memID)
             sleep(.1)
             ueye.is_ExitCamera(self.hcam)
-            
+
         except:
             print('Image not saved at {}!\n'.format(self.imageTimeStamp))
             pass
@@ -197,7 +197,7 @@ class Smartex:
 if __name__ == "__main__":
     
     DBNAME = 'boilerplate-test'
-    MONGO_HOST = '192.168.0.103'
+    MONGO_HOST = '192.168.1.111'
     
     s = Smartex(DBNAME, MONGO_HOST)
     
