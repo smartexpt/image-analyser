@@ -131,7 +131,7 @@ class Smartex:
             time2 = datetime.datetime.now()
             elapsed_time = time2 - time1
             # print('Elasped time (s): {}'.format(elapsed_time))
-            print('Image saved at {}! Elasped time (s) {}'.format(self.imageTimeStamp, elapsed_time.seconds))
+            print('Image saved at {}! Elasped time (ms) {}'.format(self.imageTimeStamp, elapsed_time.microseconds/1000))
         except:
             print('Image not saved at {}!\n'.format(self.imageTimeStamp))
             pass
@@ -194,7 +194,7 @@ class Smartex:
                 self.db['fabrics'].save(self.fabric)
                 time2 = datetime.datetime.now()
                 elapsed_time = time2 - time1
-                print ("Sent to DB!! Elapsed time(s): {}".format(elapsed_time.seconds))
+                print ("Sent to DB!! Elapsed time(ms): {}\n".format(elapsed_time.microseconds/1000))
             except:
                 print('Fabric DB instance not saved in MongoDB at {}!\n'.format(self.imageTimeStamp))
                 pass
