@@ -105,6 +105,7 @@ class Smartex:
     
     def saveImage(self):
         try:
+            time1 = datetime.datetime.now()
             ueye.is_AllocImageMem(self.hcam, self.sensorinfo.nMaxWidth, self.sensorinfo.nMaxHeight,24, self.pccmem, self.memID)
             ueye.is_SetImageMem(self.hcam, self.pccmem, self.memID)
             ueye.is_SetDisplayPos(self.hcam, 100, 100)
@@ -126,7 +127,11 @@ class Smartex:
             ueye.is_FreeImageMem(self.hcam, self.pccmem, self.memID)
             sleep(.1)
             ueye.is_ExitCamera(self.hcam)
-            print('Image saved at {}!\n'.format(self.imageTimeStamp))
+            
+            time2 = datetime.datetime.now()
+            elapsed_time = time2 - time1
+            # print('Elasped time (s): {}'.format(elapsed_time))
+            print('Image saved at {}! Elasped time (s) {}'.format(self.imageTimeStamp, elapsed_time.seconds))
         except:
             print('Image not saved at {}!\n'.format(self.imageTimeStamp))
             pass
@@ -185,8 +190,11 @@ class Smartex:
             #por try except
                     
             try:
+                time1 = datetime.datetime.now()
                 self.db['fabrics'].save(self.fabric)
-                print ("Sent to DB!!")
+                time2 = datetime.datetime.now()
+                elapsed_time = time2 - time1
+                print ("Sent to DB!! Elapsed time(s): {}".format(elapsed_time.seconds))
             except:
                 print('Fabric DB instance not saved in MongoDB at {}!\n'.format(self.imageTimeStamp))
                 pass
