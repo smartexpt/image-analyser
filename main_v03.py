@@ -126,7 +126,7 @@ class Smartex:
             ueye.is_FreeImageMem(self.hcam, self.pccmem, self.memID)
             sleep(.1)
             ueye.is_ExitCamera(self.hcam)
-
+            print('Image saved at {}!\n'.format(self.imageTimeStamp))
         except:
             print('Image not saved at {}!\n'.format(self.imageTimeStamp))
             pass
