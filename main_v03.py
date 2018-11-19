@@ -1,5 +1,5 @@
-import ids
-from PIL import Image
+#import ids
+#from PIL import Image
 from time import sleep
 import datetime
 import os
@@ -34,17 +34,15 @@ class Smartex:
     
     def initCamera(self):
         try:
-            hcam = ueye.HIDS(0)
-            pccmem = ueye.c_mem_p()
-            memID = ueye.c_int()
-            hWnd = ctypes.c_voidp()
-            ueye.is_InitCamera(hcam, hWnd)
-            ueye.is_SetDisplayMode(hcam, 0)
-            sensorinfo = ueye.SENSORINFO()
-            ueye.is_GetSensorInfo(hcam, sensorinfo)
-            ueye.is_AllocImageMem(hcam, sensorinfo.nMaxWidth, sensorinfo.nMaxHeight,24, pccmem, memID)
-            ueye.is_SetImageMem(hcam, pccmem, memID)
-            ueye.is_SetDisplayPos(hcam, 100, 100)
+            self.hcam = ueye.HIDS(0)
+            self.pccmem = ueye.c_mem_p()
+            self.memID = ueye.c_int()
+            self.hWnd = ctypes.c_voidp()
+            ueye.is_InitCamera(self.hcam, self.hWnd)
+            ueye.is_SetDisplayMode(self.hcam, 0)
+            self.sensorinfo = ueye.SENSORINFO()
+            ueye.is_GetSensorInfo(self.hcam, self.sensorinfo)
+            
             return self.OP_OK
         except:
             return self.OP_ERR
@@ -91,36 +89,55 @@ class Smartex:
         if not os.path.exists(self.savingDirectoryLastImage):
             os.makedirs(self.savingDirectoryLastImage)
             
-    def takeImage(self):
-        #por try except
-        try:
-            img, meta = self.cam.next()  # Get image as a Numpy array
-            self.imageTimeStamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-            self.image = img
-        except:
-            self.imageTimeStamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-            print('Image not taken at {}!\n'.format(self.imageTimeStamp))
-            self.image = None
-            pass
+    # def takeImage(self):
+    #     #por try except
+    #     try:
+    #         img, meta = self.cam.next()  # Get image as a Numpy array
+    #         self.imageTimeStamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+    #         self.image = img
+    #     except:
+    #         self.imageTimeStamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+    #         print('Image not taken at {}!\n'.format(self.imageTimeStamp))
+    #         self.image = None
+    #         pass
         
-        return self.image
+    #     return self.image
     
-    def saveImage(self, image):
-        self.imageName = 'imagem_%s.jpg' % self.imageTimeStamp
-        self.imagePath = self.savingDirectory + self.imageName
+    def saveImage(self):
         try:
-            misc.imsave(self.imagePath, image)
+            ueye.is_AllocImageMem(self.hcam, self.sensorinfo.nMaxWidth, self.sensorinfo.nMaxHeight,24, self.pccmem, self.memID)
+            ueye.is_SetImageMem(self.hcam, self.pccmem, self.memID)
+            ueye.is_SetDisplayPos(self.hcam, 100, 100)
+
+            self.nret = ueye.is_FreezeVideo(self.hcam, ueye.IS_WAIT)
+
+            self.imageTimeStamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
+            self.imageName = 'imagem_%s.jpg' % self.imageTimeStamp
+            self.imagePath = self.savingDirectory + self.imageName
+
+            self.FileParams = ueye.IMAGE_FILE_PARAMS()
+            self.FileParams.pwchFileName = self.imagePath 
+            self.FileParams.nFileType = ueye.IS_IMG_BMP
+            self.FileParams.ppcImageMem = None
+            self.FileParams.pnImageID = None
+
+            self.nret = ueye.is_ImageFile(self.hcam, ueye.IS_IMAGE_FILE_CMD_SAVE, self.FileParams, ueye.sizeof(self.FileParams))
+            # print(nret)
+            ueye.is_FreeImageMem(self.hcam, self.pccmem, self.memID)
+            sleep(.1)
+            ueye.is_ExitCamera(self.hcam)
+            
         except:
             print('Image not saved at {}!\n'.format(self.imageTimeStamp))
             pass
         
-    def saveImageLastImage(self, image):
-        self.imagePathLastImage = self.savingDirectoryLastImage + 'last_image.jpg'
-        try:
-            misc.imsave(self.imagePathLastImage, image)
-        except:
-            print('Last image not saved at {}!\n'.format(self.imageTimeStamp))
-            pass
+    # def saveImageLastImage(self, image):
+    #     self.imagePathLastImage = self.savingDirectoryLastImage + 'last_image.jpg'
+    #     try:
+    #         misc.imsave(self.imagePathLastImage, image)
+    #     except:
+    #         print('Last image not saved at {}!\n'.format(self.imageTimeStamp))
+    #         pass
     
     def deffectDetection(self):
                   
@@ -129,9 +146,9 @@ class Smartex:
 
             print('Taking image # ' + str(i))
             
-            image = self.takeImage()
-            self.saveImage(image)
-            self.saveImageLastImage(image)
+            self.initCamera()
+            self.saveImage()
+
 
             with open(self.imagePath, "rb") as imageFile:
                 self.b64Img = base64.b64encode(imageFile.read())
@@ -189,7 +206,7 @@ if __name__ == "__main__":
     s.setSavingDirectory()
 ##    print(s.savingDirectory)
     
-    s.setSavingDirectoryLastImage()
+    # s.setSavingDirectoryLastImage()
 ##    print(s.savingDirectoryLastImage)
     
     s.operationConfigs()
