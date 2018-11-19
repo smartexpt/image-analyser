@@ -145,8 +145,8 @@ class Smartex:
         while True:
 
             print('Taking image # ' + str(i))
-            
-            self.initCamera()
+            if i!=1:
+                self.initCamera()
             self.saveImage()
 
 
