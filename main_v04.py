@@ -7,9 +7,11 @@ import RPi.GPIO as GPIO
 from scipy import misc
 from pymongo import MongoClient
 import base64
-import pijuice
+from pijuice import PiJuice
 from pyueye import ueye
 import ctypes
+import sys, getopt
+from control_usb import powerOffUSBs, powerOnUSBs
 
 class Smartex:
     
@@ -17,6 +19,7 @@ class Smartex:
     OP_OK = 0
     OP_ERR = -1
     CAMERA_RETRYS = 10
+    pijuice = PiJuice(1,0x14)
     
     def __init__(self, DBNAME, MONGO_HOST, id = '7AKy0GDOEb'):
         self.DBNAME = DBNAME
@@ -116,9 +119,33 @@ class Smartex:
         i = 1
         while True:
 
-            print('Taking image # ' + str(i))
-            if i!=1:
+            self.UPSpowerInput = pijuice.status.GetStatus()['data']['powerInput']
+            
+            if i == 1:
+                self.USBpowerOutput = 'ON'
+
+            if self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'ON':
+                print('UPS not being charged - shutting down camera.\n')
+                powerOffUSBs()
+                self.USBpowerOutput = 'OFF'
+                sleep(1)
+                continue
+
+            elif self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'OFF':
+                print('UPS not being charged - trying again.\n')
+                sleep(1)
+                continue
+
+            elif self.UPSpowerInput == 'PRESENT' and self.USBpowerOutput == 'OFF':
+                print('UPS just started being charged - booting camera.\n')
+                powerOnUSBs()
+                self.USBpowerOutput = 'ON'
+                sleep(5)
+
+            if i != 1:
                 self.initCamera()
+
+            print('Taking image # ' + str(i))
             self.saveImage()
 
 
