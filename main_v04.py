@@ -119,7 +119,7 @@ class Smartex:
         i = 1
         while True:
 
-            self.UPSpowerInput = pijuice.status.GetStatus()['data']['powerInput']
+            self.UPSpowerInput = self.pijuice.status.GetStatus()['data']['powerInput']
             
             if i == 1:
                 self.USBpowerOutput = 'ON'
