@@ -32,7 +32,7 @@ class Smartex:
             self.CAMERA_RETRYS -= 1
             
         self.DEVICE_ID = id
-        logging.basicConfig(filename='smartex_main.log',\
+        logging.basicConfig(filename='smartex_main.log', level=logging.DEBUG,\
                             format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     
     def initCamera(self):
