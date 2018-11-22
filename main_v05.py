@@ -28,6 +28,7 @@ class Smartex:
         
         while self.initCamera() != self.OP_OK and self.operationConfigs['CAMERA_RETRYS'] > 0:
             logging.warning('Error in initCamera()')
+            self.pijuice.status.SetLedBlink('D2', 2, [255,0,0], 50, [255, 0, 0], 50)
             sleep(1)
             self.operationConfigs['CAMERA_RETRYS'] -= 1
             
@@ -54,35 +55,13 @@ class Smartex:
         try:
             con = MongoClient(self.operationConfigs['MONGO_HOST'], self.operationConfigs['MONGO_PORT'])
             self.db = con[self.operationConfigs['DBNAME']]
+            self.pijuice.status.SetLedBlink('D2', 2, [0,0,255], 50, [0, 0, 255], 50)
+            sleep(.01)
         except:
             logging.warning('Error in connectMongoDB!\n')
+            self.pijuice.status.SetLedBlink('D2', 2, [255,0,0], 50, [255, 0, 0], 50)
+            sleep(.01)
             pass
-        
-    # def operationConfigs(self):
-        
-    #     self.operationConfigs['deffectDetectionMode'] = str(raw_input('Deffect detection mode: (on/off)')) or 'on'
-    #     if self.operationConfigs['deffectDetectionMode'] == 'on':
-    #         logging.info('Detection mode: ON')
-
-    #         self.operationConfigs['stopMachineMode'] = str(raw_input('Stop machine mode: (on/off)')) or 'on'
-    #         if self.operationConfigs['stopMachineMode'] == 'on':
-    #             logging.info('Stop mode: ON')
-    #             self.operationConfigs['outputPort'] = int(raw_input('RPi low voltage GPIO port: (27)')) or 27
-    #         elif self.operationConfigs['stopMachineMode'] == 'off':
-    #             logging.info('Stop mode: OFF')
-    #         else:
-    #             logging.info('Input not recognized, not gonna stop.')
-
-    #     elif self.operationConfigs['deffectDetectionMode'] == 'off':
-    #         logging.info('Detection mode: OFF')
-    #     else:
-    #         logging.warning('Input not recognized, not gonna detect.')
-            
-    # def setSavingDirectory(self, directory='/home/smartex/teste_tojo/'):
-    #     self.operationConfigs['savingDirectory'] = directory
-        
-    #     if not os.path.exists(self.operationConfigs['savingDirectory']):
-    #         os.makedirs(self.operationConfigs['savingDirectory'])
     
     def saveImage(self):
         try:
@@ -105,14 +84,18 @@ class Smartex:
 
             self.nret = ueye.is_ImageFile(self.hcam, ueye.IS_IMAGE_FILE_CMD_SAVE, self.FileParams, ueye.sizeof(self.FileParams))
             ueye.is_FreeImageMem(self.hcam, self.pccmem, self.memID)
-            sleep(.1)
+            sleep(.01)
             ueye.is_ExitCamera(self.hcam)
             
             time2 = datetime.datetime.now()
             elapsed_time = time2 - time1
             logging.info('Saved: {}! Elasped time (ms): {}'.format(self.imageName, elapsed_time.microseconds/1000))
+            self.pijuice.status.SetLedBlink('D2', 2, [0,255,0], 50, [0, 255, 0], 50)
+            sleep(.01)
         except:
             logging.warning('NOT SAVED: {}!\n'.format(self.imageName))
+            self.pijuice.status.SetLedBlink('D2', 2, [255,0,0], 50, [255, 0, 0], 50)
+            sleep(.01)
             pass
         
     def deffectDetection(self):
@@ -190,8 +173,12 @@ class Smartex:
                 time2 = datetime.datetime.now()
                 elapsed_time = time2 - time1
                 logging.info ("Sent to DB!! Elapsed time (ms): {}\n".format(elapsed_time.microseconds/1000))
+                self.pijuice.status.SetLedBlink('D2', 2, [0,0,255], 50, [0, 0, 255], 50)
+                sleep(.01)
             except:
                 logging.warning('Fabric DB instance not saved in MongoDB\n')
+                self.pijuice.status.SetLedBlink('D2', 2, [255,0,0], 50, [255, 0, 0], 50)
+                sleep(.01)
                 pass
             
             sleep(1)
