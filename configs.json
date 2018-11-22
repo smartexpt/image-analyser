@@ -4,11 +4,9 @@
   "MONGO_HOST": "192.168.1.111",
   "MONGO_PORT": 27017,
   "CAMERA_RETRYS": 10,
-  "operationConfigs": {
-    "deffectDetectionMode": false,
-    "stopMachineMode": false,
-    "outputPort": 27
-  },
+  "deffectDetectionMode": false,
+  "stopMachineMode": false,
+  "outputPort": 27,
   "DEVICE_ID": "7AKy0GDOEb",
   "LOG_FILE": "smartex_main.log"
 }
