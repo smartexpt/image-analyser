@@ -32,7 +32,7 @@ class Smartex:
     # CAMERA_RETRYS = 10
     pijuice = PiJuice(1,0x14)
     
-    def __init__(self, configsFile = 'configs.json'):
+    def __init__(self, configsFile = 'image-analyser/configs.json'):
         self.operationConfigs = json.loads(open(configsFile).read())
         
         while self.initCamera() != self.OP_OK and self.operationConfigs['CAMERA_RETRYS'] > 0:
