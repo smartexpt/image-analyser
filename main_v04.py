@@ -12,6 +12,7 @@ from pyueye import ueye
 import ctypes
 import sys, getopt
 from control_usb import powerOffUSBs, powerOnUSBs
+import logging
 
 class Smartex:
     
@@ -26,11 +27,13 @@ class Smartex:
         self.MONGO_HOST = MONGO_HOST
         
         while self.initCamera() != self.OP_OK and self.CAMERA_RETRYS > 0:
-            print('Error in initCamera()')
+            logging.warning('Error in initCamera()')
             sleep(1)
             self.CAMERA_RETRYS -= 1
             
         self.DEVICE_ID = id
+        logging.basicConfig(filename='smartex_main.log',\
+                            format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     
     def initCamera(self):
         try:
@@ -52,28 +55,28 @@ class Smartex:
             con = MongoClient(self.MONGO_HOST, self.MONGO_PORT)
             self.db = con[self.DBNAME]
         except:
-            print('Error in connectMongoDB!\n')
+            logging.warning('Error in connectMongoDB!\n')
             pass
         
     def operationConfigs(self):
         
         self.deffectDetectionMode = str(raw_input('Deffect detection mode: (on/off)')) or 'on'
         if self.deffectDetectionMode == 'on':
-            print('Detection mode: ON')
+            logging.info('Detection mode: ON')
 
             self.stopMachineMode = str(raw_input('Stop machine mode: (on/off)')) or 'on'
             if self.stopMachineMode == 'on':
-                print('Stop mode: ON')
+                logging.info('Stop mode: ON')
                 self.outputPort = int(raw_input('RPi low voltage GPIO port: (27)')) or 27
             elif self.stopMachineMode == 'off':
-                print('Stop mode: OFF')
+                logging.info('Stop mode: OFF')
             else:
-                print('Input not recognized, not gonna stop.')
+                logging.info('Input not recognized, not gonna stop.')
 
         elif self.deffectDetectionMode == 'off':
-            print('Detection mode: OFF')
+            logging.info('Detection mode: OFF')
         else:
-            print('Input not recognized, not gonna detect.')
+            logging.warning('Input not recognized, not gonna detect.')
             
     def setSavingDirectory(self, directory='/home/smartex/teste_tojo/'):
         self.savingDirectory = directory
@@ -101,17 +104,15 @@ class Smartex:
             self.FileParams.pnImageID = None
 
             self.nret = ueye.is_ImageFile(self.hcam, ueye.IS_IMAGE_FILE_CMD_SAVE, self.FileParams, ueye.sizeof(self.FileParams))
-            # print(nret)
             ueye.is_FreeImageMem(self.hcam, self.pccmem, self.memID)
             sleep(.1)
             ueye.is_ExitCamera(self.hcam)
             
             time2 = datetime.datetime.now()
             elapsed_time = time2 - time1
-            # print('Elasped time (s): {}'.format(elapsed_time))
-            print('Image saved at {}! Elasped time (ms) {}'.format(self.imageTimeStamp, elapsed_time.microseconds/1000))
+            logging.info('Saved: {}! Elasped time (ms): {}'.format(self.imageName, elapsed_time.microseconds/1000))
         except:
-            print('Image not saved at {}!\n'.format(self.imageTimeStamp))
+            logging.warning('NOT SAVED: {}!\n'.format(self.imageName))
             pass
         
     def deffectDetection(self):
@@ -125,19 +126,19 @@ class Smartex:
                 self.USBpowerOutput = 'ON'
 
             if self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'ON':
-                print('UPS not being charged - shutting down camera.\n')
+                logging.warning('UPS not being charged - shutting down camera.\n')
                 powerOffUSBs()
                 self.USBpowerOutput = 'OFF'
                 sleep(1)
                 continue
 
             elif self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'OFF':
-                print('UPS not being charged - trying again.\n')
+                logging.warning('UPS not being charged - trying again.\n')
                 sleep(1)
                 continue
 
             elif self.UPSpowerInput == 'PRESENT' and self.USBpowerOutput == 'OFF':
-                print('UPS just started being charged - booting camera.\n')
+                logging.info('UPS just started being charged - booting camera.\n')
                 powerOnUSBs()
                 self.USBpowerOutput = 'ON'
                 sleep(5)
@@ -145,7 +146,7 @@ class Smartex:
             if i != 1:
                 self.initCamera()
 
-            print('Taking image # ' + str(i))
+            logging.info('Taking image # ' + str(i))
             self.saveImage()
 
 
@@ -167,11 +168,11 @@ class Smartex:
 
                 if agulhaDeffectDetected:
                     self.fabric['defect'] = 'Agulha'
-                    print("Defeito agulha!")
+                    logging.info("Defeito agulha!")
 
                 if lycraDeffectDetected[0]:
                     self.fabric['defect'] = lycraDeffectDetected[1]
-                    print("Defeito lycra!")
+                    logging.info("Defeito lycra!")
 
                 if self.stopMachineMode == 'on' and (lycraDeffectDetected[0] or agulhaDeffectDetected):
                     
@@ -188,9 +189,9 @@ class Smartex:
                 self.db['fabrics'].save(self.fabric)
                 time2 = datetime.datetime.now()
                 elapsed_time = time2 - time1
-                print ("Sent to DB!! Elapsed time(ms): {}\n".format(elapsed_time.microseconds/1000))
+                logging.info ("Sent to DB!! Elapsed time (ms): {}\n".format(elapsed_time.microseconds/1000))
             except:
-                print('Fabric DB instance not saved in MongoDB at {}!\n'.format(self.imageTimeStamp))
+                logging.warning('Fabric DB instance not saved in MongoDB\n')
                 pass
             
             sleep(1)
