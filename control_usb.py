@@ -2,14 +2,14 @@ import subprocess
 from time import sleep
 
 def powerOffUSBs():
-    proc = subprocess.Popen('echo lycralycra | sudo -S echo \'1-1\' | sudo tee /sys/bus/usb/drivers/usb/unbind',
+    proc = subprocess.Popen('echo \'lycralycra\n\' | sudo -S echo \'1-1\' | sudo tee /sys/bus/usb/drivers/usb/unbind',
                         shell=True, stdin=subprocess.PIPE,
                         stdout=subprocess.PIPE,
                         stderr=subprocess.PIPE)
     print('Shutted down USB ports.')
 
 def powerOnUSBs():
-    proc = subprocess.Popen('echo lycralycra | sudo -S echo \'1-1\' | sudo tee /sys/bus/usb/drivers/usb/bind',
+    proc = subprocess.Popen('echo \'lycralycra\n\' | sudo -S echo \'1-1\' | sudo tee /sys/bus/usb/drivers/usb/bind',
                         shell=True, stdin=subprocess.PIPE,
                         stdout=subprocess.PIPE,
                         stderr=subprocess.PIPE)
