@@ -15,15 +15,6 @@ from control_usb import powerOffUSBs, powerOnUSBs
 import logging
 import json
 
-json1_file = open('document.json')
-json1_str = json1_file.read()
-print(json1_str)
-json1_data = json.loads(json1_str)
-print(json1_data)
-print(type(json1_data))
-datapoints = json1_data['DEVICE_ID']
-print(datapoints)
-
 class Smartex:
     
     # MONGO_PORT = 27017
