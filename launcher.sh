@@ -4,5 +4,5 @@
 
 cd /
 cd home/smartex/
-python image-analyser/main_v05.py
+echo 'lycralycra' | sudo -i -u smartex python image-analyser/main_v05.py
 cd /
