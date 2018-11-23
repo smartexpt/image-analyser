@@ -30,6 +30,7 @@ class Smartex:
             logging.warning('Error in initCamera()')
             self.pijuice.status.SetLedBlink('D2', 2, [255,0,0], 50, [255, 0, 0], 50)
             sleep(1)
+            self.pijuice.status.SetLedState('D2', [0, 0,0])
             self.operationConfigs['CAMERA_RETRYS'] -= 1
             
         self.DEVICE_ID = id
@@ -57,10 +58,12 @@ class Smartex:
             self.db = con[self.operationConfigs['DBNAME']]
             self.pijuice.status.SetLedBlink('D2', 2, [0,0,255], 50, [0, 0, 255], 50)
             sleep(.01)
+            self.pijuice.status.SetLedState('D2', [0, 0,0])
         except:
             logging.warning('Error in connectMongoDB!\n')
             self.pijuice.status.SetLedBlink('D2', 2, [255,0,0], 50, [255, 0, 0], 50)
-            sleep(.01)
+            sleep(.1)
+            self.pijuice.status.SetLedState('D2', [0, 0,0])
             pass
     
     def saveImage(self):
@@ -91,11 +94,13 @@ class Smartex:
             elapsed_time = time2 - time1
             logging.info('Saved: {}! Elasped time (ms): {}'.format(self.imageName, elapsed_time.microseconds/1000))
             self.pijuice.status.SetLedBlink('D2', 2, [0,255,0], 50, [0, 255, 0], 50)
-            sleep(.01)
+            sleep(.1)
+            self.pijuice.status.SetLedState('D2', [0, 0,0])
         except:
             logging.warning('NOT SAVED: {}!\n'.format(self.imageName))
             self.pijuice.status.SetLedBlink('D2', 2, [255,0,0], 50, [255, 0, 0], 50)
-            sleep(.01)
+            sleep(.1)
+            self.pijuice.status.SetLedState('D2', [0, 0,0])
             pass
         
     def deffectDetection(self):
@@ -174,11 +179,13 @@ class Smartex:
                 elapsed_time = time2 - time1
                 logging.info ("Sent to DB!! Elapsed time (ms): {}\n".format(elapsed_time.microseconds/1000))
                 self.pijuice.status.SetLedBlink('D2', 2, [0,0,255], 50, [0, 0, 255], 50)
-                sleep(.01)
+                sleep(.1)
+                self.pijuice.status.SetLedState('D2', [0, 0,0])
             except:
                 logging.warning('Fabric DB instance not saved in MongoDB\n')
                 self.pijuice.status.SetLedBlink('D2', 2, [255,0,0], 50, [255, 0, 0], 50)
-                sleep(.01)
+                sleep(.1)
+                self.pijuice.status.SetLedState('D2', [0, 0,0])
                 pass
             
             sleep(1)
