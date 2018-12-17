@@ -11,8 +11,8 @@ from scipy import misc
 
 import pymongo
 from pymongo import MongoClient
-connection = MongoClient()
-db = connection['boilerplate-test']
+#connection = MongoClient()
+#db = connection['boilerplate-test']
 
 #camera = PiCamera()
 
@@ -107,7 +107,7 @@ def cam_deffect_detection():
                 GPIO.setup(output_port, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
                 #break
 
-        db['fabrics'].insert_one(fabric)
+        #db['fabrics'].insert_one(fabric)
         sleep(.8)
 
 if __name__ == "__main__":
