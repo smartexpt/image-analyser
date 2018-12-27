@@ -52,9 +52,9 @@ def identifica_picos_seguidos(lista_de_picos):
     return coord_repetidos
 
 
-def funcao_detecao_agulhas(name, threshold = 9., resize = 0.5, d_blur = 0.04 , N_linhas_verticais = 70, angle = 0 , grafico = "nao"):   #name corresponde ao nome da imagem a analisar ... deve conter o '.jpg'
+def funcao_detecao_agulhas(image, threshold = 9., resize = 0.5, d_blur = 0.04 , N_linhas_verticais = 70, angle = 0 , grafico = "nao"):   #name corresponde ao nome da imagem a analisar ... deve conter o '.jpg'
 
-    im = misc.imresize( np.uint8( ndimage.imread( name , flatten=True) ) , resize)     #reading image
+    im = misc.imresize(image , resize)     #reading image
 
     altura, largura = np.shape(im)
     dim = int(largura * d_blur + 1)  # dimensao da matriz de convolucao

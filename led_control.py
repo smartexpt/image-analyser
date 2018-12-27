@@ -29,6 +29,7 @@ abort = False
 state = True
 
 pi = pigpio.pi()
+pi.set_mode(LED_PIN, pigpio.OUTPUT)
 
 def updateColor(color, step):
 	color += step
@@ -90,9 +91,7 @@ def checkKey():
 			
 			time.sleep(0.1)
 			
-			setLights(RED_PIN, 0)
-			setLights(GREEN_PIN, 0)
-			setLights(BLUE_PIN, 0)
+			setLights(LED_PIN, 0)
 			
 		if c == 'r' and not state:
 			state = True

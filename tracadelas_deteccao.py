@@ -28,9 +28,9 @@ def identifica_picos_seguidos(lista_de_picos):
     return coord_repetidos
 
 
-def funcao_deteccao_lycra_tracadelas(name, threshold=14, resize=0.6, d_blur=0.02, N_linhas_verticais=70, angle=0,grafico="nao"):  # name corresponde ao nome da imagem a analisar ... deve conter o '.jpg'
+def funcao_deteccao_lycra_tracadelas(image, threshold=14, resize=0.6, d_blur=0.02, N_linhas_verticais=70, angle=0,grafico="nao"):  # name corresponde ao nome da imagem a analisar ... deve conter o '.jpg'
 
-    im_inicial = misc.imresize(np.uint8(ndimage.imread(name, flatten=True)), resize)  # reading image
+    im_inicial = misc.imresize(image, resize)  # reading image
 
     altura, largura = np.shape(im_inicial)
     dim = int(largura * d_blur + 1)  # dimensao da matriz de convolucao
