@@ -5,6 +5,8 @@ from detecao_agulha_v02 import funcao_detecao_agulhas
 import RPi.GPIO as GPIO
 from pijuice import PiJuice
 from pyueye import ueye
+import numpy as np
+from scipy import misc, ndimage
 import ctypes
 from control_usb import powerOffUSBs, powerOnUSBs
 import logging
@@ -94,6 +96,7 @@ class Smartex:
         ueye.is_FreeImageMem(self.hcam, self.pccmem, self.memID)
         sleep(.01)
         ueye.is_ExitCamera(self.hcam)
+        self.image = np.uint8(ndimage.imread(self.imagePath, flatten=True))
 
     def deffectDetection(self):
         i = 1
