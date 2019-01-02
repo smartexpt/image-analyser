@@ -23,6 +23,7 @@ class FabricWorker:
         self.thread.start()
 
     def add_work(self, obj):
+        logging.info("Adding object to worker queue! Queue has now " + str(self.queue.qsize()) + "elements!")
         self.queue.put(obj)
 
     def upload(self):
@@ -44,7 +45,7 @@ class FabricWorker:
         begin = datetime.datetime.now()
         r = self.client.post(self.operationConfigs['FABRIC_ENDPOINT'], data=fabric)
         elapsed = datetime.datetime.now() - begin
-        logging.info("\nFabric object uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+        logging.info("\nFabric object uploaded - elapsed time (s): {}".format(elapsed.total_seconds()))
 
     def upload_image(self, image_path):
         if self.operationConfigs['storage'] == "ONLINE":
@@ -80,7 +81,7 @@ class FabricWorker:
             'thumb_url': thumb_url
         }
         elapsed = datetime.datetime.now() - begin
-        logging.info("\nImage uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+        logging.info("Image uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
 
         return paths
 
@@ -119,7 +120,7 @@ class FabricWorker:
             'thumb_url': thumb_url
         }
         elapsed = datetime.datetime.now() - begin
-        logging.info("\nImage uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+        logging.info("Image uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
 
         return paths
 
