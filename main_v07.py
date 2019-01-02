@@ -4,6 +4,7 @@ import os
 from tracadelas_deteccao import funcao_deteccao_lycra_tracadelas
 from detecao_agulha_v02 import funcao_detecao_agulhas
 import RPi.GPIO as GPIO
+import pigpio
 from scipy import misc, ndimage
 from pijuice import PiJuice
 from pyueye import ueye
@@ -22,6 +23,7 @@ import sys
 import base64
 import numpy as np
 from io import BytesIO
+from Queue import Queue
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -56,7 +58,6 @@ def percent_cb(complete, total):
 class Smartex:
     OP_OK = 0
     OP_ERR = -1
-    # CAMERA_RETRYS = 10
     pijuice = PiJuice(1, 0x14)
 
     def __init__(self, configsFile='configs.json'):
@@ -64,6 +65,7 @@ class Smartex:
         self.configsFile = configsFile
         self.operationConfigs = json.loads(open(configsFile).read())
         print "Configurations loaded from " + configsFile
+        self.fabricQueue = Queue(maxsize=100)
         while self.initCamera() != self.OP_OK and self.operationConfigs['CAMERA_RETRYS'] > 0:
             logging.warning('Error in initCamera()')
             self.pijuice.status.SetLedBlink('D2', 2, [255, 0, 0], 50, [255, 0, 0], 50)
@@ -97,7 +99,6 @@ class Smartex:
             print self.sensorinfo
             return self.OP_OK
         except:
-            print "\n\nERR\n\n"
             return self.OP_ERR
 
     def connectAWSS3(self):
@@ -106,11 +107,11 @@ class Smartex:
             con = boto.connect_s3(self.operationConfigs['AWS_ACCESS_KEY'], self.operationConfigs['AWS_SECRET_KEY'],
                                   host=self.operationConfigs['REGION_HOST'])
             self.bucket = con.get_bucket(self.operationConfigs['AWS_BUCKET'])
-            return True
+            return self.OP_OK
         except:
             logging.warning('Error in connectAWSS3!\n')
             self.blinkLED()
-            return False
+            return self.OP_ERR
 
     def authWS(self):
         try:
@@ -136,29 +137,23 @@ class Smartex:
 
             time2 = datetime.datetime.now()
             elapsed_time = time2 - time1
-            logging.info("\nAuthentication status code: {}".format(r.status_code))
-            # logging.info("Authentication response headers: {}".format(r.headers))
-            # logging.info("Authentication response cookies: {}\n".format(r.cookies))
             logging.info("Authenticated in WS!! Elapsed time (s): {}\n".format(elapsed_time.total_seconds()))
             self.blinkLED()
-            return True
+            return self.OP_OK
         except:
             logging.warning('Error authenticating with WS\n')
             self.blinkLED()
-            return False
-            pass
-        pass
+            return self.OP_ERR
 
     def getLastID(self):
-        r = self.client.get('http://192.168.0.102:3000/api/fabric/lastID')  # sets cookie
-        data = r.json()
-        print(data['data']['id'])
-        self.lastID = data['data']['id']
-        pass
+        try:
+            r = self.client.get('http://192.168.0.102:3000/api/fabric/lastID')  # sets cookie
+            data = r.json()
+            self.lastID = data['data']['id']
+        except:
+            self.lastID = 1
 
     def saveImage(self):
-        # try:
-        time1 = datetime.datetime.now()
         ueye.is_AllocImageMem(self.hcam, self.sensorinfo.nMaxWidth, self.sensorinfo.nMaxHeight, 24, self.pccmem,
                               self.memID)
         ueye.is_SetImageMem(self.hcam, self.pccmem, self.memID)
@@ -188,16 +183,7 @@ class Smartex:
 
         self.image = np.uint8(ndimage.imread(self.imagePath, flatten=True))
 
-        time2 = datetime.datetime.now()
-        elapsed_time = time2 - time1
-        logging.info('Saved: {}! Elasped time (s): {}'.format(self.imageName, elapsed_time.total_seconds()))
-        # except:
-        #    logging.warning('NOT SAVED: {}!\n'.format(self.imageName))
-        #    self.blinkLED()
-        #    pass
-
     def uploadImages(self):
-        # try:
         if self.operationConfigs['storage'] == "ONLINE":
             logging.info("#upload full res: " + self.imagePath)
             fuuid = str(uuid.uuid4())
@@ -223,7 +209,6 @@ class Smartex:
                 'AWS_BUCKET'] + '/' + k.key
             k.set_acl('public-read')
         else:
-            time1 = datetime.datetime.now()
             fuuid = str(uuid.uuid4())
             name = 'F_' + fuuid + '.png'
             pil_img = Image.fromarray(self.image)
@@ -258,17 +243,14 @@ class Smartex:
 
             self.thumbUrl = 'http://192.168.0.102:3000/fabrics/' + name
 
-            time2 = datetime.datetime.now()
-            elapsed_time = time2 - time1
-            logging.info("Sent images to local storage!! Elapsed time (s): {}\n".format(elapsed_time.total_seconds()))
-        # except:
-        #   logging.warn("Error sendig image to local storage!\n")
+    def uploadFabric(self):
+        r = self.client.post(self.operationConfigs['FABRIC_ENDPOINT'], data=self.fabric)
 
     def deffectDetection(self):
         i = 1
         while True:
             begin = datetime.datetime.now()
-            logging.info('Iteration # ' + str(i))
+            logging.info('Beginning iteration # ' + str(i))
             self.UPSpowerInput = self.pijuice.status.GetStatus()['data']['powerInput']
 
             if i == 1:
@@ -292,47 +274,70 @@ class Smartex:
                 self.USBpowerOutput = 'ON'
                 sleep(2)
 
+            now = datetime.datetime.now()
+            elapsed = now - begin
+
+            logging.info("\nUSB ports are up - elapsed time (s): {}".format(elapsed.total_seconds()))
+
             if i != 1:
                 self.initCamera()
 
-            logging.info('Taking image!')
+            now_ant = now
+            now = datetime.datetime.now()
+            elapsed = now - now_ant
+
+            logging.info("\nCamera is ready - elapsed time (s): {}".format(elapsed.total_seconds()))
+
             try:
+                logging.info('Taking image!')
                 self.saveImage()
+                now_ant = now
+                now = datetime.datetime.now()
+                elapsed = now - now_ant
+                logging.info("\nImage taken and saved - elapsed time (s): {}".format(elapsed.total_seconds()))
             except:
+                logging.warn("Error taking/saving image! Continuing to next iteration..")
                 continue
 
             defect = 'None'
 
-            time1 = datetime.datetime.now()
             if self.operationConfigs['deffectDetectionMode']:
-                logging.info("Starting detection modules!")
+                logging.info("Analyzing images for defect..")
                 lycraDeffectDetected = funcao_deteccao_lycra_tracadelas(self.image)
                 agulhaDeffectDetected = funcao_detecao_agulhas(self.image)
 
                 if agulhaDeffectDetected:
                     defect = 'Agulha'
-                    logging.info("Defeito agulha!")
+                    logging.info("Defeito agulha detectado!")
 
                 if lycraDeffectDetected[0]:
                     defect = lycraDeffectDetected[1]
-                    logging.info("Defeito lycra!")
+                    logging.info("Defeito lycra detectado!")
 
                 if self.operationConfigs['stopMachineMode'] and (lycraDeffectDetected[0] or agulhaDeffectDetected):
+                    logging.info("Stoping the machine!")
                     GPIO.setmode(GPIO.BCM)
                     GPIO.setup(self.operationConfigs['outputPort'], GPIO.OUT, initial=GPIO.LOW)
                     GPIO.output(self.operationConfigs['outputPort'], GPIO.LOW)
                     sleep(1)
                     GPIO.setup(self.operationConfigs['outputPort'], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
-                time2 = datetime.datetime.now()
-                elapsed_time = time2 - time1
-                logging.info("Detection modules finished! Elapsed time (s): {}\n".format(elapsed_time.total_seconds()))
+                now_ant = now
+                now = datetime.datetime.now()
+                elapsed = now - now_ant
+                logging.info("\nDetection modules finished -elapsed time (s): {}\n".format(elapsed.total_seconds()))
 
-            logging.info("Uploading image!")
             try:
+                logging.info("Uploading image!")
                 self.uploadImages()
+                now_ant = now
+                now = datetime.datetime.now()
+                elapsed = now - now_ant
+                logging.info("\nImage uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
             except:
+                logging.warn("Error uploading image! Continuing to next iteration..")
                 continue
+
             self.fabric = {
                 '_id': self.lastID + i,
                 'defect': defect,
@@ -341,28 +346,56 @@ class Smartex:
                 'thumbUrl': self.thumbUrl,
                 'deviceID': self.operationConfigs['DEVICE_ID'],
             }
-            # por try except
+
             try:
-                time1 = datetime.datetime.now()
-                logging.info("Sending to WS!")
-                r = self.client.post(self.operationConfigs['FABRIC_ENDPOINT'], data=self.fabric)
-                time2 = datetime.datetime.now()
-                elapsed_time = time2 - time1
-                logging.info("Fabric post status code: {}".format(r.status_code))
-                logging.info("Sent to WS!! Elapsed time (s): {}\n".format(elapsed_time.total_seconds()))
-                # self.blinkLED()
+                logging.info("Uploading fabric object!")
+                self.uploadFabric()
+                now_ant = now
+                now = datetime.datetime.now()
+                elapsed = now - now_ant
+                logging.info("\nFabric object uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
             except:
-                logging.warning('Error communicating with WS\n')
-                self.blinkLED()
-                pass
+                logging.warn("Error uploading fabric object! Continuing to next iteration..")
+                continue
+
 
             elapsed = datetime.datetime.now() - begin
             sleep_time = max(self.operationConfigs['interval'] - elapsed.total_seconds(), 0)
+            logging.info('Iteration # ' + str(i) + " finished!")
             logging.info("\nTotal elapsed time (s): {}".format(elapsed.total_seconds()))
             logging.info("Will sleep for (s): {}".format(sleep_time))
-            print(self.operationConfigs['interval'], elapsed.total_seconds())
+            #print(self.operationConfigs['interval'], elapsed.total_seconds())
             sleep(sleep_time)
             i += 1
+
+    def startDetectionLoop(self):
+        if(self.ready):
+            self.startWSockService()
+            self.deffectDetection()
+            self.wsockthread.join()
+            self.fabricQueue.task_done()
+        else:
+            logging.warning("You need to authenticate first!")
+
+    def authEverything(self):
+        while s.authWS() != self.OP_OK:
+            logging.warning("Reconnecting WS!")
+
+        if s.operationConfigs['storage'] == "ONLINE":
+            while s.connectAWSS3() != self.OP_OK:
+                logging.warning("Reconnecting AWS!")
+
+        self.getLastID()
+        self.ready = True
+
+    def changeLEDInt(self, LED_PIN, realBrightness):
+        try:
+            logging.info("Going to set PWM_dutycycle to " + realBrightness + " in GPIO port "+LED_PIN)
+            pi = pigpio.pi()
+            pi.set_PWM_dutycycle(LED_PIN, realBrightness)
+            sleep(.2)
+        except:
+            logging.warn("Error changing LED brightness!")
 
     def blinkLED(self):
         pass
@@ -382,6 +415,20 @@ class Smartex:
         except ConnectionError:
             logging.warning('Error connecting WebSockets\n')
 
+    def startWSockService(self):
+        self.wsockthread = Thread(target=self.connectWSock)
+        self.wsockthread.setDaemon(True)
+        self.wsockthread.start()
+
+    def startWorkers(self):
+        self.fabricWorker = Thread(target=self.connectWSock)
+        self.fabricWorker.setDaemon(True)
+        self.fabricWorker.start()
+
+        self.uploadWorker = Thread(target=self.connectWSock)
+        self.uploadWorker.setDaemon(True)
+        self.uploadWorker.start()
+
     def on_updated(self, *args):
         try:
             configs = args[0]['data']
@@ -398,28 +445,26 @@ class Smartex:
                     self.operationConfigs['interval'] = configs['interval']
                 if configs.get('storage', -1) >= 0:
                     self.operationConfigs['storage'] = configs['storage']
+                if configs.get('frontledgpio', -1) >= 0:
+                    self.operationConfigs['frontledgpio'] = configs['frontledgpio']
+                if configs.get('backledgpio', -1) >= 0:
+                    self.operationConfigs['backledgpio'] = configs['backledgpio']
+
+                if configs.get('frontledint', -1) >= 0:
+                    self.operationConfigs['frontledint'] = configs['frontledint']
+                    self.changeLEDInt(self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
+
+                if configs.get('backledint', -1) >= 0:
+                    self.operationConfigs['backledint'] = configs['backledint']
+                    self.changeLEDInt(self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
 
                 self.updateJsonFile()
-                print self.operationConfigs
+                logging.info("Updated operationConfigs!")
         except ValueError:
             logging.warning("Error parsing configs: " + ValueError)
 
 
 if __name__ == "__main__":
     s = Smartex()
-    while not s.authWS():
-        logging.warning("Reconnecting WS!")
-
-    while not s.connectAWSS3():
-        logging.warning("Reconnecting AWS!")
-
-    try:
-        s.getLastID()
-    except:
-        s.lastID = 0
-
-    t1 = Thread(target=s.connectWSock)
-    t1.setDaemon(True)
-    t1.start()
-    s.deffectDetection()
-    t1.join()
+    s.authEverything()
+    s.startDetectionLoop()
