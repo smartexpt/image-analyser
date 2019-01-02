@@ -170,7 +170,7 @@ class WebSockets:
 
     def changeLEDInt(self, LED_PIN, realBrightness):
         try:
-            logging.info("Going to set PWM_dutycycle to " + realBrightness + " in GPIO port " + LED_PIN)
+            logging.info("Going to set PWM_dutycycle to " + str(realBrightness) + " in GPIO port " + str(LED_PIN))
             pi = pigpio.pi()
             pi.set_PWM_dutycycle(LED_PIN, realBrightness)
             sleep(.2)
