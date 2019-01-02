@@ -44,7 +44,7 @@ class Smartex:
         self.aws = AWS(self.operationConfigs)
 
         self.authEverything()
-        self.fabricWorker = FabricWorker(100, self.bucket, self.client, self.operationConfigs)
+        self.fabricWorker = FabricWorker(100, self.aws.bucket, self.webServer.client, self.operationConfigs)
 
         if self.authenticated:
             self.webSockets = WebSockets(self.operationConfigs, self.webServer.session_id)
@@ -65,11 +65,9 @@ class Smartex:
             ueye.is_SetDisplayMode(self.hcam, 0)
             self.sensorinfo = ueye.SENSORINFO()
             ueye.is_GetSensorInfo(self.hcam, self.sensorinfo)
-            print self.sensorinfo
             return self.OP_OK
-        except:
-            return self.OP_ERR
-
+        except Exception as ex:
+            logging.exception("Error during camera initialization!")
             return self.OP_ERR
 
     def saveImage(self):
