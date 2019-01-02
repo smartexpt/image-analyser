@@ -31,7 +31,7 @@ class WebServer:
             self.client = requests.session()
 
             # Retrieve the CSRF token first
-            self.client.get('http://192.168.0.102:3000/login')  # sets cookie
+            self.client.get(self.operationConfigs['WS_ENDPOINT'] + 'login')  # sets cookie
 
             if 'csrftoken' in self.client.cookies:
                 self.session_id = self.client.cookies['csrftoken']
@@ -44,7 +44,7 @@ class WebServer:
 
             login_data = dict(username='test', password='test1234', csrfmiddlewaretoken=self.session_id, next='/')
             r = self.client.post(self.operationConfigs['AUTH_ENDPOINT'], data=login_data,
-                                 headers=dict(Referer='http://192.168.0.102:3000/login'))
+                                 headers=dict(Referer=self.operationConfigs['WS_ENDPOINT'] + 'login'))
 
             time2 = datetime.datetime.now()
             elapsed_time = time2 - time1
@@ -60,7 +60,7 @@ class WebServer:
             logging.warn("You need to authenticate before getting an ID!")
             return 1
         try:
-            r = self.client.get('http://192.168.0.102:3000/api/fabric/lastID')  # sets cookie
+            r = self.client.get(self.operationConfigs['WS_ENDPOINT'] + 'api/fabric/lastID')  # sets cookie
             data = r.json()
             self.lastID = data['data']['id']
         except:

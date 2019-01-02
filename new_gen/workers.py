@@ -97,7 +97,7 @@ class FabricWorker:
         }
         r = requests.post("http://" + self.operationConfigs['STORAGE_ENDPOINT'] + "/" + name, json=img)
 
-        img_url = 'http://192.168.0.102:3000/fabrics/' + name
+        img_url = self.operationConfigs['WS_ENDPOINT'] + 'fabrics/' + name
 
         im = Image.open(self.imagePath)
         im.thumbnail((128, 128), Image.ANTIALIAS)
@@ -112,7 +112,7 @@ class FabricWorker:
         }
         r = requests.post("http://" + self.operationConfigs['STORAGE_ENDPOINT'] + "/" + name, json=img)
 
-        thumb_url = 'http://192.168.0.102:3000/fabrics/' + name
+        thumb_url = self.operationConfigs['WS_ENDPOINT'] + 'fabrics/' + name
 
         paths = {
             'img_url': img_url,
