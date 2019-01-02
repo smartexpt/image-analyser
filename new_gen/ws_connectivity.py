@@ -62,9 +62,9 @@ class WebServer:
         try:
             r = self.client.get(self.operationConfigs['WS_ENDPOINT'] + 'api/fabric/lastID')  # sets cookie
             data = r.json()
-            self.lastID = data['data']['id']
+            return data['data']['id']
         except:
-            self.lastID = 1
+            return 1
 
 
 class AWS:
@@ -155,13 +155,13 @@ class WebSockets:
             pass
 
     def on_connect(self):
-        print('[Connected]')
+        print('[WebSocket Connected]')
 
     def on_reconnect(self):
-        print('[Reconnected]')
+        print('[WebSocket Reconnected]')
 
     def on_disconnect(self):
-        print('[Disconnected]')
+        print('[WebSocket Disconnected]')
 
     def updateJsonFile(self):
         jsonFile = open(self.configsFile, "w+")
