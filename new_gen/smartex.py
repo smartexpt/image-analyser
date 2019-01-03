@@ -25,7 +25,7 @@ class Smartex:
     OP_ERR = -1
     pijuice = PiJuice(1, 0x14)
 
-    def __init__(self, configsFile='configs.json'):
+    def __init__(self, configsFile='/home/smartex/image-analyser/new_gen/configs.json'):
         print "Starting..."
         self.configsFile = configsFile
         self.operationConfigs = json.loads(open(configsFile).read())
