@@ -104,15 +104,15 @@ class Smartex:
         ueye.is_ExitCamera(self.hcam)
         self.image = np.uint8(ndimage.imread(self.imagePath, flatten=True))
 
-    def setLEDParams(self, i, j):
+    def setLEDParams(self, pi, i, j):
         i = (i % 26)
         j = (j % 26)
         valFront = min((i * 10), 255)
         valBack = min((j * 10), 255)
         self.operationConfigs['frontledint'] = valFront
-        WebSockets.changeLEDInt(self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
+        WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
         self.operationConfigs['backledint'] = valBack
-        WebSockets.changeLEDInt(self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
+        WebSockets.changeLEDInt(pi, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
 
     def deffectDetection(self):
         i = 1
