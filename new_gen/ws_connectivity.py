@@ -168,11 +168,12 @@ class WebSockets:
         jsonFile.write(json.dumps(self.operationConfigs))
         jsonFile.close()
 
-    def changeLEDInt(self, LED_PIN, realBrightness):
+    @staticmethod
+    def changeLEDInt(LED_PIN, realBrightness):
+        sleep(0.5)
         try:
             logging.info("Going to set PWM_dutycycle to " + str(realBrightness) + " in GPIO port " + str(LED_PIN))
             pi = pigpio.pi()
             pi.set_PWM_dutycycle(LED_PIN, realBrightness)
-            sleep(.2)
         except Exception as ex:
             logging.exception("Error changing LED brightness!")

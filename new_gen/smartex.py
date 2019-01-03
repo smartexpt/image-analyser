@@ -72,6 +72,11 @@ class Smartex:
             logging.exception("Error during camera initialization!")
             return self.OP_ERR
 
+    def updateJsonFile(self):
+        jsonFile = open(self.configsFile, "w+")
+        jsonFile.write(json.dumps(self.operationConfigs))
+        jsonFile.close()
+
     def saveImage(self):
         ueye.is_AllocImageMem(self.hcam, self.sensorinfo.nMaxWidth, self.sensorinfo.nMaxHeight, 24, self.pccmem,
                               self.memID)
@@ -98,8 +103,19 @@ class Smartex:
         ueye.is_ExitCamera(self.hcam)
         self.image = np.uint8(ndimage.imread(self.imagePath, flatten=True))
 
+    def setLEDParams(self, i, j):
+        i = (i % 26)
+        j = (j % 26)
+        valFront = min((i * 10), 255)
+        valBack = min((j * 10), 255)
+        self.operationConfigs['frontledint'] = valFront
+        WebSockets.changeLEDInt(self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
+        self.operationConfigs['backledint'] = valBack
+        WebSockets.changeLEDInt(self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
+
     def deffectDetection(self):
         i = 1
+        j = 1
         while True:
             begin = datetime.datetime.now()
             logging.info('Beginning iteration # ' + str(i))
@@ -124,12 +140,14 @@ class Smartex:
                 logging.info('UPS just started being charged - booting camera.\n')
                 powerOnUSBs()
                 self.USBpowerOutput = 'ON'
-                sleep(2)
+                sleep(1)
 
             now = datetime.datetime.now()
             elapsed = now - begin
 
-            logging.info("\nUSB ports are up - elapsed time (s): {}".format(elapsed.total_seconds()))
+            logging.info("USB ports are up - elapsed time (s): {}".format(elapsed.total_seconds()))
+
+            self.setLEDParams(i-1, j-1)
 
             if i != 1:
                 self.initCamera()
@@ -138,7 +156,7 @@ class Smartex:
             now = datetime.datetime.now()
             elapsed = now - now_ant
 
-            logging.info("\nCamera is ready - elapsed time (s): {}".format(elapsed.total_seconds()))
+            logging.info("Camera is ready - elapsed time (s): {}".format(elapsed.total_seconds()))
 
             try:
                 logging.info('Taking image!')
@@ -146,7 +164,7 @@ class Smartex:
                 now_ant = now
                 now = datetime.datetime.now()
                 elapsed = now - now_ant
-                logging.info("\nImage taken and saved - elapsed time (s): {}".format(elapsed.total_seconds()))
+                logging.info("Image taken and saved - elapsed time (s): {}".format(elapsed.total_seconds()))
             except:
                 logging.warn("Error taking/saving image! Continuing to next iteration..")
                 continue
@@ -177,7 +195,7 @@ class Smartex:
                 now_ant = now
                 now = datetime.datetime.now()
                 elapsed = now - now_ant
-                logging.info("\nDetection modules finished -elapsed time (s): {}\n".format(elapsed.total_seconds()))
+                logging.info("Detection modules finished -elapsed time (s): {}\n".format(elapsed.total_seconds()))
 
             fabric = {
                 '_id': self.lastID + i,
@@ -186,6 +204,8 @@ class Smartex:
                 'imageUrl': "",
                 'thumbUrl': "",
                 'deviceID': self.operationConfigs['DEVICE_ID'],
+                'LEDBack':  self.operationConfigs['backledint'],
+                'LEDFront':  self.operationConfigs['frontledint']
             }
 
             obj = {
@@ -203,6 +223,8 @@ class Smartex:
 
             sleep(sleep_time)
             i += 1
+            if i % 26 == 0:
+                j += 1
 
     def authEverything(self):
         while self.webServer.authWS() != self.OP_OK:
