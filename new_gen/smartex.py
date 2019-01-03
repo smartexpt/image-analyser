@@ -12,6 +12,7 @@ from control_usb import powerOffUSBs, powerOnUSBs
 import logging
 import json
 import sys
+import pigpio
 
 from workers import FabricWorker
 from ws_connectivity import WebSockets, AWS, WebServer
@@ -116,6 +117,8 @@ class Smartex:
     def deffectDetection(self):
         i = 1
         j = 1
+        pi = pigpio.pi()
+
         while True:
             begin = datetime.datetime.now()
             logging.info('Beginning iteration # ' + str(i))
@@ -147,7 +150,7 @@ class Smartex:
 
             logging.info("USB ports are up - elapsed time (s): {}".format(elapsed.total_seconds()))
 
-            self.setLEDParams(i-1, j-1)
+            self.setLEDParams(pi, i-1, j-1)
 
             if i != 1:
                 self.initCamera()

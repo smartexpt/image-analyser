@@ -95,6 +95,7 @@ class WebSockets:
         self.operationConfigs = operation_configs
         self.configsFile = configsFile
         self.session_id = session_id
+        self.pi = pigpio.pi()
         pass
 
     def connectWSock(self):
@@ -137,11 +138,11 @@ class WebSockets:
 
                 if configs.get('frontledint', -1) >= 0:
                     self.operationConfigs['frontledint'] = configs['frontledint']
-                    self.changeLEDInt(self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
+                    self.changeLEDInt(self.pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
 
                 if configs.get('backledint', -1) >= 0:
                     self.operationConfigs['backledint'] = configs['backledint']
-                    self.changeLEDInt(self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
+                    self.changeLEDInt(self.pi, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
 
                 self.updateJsonFile()
                 logging.info("Updated operationConfigs!")
@@ -169,11 +170,11 @@ class WebSockets:
         jsonFile.close()
 
     @staticmethod
-    def changeLEDInt(LED_PIN, realBrightness):
-        sleep(0.5)
+    def changeLEDInt(pi, LED_PIN, realBrightness):
+        sleep(0.4)
         try:
             logging.info("Going to set PWM_dutycycle to " + str(realBrightness) + " in GPIO port " + str(LED_PIN))
-            pi = pigpio.pi()
             pi.set_PWM_dutycycle(LED_PIN, realBrightness)
         except Exception as ex:
             logging.exception("Error changing LED brightness!")
+        sleep(0.4)
