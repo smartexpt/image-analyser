@@ -32,7 +32,7 @@ class Smartex:
         self.operationConfigs = json.loads(open(configsFile).read())
         print "Configurations loaded from " + configsFile
 
-        logging.basicConfig(filename='smartex_main.log', level=logging.INFO, \
+        logging.basicConfig(filename='/home/smartex/image-analyser/new_gen/smartex_main.log', level=logging.INFO, \
                             format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         logging.getLogger().addHandler(logging.StreamHandler())
 
@@ -103,6 +103,13 @@ class Smartex:
         sleep(.01)
         ueye.is_ExitCamera(self.hcam)
         self.image = np.uint8(ndimage.imread(self.imagePath, flatten=True))
+        self.image = self.crop_end(self.image, 0, 200)
+
+    def crop_end(self, img, cropx, cropy):
+        y, x = img.shape
+        endx = x - cropx
+        endy = y - cropy
+        return img[0:endy, 0:endx]
 
     def setLEDParams(self, pi, i, j):
         i = (i % 26)
