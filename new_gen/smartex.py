@@ -47,7 +47,7 @@ class Smartex:
         self.aws = AWS(self.operationConfigs)
 
         self.authEverything()
-        self.fabricWorker = FabricWorker(100, self.aws.bucket, self.webServer.client, self.operationConfigs)
+        self.fabricWorker = FabricWorker(20, self.aws.bucket, self.webServer.client, self.operationConfigs)
 
         if self.authenticated:
             self.webSockets = WebSockets(self.operationConfigs, self.webServer.session_id)

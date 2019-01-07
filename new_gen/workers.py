@@ -82,7 +82,8 @@ class FabricWorker:
         }
         elapsed = datetime.datetime.now() - begin
         logging.info("Image uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
-
+        os.remove(image_path)
+        os.remove(thumb_path)
         return paths
 
     def upload_local(self, image_path):
@@ -121,6 +122,7 @@ class FabricWorker:
         }
         elapsed = datetime.datetime.now() - begin
         logging.info("Image uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+        os.remove(image_path)
 
         return paths
 

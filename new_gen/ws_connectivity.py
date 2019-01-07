@@ -1,6 +1,6 @@
 import logging
 from time import sleep
-
+import os
 import requests
 from socketIO_client_nexus import SocketIO, LoggingNamespace, BaseNamespace, ConnectionError
 import datetime
