@@ -9,7 +9,7 @@ from boto.s3.key import Key
 import base64
 from io import BytesIO
 import logging
-
+from ws_connectivity import WebSockets, AWS, WebServer
 
 class FabricWorker:
 
@@ -39,6 +39,12 @@ class FabricWorker:
                 self.queue.task_done()
             except Exception as ex:
                 logging.exception("Error uploading fabric object!")
+                aws = AWS(self.operationConfigs)
+                webServer = WebServer(self.operationConfigs)
+                aws.connectAWSS3()
+                webServer.authWS()
+                self.bucket = aws.bucket
+                self.client = webServer.client
                 continue
 
     def upload_fabric(self, fabric):

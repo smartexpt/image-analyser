@@ -91,7 +91,7 @@ class WebSockets:
     OP_OK = 0
     OP_ERR = -1
 
-    def __init__(self, operation_configs, session_id, configsFile='configs.json'):
+    def __init__(self, operation_configs, session_id, configsFile='/home/smartex/image-analyser/new_gen/configs.json'):
         self.operationConfigs = operation_configs
         self.configsFile = configsFile
         self.session_id = session_id
