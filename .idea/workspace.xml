@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f2e516e-6f6e-422d-a9a7-76f6b90c4677" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_gen/workers.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/workers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_gen/ws_connectivity.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/ws_connectivity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_gen/smartex.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/smartex.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -50,28 +48,28 @@
         <counts>
           <entry key="Python Console" value="68" />
           <entry key="dummy" value="8" />
-          <entry key="py" value="2862" />
+          <entry key="py" value="2863" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="8" />
-          <entry key="Python" value="2930" />
+          <entry key="Python" value="2931" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="28" column="86" selection-start-line="28" selection-start-column="86" selection-end-line="28" selection-end-column="86" />
+            <state relative-caret-position="281">
+              <caret line="159" column="13" selection-start-line="159" selection-start-column="13" selection-end-line="159" selection-end-column="13" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
-                <marker date="1546862609691" expanded="true" signature="4924:4930" ph="..." />
-                <marker date="1546862609691" expanded="true" signature="9423:9428" ph="..." />
+                <marker date="1547037046034" expanded="true" signature="4924:4930" ph="..." />
+                <marker date="1547037046034" expanded="true" signature="9424:9429" ph="..." />
               </folding>
             </state>
           </provider>
@@ -102,10 +100,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/new_gen/ws_connectivity.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="312">
+            <state relative-caret-position="-707">
               <caret line="93" column="116" selection-start-line="93" selection-start-column="116" selection-end-line="93" selection-end-column="116" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
@@ -163,7 +161,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>pil_img</find>
       <find>work</find>
       <find>connectWSock</find>
       <find>wsockthread</find>
@@ -193,6 +190,7 @@
       <find>WS_E</find>
       <find>configs.</find>
       <find>.json</find>
+      <find>setLEDParams</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -204,9 +202,9 @@
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/main_v06.py" />
         <option value="$PROJECT_DIR$/main_v07.py" />
-        <option value="$PROJECT_DIR$/new_gen/smartex.py" />
         <option value="$PROJECT_DIR$/new_gen/workers.py" />
         <option value="$PROJECT_DIR$/new_gen/ws_connectivity.py" />
+        <option value="$PROJECT_DIR$/new_gen/smartex.py" />
       </list>
     </option>
   </component>
@@ -466,24 +464,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
+    <entry file="file://$PROJECT_DIR$/new_gen/ws_connectivity.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="28" column="86" selection-start-line="28" selection-start-column="86" selection-end-line="28" selection-end-column="86" />
+        <state relative-caret-position="-707">
+          <caret line="93" column="116" selection-start-line="93" selection-start-column="116" selection-end-line="93" selection-end-column="116" />
           <folding>
-            <element signature="e#0#22#0" expanded="true" />
-            <marker date="1546862609691" expanded="true" signature="4924:4930" ph="..." />
-            <marker date="1546862609691" expanded="true" signature="9423:9428" ph="..." />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_gen/ws_connectivity.py">
+    <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="93" column="116" selection-start-line="93" selection-start-column="116" selection-end-line="93" selection-end-column="116" />
+        <state relative-caret-position="281">
+          <caret line="159" column="13" selection-start-line="159" selection-start-column="13" selection-end-line="159" selection-end-column="13" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#22#0" expanded="true" />
+            <marker date="1547037046034" expanded="true" signature="4924:4930" ph="..." />
+            <marker date="1547037046034" expanded="true" signature="9424:9429" ph="..." />
           </folding>
         </state>
       </provider>

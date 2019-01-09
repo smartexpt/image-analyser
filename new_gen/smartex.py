@@ -157,7 +157,7 @@ class Smartex:
 
             logging.info("USB ports are up - elapsed time (s): {}".format(elapsed.total_seconds()))
 
-            self.setLEDParams(pi, i-1, j-1)
+            #self.setLEDParams(pi, i-1, j-1)
 
             if i != 1:
                 self.initCamera()
