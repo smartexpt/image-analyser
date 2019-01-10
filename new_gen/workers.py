@@ -44,7 +44,7 @@ class FabricWorker:
                     m = self.mse(gray1, gray2)
                     fabric["mse"] = m
                 except Exception as ex:
-                    logging.exception("Error uploading fabric object!")
+                    logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
                 fabric["imageUrl"] = paths["img_url"]
                 fabric["thumbUrl"] = paths["thumb_url"]
                 self.upload_fabric(fabric)
