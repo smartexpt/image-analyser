@@ -56,7 +56,7 @@ class FabricWorker:
                     im3 = abs(np.int32(im2) - np.int32(im1))
                     av = np.average(im3)
                     elapsed = datetime.datetime.now() - begin
-                    logging.info("MSE 2 of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+                    logging.info("MSE 2 of " + str(av) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
                 except Exception as ex:
                     logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
                 fabric["imageUrl"] = paths["img_url"]
