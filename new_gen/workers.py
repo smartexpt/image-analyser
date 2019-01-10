@@ -12,6 +12,7 @@ import logging
 from ws_connectivity import WebSockets, AWS, WebServer
 import numpy as np
 import cv2
+from scipy import misc
 
 class FabricWorker:
 
@@ -37,13 +38,25 @@ class FabricWorker:
                 fabric = obj["fabric"]
                 paths = self.upload_image(image_path)
                 try:
+                    begin = datetime.datetime.now()
                     im1 = cv2.imread(image_path)
                     gray1 = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
                     im2 = cv2.imread(self.img_ant)
                     gray2 = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
                     m = self.mse(gray1, gray2)
                     fabric["mse"] = m
-                    logging.info("MSE of " + str(m))
+                    elapsed = datetime.datetime.now() - begin
+                    logging.info("MSE 1 of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+                except Exception as ex:
+                    logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
+                try:
+                    begin = datetime.datetime.now()
+                    im1 = misc.imresize(misc.imread(image_path), 0.3)  # reading image1
+                    im2 = misc.imresize(misc.imread(self.img_ant), 0.3)  # reading image2
+                    im3 = abs(np.int32(im2) - np.int32(im1))
+                    av = np.average(im3)
+                    elapsed = datetime.datetime.now() - begin
+                    logging.info("MSE 2 of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
                 except Exception as ex:
                     logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
                 fabric["imageUrl"] = paths["img_url"]
