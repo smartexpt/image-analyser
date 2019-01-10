@@ -10,6 +10,7 @@ import base64
 from io import BytesIO
 import logging
 from ws_connectivity import WebSockets, AWS, WebServer
+import numpy as np
 
 class FabricWorker:
 
@@ -33,10 +34,17 @@ class FabricWorker:
                 image_path = obj["path"]
                 fabric = obj["fabric"]
                 paths = self.upload_image(image_path)
+                m = self.mse(self.img_ant, image_path)
+                fabric["mse"] = m
                 fabric["imageUrl"] = paths["img_url"]
                 fabric["thumbUrl"] = paths["thumb_url"]
                 self.upload_fabric(fabric)
                 self.queue.task_done()
+                self.img_ant = image_path
+                try:
+                    os.remove(self.img_ant)
+                except:
+                    pass
             except Exception as ex:
                 logging.exception("Error uploading fabric object!")
                 aws = AWS(self.operationConfigs)
@@ -46,6 +54,12 @@ class FabricWorker:
                 self.bucket = aws.bucket
                 self.client = webServer.client
                 continue
+    def mse(self, imageA, imageB):
+        err = np.sum((imageA.astype("float") - imageB.astype("float")) ** 2)
+        err /= float(imageA.shape[0] * imageA.shape[1])
+
+        # return the MSE, the lower the error, the more "similar" the two images are
+        return err
 
     def upload_fabric(self, fabric):
         begin = datetime.datetime.now()
@@ -88,7 +102,7 @@ class FabricWorker:
         }
         elapsed = datetime.datetime.now() - begin
         logging.info("Image uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
-        os.remove(image_path)
+
         os.remove(thumb_path)
         return paths
 
@@ -128,7 +142,7 @@ class FabricWorker:
         }
         elapsed = datetime.datetime.now() - begin
         logging.info("Image uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
-        os.remove(image_path)
+
 
         return paths
 
