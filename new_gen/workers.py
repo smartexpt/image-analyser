@@ -28,6 +28,7 @@ class FabricWorker:
         self.queue.put(obj)
 
     def upload(self):
+        self.img_ant = ""
         while True:
             try:
                 obj = self.queue.get()
