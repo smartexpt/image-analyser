@@ -79,7 +79,8 @@ class FabricWorker:
     def upload_fabric(self, fabric):
         begin = datetime.datetime.now()
         r = self.client.post(self.operationConfigs['FABRIC_ENDPOINT'], data=fabric)
-        logging.info(r)
+        if(r.status_code != 200):
+            raise Exception('Bad response status code!')
         elapsed = datetime.datetime.now() - begin
         logging.info("\nFabric object uploaded - elapsed time (s): {}".format(elapsed.total_seconds()))
 
