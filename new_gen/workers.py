@@ -46,17 +46,7 @@ class FabricWorker:
                     m = self.mse(gray1, gray2)
                     fabric["mse"] = m
                     elapsed = datetime.datetime.now() - begin
-                    logging.info("MSE 1 of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
-                except Exception as ex:
-                    logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
-                try:
-                    begin = datetime.datetime.now()
-                    im1 = misc.imresize(misc.imread(image_path), 0.3)  # reading image1
-                    im2 = misc.imresize(misc.imread(self.img_ant), 0.3)  # reading image2
-                    im3 = abs(np.int32(im2) - np.int32(im1))
-                    av = np.average(im3)
-                    elapsed = datetime.datetime.now() - begin
-                    logging.info("MSE 2 of " + str(av) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+                    logging.info("MSE of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
                 except Exception as ex:
                     logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
                 fabric["imageUrl"] = paths["img_url"]
@@ -77,6 +67,7 @@ class FabricWorker:
                 self.bucket = aws.bucket
                 self.client = webServer.client
                 continue
+                
     def mse(self, imageA, imageB):
         err = np.sum((imageA.astype("float") - imageB.astype("float")) ** 2)
         err /= float(imageA.shape[0] * imageA.shape[1])
