@@ -49,7 +49,7 @@ class FabricWorker:
                     im2 = misc.imresize(misc.imread(self.img_ant), 0.3)  # reading image2
                     im3 = abs(np.int32(im2) - np.int32(im1))
                     difavg = np.average(im3)
-                    fabric["mse"] = m
+                    fabric["mse"] = 100
                     fabric["difavg"] = difavg
                     elapsed = datetime.datetime.now() - begin
                     logging.info("MSE of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
