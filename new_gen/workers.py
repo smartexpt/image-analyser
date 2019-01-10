@@ -43,6 +43,7 @@ class FabricWorker:
                     gray2 = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
                     m = self.mse(gray1, gray2)
                     fabric["mse"] = m
+                    logging.info("MSE of " + str(m))
                 except Exception as ex:
                     logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
                 fabric["imageUrl"] = paths["img_url"]
