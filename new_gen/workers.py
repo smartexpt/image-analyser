@@ -49,11 +49,11 @@ class FabricWorker:
                 fabric["thumbUrl"] = paths["thumb_url"]
                 self.upload_fabric(fabric)
                 self.queue.task_done()
-                self.img_ant = image_path
                 try:
                     os.remove(self.img_ant)
                 except:
                     pass
+                self.img_ant = image_path
             except Exception as ex:
                 logging.exception("Error uploading fabric object!")
                 aws = AWS(self.operationConfigs)
