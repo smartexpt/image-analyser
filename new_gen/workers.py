@@ -11,6 +11,7 @@ from io import BytesIO
 import logging
 from ws_connectivity import WebSockets, AWS, WebServer
 import numpy as np
+import cv2
 
 class FabricWorker:
 
@@ -35,8 +36,15 @@ class FabricWorker:
                 image_path = obj["path"]
                 fabric = obj["fabric"]
                 paths = self.upload_image(image_path)
-                m = self.mse(self.img_ant, image_path)
-                fabric["mse"] = m
+                try:
+                    im1 = cv2.imread(image_path)
+                    gray1 = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
+                    im2 = cv2.imread(self.img_ant)
+                    gray2 = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
+                    m = self.mse(gray1, gray2)
+                    fabric["mse"] = m
+                except Exception as ex:
+                    logging.exception("Error uploading fabric object!")
                 fabric["imageUrl"] = paths["img_url"]
                 fabric["thumbUrl"] = paths["thumb_url"]
                 self.upload_fabric(fabric)
