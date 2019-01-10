@@ -36,6 +36,7 @@ class FabricWorker:
                 obj = self.queue.get()
                 image_path = obj["path"]
                 fabric = obj["fabric"]
+                fabric["mse"] = 100.0
                 paths = self.upload_image(image_path)
                 try:
                     begin = datetime.datetime.now()
@@ -67,7 +68,7 @@ class FabricWorker:
                 self.bucket = aws.bucket
                 self.client = webServer.client
                 continue
-                
+
     def mse(self, imageA, imageB):
         err = np.sum((imageA.astype("float") - imageB.astype("float")) ** 2)
         err /= float(imageA.shape[0] * imageA.shape[1])
