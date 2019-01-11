@@ -64,12 +64,6 @@ class Smartex:
         jsonFile.write(json.dumps(self.operationConfigs))
         jsonFile.close()
 
-    def crop_end(self, img, cropx, cropy):
-        y, x = img.shape
-        endx = x - cropx
-        endy = y - cropy
-        return img[0:endy, 0:endx]
-
     def setLEDParams(self, pi, i, j):
         i = (i % 26)
         j = (j % 26)

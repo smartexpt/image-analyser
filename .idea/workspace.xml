@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f2e516e-6f6e-422d-a9a7-76f6b90c4677" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/new_gen/pi_camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/pi_camera.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/new_gen/smartex.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/smartex.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,38 +58,38 @@
         <counts>
           <entry key="Python Console" value="68" />
           <entry key="dummy" value="8" />
-          <entry key="py" value="3723" />
+          <entry key="py" value="3732" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="8" />
-          <entry key="Python" value="3791" />
+          <entry key="Python" value="3800" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="137" column="27" lean-forward="true" selection-start-line="137" selection-start-column="27" selection-end-line="137" selection-end-column="27" />
+            <state relative-caret-position="213">
+              <caret line="64" column="24" selection-start-line="64" selection-start-column="24" selection-end-line="64" selection-end-column="24" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
-                <marker date="1547226261252" expanded="true" signature="2855:2861" ph="..." />
-                <marker date="1547226261252" expanded="true" signature="7420:7425" ph="..." />
+                <marker date="1547226537962" expanded="true" signature="2701:2707" ph="..." />
+                <marker date="1547226537962" expanded="true" signature="7266:7271" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_gen/pi_camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
+            <state relative-caret-position="588">
+              <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -99,8 +100,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="36" column="17" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="17" />
+            <state relative-caret-position="724">
+              <caret line="61" column="34" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="34" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -169,8 +170,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>self.im</find>
-      <find>ndimage</find>
       <find>lastID</find>
       <find>image</find>
       <find>self.lastID</find>
@@ -198,6 +197,8 @@
       <find>initCamera</find>
       <find>save_flag</find>
       <find>rawImageTimeStamp</find>
+      <find>self.image = np.uint8(ndimage.imread(self.imagePath, flatten=True))</find>
+      <find>self.image = self.crop_end(self.image, 0, 200)</find>
       <find>saveImage</find>
     </findStrings>
   </component>
@@ -216,8 +217,8 @@
         <option value="$PROJECT_DIR$/new_gen/correlation/correlation.py" />
         <option value="$PROJECT_DIR$/new_gen/workers.py" />
         <option value="$PROJECT_DIR$/new_gen/ids_camera.py" />
-        <option value="$PROJECT_DIR$/new_gen/pi_camera.py" />
         <option value="$PROJECT_DIR$/new_gen/smartex.py" />
+        <option value="$PROJECT_DIR$/new_gen/pi_camera.py" />
       </list>
     </option>
   </component>
@@ -664,18 +665,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="36" column="17" selection-start-line="36" selection-start-column="8" selection-end-line="36" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_gen/pi_camera.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret lean-forward="true" />
+        <state relative-caret-position="724">
+          <caret line="61" column="34" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="34" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
@@ -684,12 +675,22 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="137" column="27" lean-forward="true" selection-start-line="137" selection-start-column="27" selection-end-line="137" selection-end-column="27" />
+        <state relative-caret-position="213">
+          <caret line="64" column="24" selection-start-line="64" selection-start-column="24" selection-end-line="64" selection-end-column="24" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
-            <marker date="1547226261252" expanded="true" signature="2855:2861" ph="..." />
-            <marker date="1547226261252" expanded="true" signature="7420:7425" ph="..." />
+            <marker date="1547226537962" expanded="true" signature="2701:2707" ph="..." />
+            <marker date="1547226537962" expanded="true" signature="7266:7271" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_gen/pi_camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="588">
+          <caret line="53" lean-forward="true" selection-start-line="53" selection-end-line="53" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
           </folding>
         </state>
       </provider>
