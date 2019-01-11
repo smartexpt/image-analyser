@@ -134,8 +134,8 @@ class Smartex:
                 now = datetime.datetime.now()
                 elapsed = now - now_ant
                 logging.info("Image taken and saved - elapsed time (s): {}".format(elapsed.total_seconds()))
-            except:
-                logging.warn("Error taking/saving image! Continuing to next iteration..")
+            except Exception as ex:
+                logging.exception("Error taking/saving image! Continuing to next iteration..")
                 continue
 
             defect = 'None'
