@@ -17,6 +17,7 @@ import pigpio
 from workers import FabricWorker
 from ws_connectivity import WebSockets, AWS, WebServer
 
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
@@ -35,14 +36,12 @@ class Smartex:
         logging.basicConfig(filename='/home/smartex/image-analyser/new_gen/smartex_main.log', level=logging.INFO, \
                             format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         logging.getLogger().addHandler(logging.StreamHandler())
+        if(self.operationConfigs['CAMERA_TYPE'] == "ids"):
+            from ids_camera import Camera
+        else:
+            from pi_camera import Camera
 
-        while self.initCamera() != self.OP_OK and self.operationConfigs['CAMERA_RETRYS'] > 0:
-            logging.warning('Error in initCamera()')
-            self.pijuice.status.SetLedBlink('D2', 2, [255, 0, 0], 50, [255, 0, 0], 50)
-            sleep(1)
-            self.pijuice.status.SetLedState('D2', [0, 0, 0])
-            self.operationConfigs['CAMERA_RETRYS'] -= 1
-
+        self.camera = Camera(self.operationConfigs)
         self.webServer = WebServer(self.operationConfigs)
         self.aws = AWS(self.operationConfigs)
 
@@ -58,52 +57,10 @@ class Smartex:
         else:
             logging.warning("You need to authenticate first!")
 
-    def initCamera(self):
-        try:
-            self.hcam = ueye.HIDS(0)
-            self.pccmem = ueye.c_mem_p()
-            self.memID = ueye.c_int()
-            self.hWnd = ctypes.c_voidp()
-            ueye.is_InitCamera(self.hcam, self.hWnd)
-            ueye.is_SetDisplayMode(self.hcam, 0)
-            self.sensorinfo = ueye.SENSORINFO()
-            ueye.is_GetSensorInfo(self.hcam, self.sensorinfo)
-            return self.OP_OK
-        except Exception as ex:
-            logging.exception("Error during camera initialization!")
-            return self.OP_ERR
-
     def updateJsonFile(self):
         jsonFile = open(self.configsFile, "w+")
         jsonFile.write(json.dumps(self.operationConfigs))
         jsonFile.close()
-
-    def saveImage(self):
-        ueye.is_AllocImageMem(self.hcam, self.sensorinfo.nMaxWidth, self.sensorinfo.nMaxHeight, 24, self.pccmem,
-                              self.memID)
-        ueye.is_SetImageMem(self.hcam, self.pccmem, self.memID)
-        ueye.is_SetDisplayPos(self.hcam, 100, 100)
-
-        self.nret = ueye.is_FreezeVideo(self.hcam, ueye.IS_WAIT)
-        self.rawImageTimeStamp = datetime.datetime.now()
-        self.imageTimeStamp = datetime.datetime.now().strftime('%Y_%m_%d_%H_%M_%S')
-        self.imageName = 'imagem_%s.jpg' % self.imageTimeStamp
-        self.imagePath = self.operationConfigs['savingDirectory'] + self.imageName
-        # self.imagePath = self.operationConfigs['savingDirectory'] + "tmp.jpg"
-        self.FileParams = ueye.IMAGE_FILE_PARAMS()
-        self.FileParams.pwchFileName = self.imagePath
-        self.FileParams.nFileType = ueye.IS_IMG_BMP
-        self.FileParams.ppcImageMem = None
-        self.FileParams.pnImageID = None
-
-        self.nret = ueye.is_ImageFile(self.hcam, ueye.IS_IMAGE_FILE_CMD_SAVE, self.FileParams,
-                                      ueye.sizeof(self.FileParams))
-
-        ueye.is_FreeImageMem(self.hcam, self.pccmem, self.memID)
-        sleep(.01)
-        ueye.is_ExitCamera(self.hcam)
-        self.image = np.uint8(ndimage.imread(self.imagePath, flatten=True))
-        self.image = self.crop_end(self.image, 0, 200)
 
     def crop_end(self, img, cropx, cropy):
         y, x = img.shape
@@ -150,7 +107,7 @@ class Smartex:
                 logging.info('UPS just started being charged - booting camera.\n')
                 powerOnUSBs()
                 self.USBpowerOutput = 'ON'
-                sleep(1)
+                sleep(2.5)
 
             now = datetime.datetime.now()
             elapsed = now - begin
@@ -160,7 +117,7 @@ class Smartex:
             #self.setLEDParams(pi, i-1, j-1)
 
             if i != 1:
-                self.initCamera()
+                self.camera.initCamera()
 
             now_ant = now
             now = datetime.datetime.now()
@@ -170,7 +127,7 @@ class Smartex:
 
             try:
                 logging.info('Taking image!')
-                self.saveImage()
+                self.camera.saveImage()
                 now_ant = now
                 now = datetime.datetime.now()
                 elapsed = now - now_ant
@@ -183,8 +140,8 @@ class Smartex:
 
             if self.operationConfigs['deffectDetectionMode']:
                 logging.info("Analyzing images for defect..")
-                lycraDeffectDetected = funcao_deteccao_lycra_tracadelas(self.image)
-                agulhaDeffectDetected = funcao_detecao_agulhas(self.image)
+                lycraDeffectDetected = funcao_deteccao_lycra_tracadelas(self.camera.image)
+                agulhaDeffectDetected = funcao_detecao_agulhas(self.camera.image)
 
                 if agulhaDeffectDetected:
                     defect = 'Agulha'
@@ -210,7 +167,7 @@ class Smartex:
             fabric = {
                 '_id': self.lastID + i,
                 'defect': defect,
-                'date': self.rawImageTimeStamp,
+                'date': self.camera.rawImageTimeStamp,
                 'imageUrl': "",
                 'thumbUrl': "",
                 'deviceID': self.operationConfigs['DEVICE_ID'],
@@ -219,7 +176,7 @@ class Smartex:
             }
 
             obj = {
-                'path': self.imagePath,
+                'path': self.camera.imagePath,
                 'fabric': fabric
             }
             self.fabricWorker.add_work(obj)
