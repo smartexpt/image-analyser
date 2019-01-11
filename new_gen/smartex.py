@@ -37,8 +37,10 @@ class Smartex:
                             format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         logging.getLogger().addHandler(logging.StreamHandler())
         if(self.operationConfigs['CAMERA_TYPE'] == "ids"):
+            print "IDS"
             from ids_camera import Camera
         else:
+            print "Pi camera"
             from pi_camera import Camera
 
         self.camera = Camera(self.operationConfigs)
