@@ -1,3 +1,4 @@
+import os
 from time import sleep
 import datetime
 from tracadelas_deteccao import funcao_deteccao_lycra_tracadelas
@@ -28,6 +29,9 @@ class Smartex:
     pijuice = PiJuice(1, 0x14)
 
     def __init__(self, configsFile='/home/smartex/image-analyser/new_gen/configs.json'):
+        if not os.path.exists(configsFile):
+            print("Config file does not exist.")
+            exit()
         print "Starting..."
         self.configsFile = configsFile
         self.operationConfigs = json.loads(open(configsFile).read())
@@ -36,12 +40,13 @@ class Smartex:
         logging.basicConfig(filename='/home/smartex/image-analyser/new_gen/smartex_main.log', level=logging.INFO, \
                             format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
         logging.getLogger().addHandler(logging.StreamHandler())
+
         if(self.operationConfigs['CAMERA_TYPE'] == "ids"):
             print "IDS"
             from ids_camera import Camera
         else:
-            print "Pi camera"
-            from pi_camera import Camera
+            print "Ardu cam"
+            from ardu_camera import Camera
 
         self.camera = Camera(self.operationConfigs)
         self.webServer = WebServer(self.operationConfigs)

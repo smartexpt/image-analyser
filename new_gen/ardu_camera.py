@@ -1,4 +1,3 @@
-import signal
 from time import sleep
 import datetime
 from scipy import misc, ndimage
@@ -21,30 +20,40 @@ handle = {}
 class Camera:
     OP_OK = 0
     OP_ERR = -1
-    def __init__(self, operation_configs, config_file_name='AR0134_960p_Color.json'):
+
+    def __init__(self, operation_configs, config_file_name='/home/smartex/image-analyser/new_gen/ar0134/AR0134_960p_Mono.json'):
         self.operationConfigs = operation_configs
         self.config_file_name = config_file_name
 
         if not os.path.exists(config_file_name):
             print("Config file does not exist.")
-        retrys = 2
-        while self.initCamera() != self.OP_OK and retrys >= 0:
-            print('Error in initCamera()')
-            retrys -= 1
-        print("Camera initializated!")
+
+        while self.initCamera() != self.OP_OK and self.operationConfigs['CAMERA_RETRYS'] > 0:
+            logging.warning('Error in initCamera()')
+            self.operationConfigs['CAMERA_RETRYS'] -= 1
+
+    def join(self):
+        self.ct.join()
+        self.rt.join()
 
     def initCamera(self):
         try:
             if self.camera_initFromFile(self.config_file_name):
                 ArducamSDK.Py_ArduCam_setMode(handle, ArducamSDK.CONTINUOUS_MODE)
+                cam = Camera({})
+                self.ct = threading.Thread(target=cam.backgroundCapture)
+                self.rt = threading.Thread(target=cam.saveImage)
+                self.ct.start()
+                self.rt.start()
+
+
             return self.OP_OK
         except Exception as ex:
             logging.exception("Error during camera initialization!")
             return self.OP_ERR
 
-    def backgroundCapture(self):
+    def capture_thread(self):
         global handle, running
-
 
         rtn_val = ArducamSDK.Py_ArduCam_beginCaptureImage(handle)
         if rtn_val != 0:
@@ -61,7 +70,7 @@ class Camera:
                     print("ardu cam USB_CAMERA_USB_TASK_ERROR!!")
             time.sleep(0.01)
 
-    def saveImage(self):
+    def process_thread(self):
         global handle, running, Width, Height, save_flag, cfg, color_mode
         global COLOR_BayerGB2BGR, COLOR_BayerRG2BGR, COLOR_BayerGR2BGR, COLOR_BayerBG2BGR
 
@@ -83,13 +92,26 @@ class Camera:
                 if save_flag:
                     cv2.imwrite(self.imagePath, image)
                     self.image = np.uint8(ndimage.imread(self.imagePath, flatten=True))
+
                     self.image = self.crop_end(self.image, 0, 150)
+                    save_flag = False
                 ArducamSDK.Py_ArduCam_del(handle)
 
-
-                save_flag = False
             else:
                 time.sleep(0.01)
+
+    def saveImage(self):
+        global save_flag
+        save_flag = True
+        total_wait = 1
+        while save_flag and total_wait >= 0:
+            sleep(0.01)
+            total_wait -= 0.01
+
+        if total_wait > 0:
+            return True
+
+        return False
 
     def crop_end(self, img, cropx, cropy):
         y, x = img.shape
@@ -190,45 +212,5 @@ class Camera:
             print("open fail,rtn_val = ", ret)
             return False
 
-    def takePic(self):
-        global save_flag
-        save_flag = True
-        total_wait = 1
-        while save_flag and total_wait >= 0:
-            sleep(0.01)
-            total_wait -= 0.01
-
-        if total_wait > 0:
-            return True
-
-        return False
-
-def sigint_handler(signum, frame):
-    global running, handle
-    running = False
-    exit()
 
 
-signal.signal(signal.SIGINT, sigint_handler)
-# signal.signal(signal.SIGHUP, sigint_handler)
-signal.signal(signal.SIGTERM, sigint_handler)
-if __name__ == "__main__":
-    cam = Camera({})
-    ct = threading.Thread(target=cam.backgroundCapture)
-    rt = threading.Thread(target=cam.saveImage)
-    ct.start()
-    rt.start()
-
-    while running:
-        print "Waiting for input: "
-        input_kb = str(sys.stdin.readline()).strip("\n")
-        if input_kb == 'q' or input_kb == 'Q':
-            running = False
-        if input_kb == 's' or input_kb == 'S':
-            cam.takePic()
-        if input_kb == 'c' or input_kb == 'C':
-            save_flag = False
-
-    ct.join()
-    rt.join()
-    #cam.saveImage()

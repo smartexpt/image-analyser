@@ -59,7 +59,7 @@ class Camera:
         sleep(.01)
         ueye.is_ExitCamera(self.hcam)
         self.image = np.uint8(ndimage.imread(self.imagePath, flatten=True))
-        self.image = self.crop_end(self.image, 0, 200)
+        self.image = self.crop_end(self.image, 0, 150)
 
     def crop_end(self, img, cropx, cropy):
         y, x = img.shape
