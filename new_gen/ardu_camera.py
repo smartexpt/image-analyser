@@ -41,8 +41,8 @@ class Camera:
             if self.camera_initFromFile(self.config_file_name):
                 ArducamSDK.Py_ArduCam_setMode(handle, ArducamSDK.CONTINUOUS_MODE)
                 cam = Camera({})
-                self.ct = threading.Thread(target=cam.backgroundCapture)
-                self.rt = threading.Thread(target=cam.saveImage)
+                self.ct = threading.Thread(target=cam.capture_thread)
+                self.rt = threading.Thread(target=cam.process_thread)
                 self.ct.start()
                 self.rt.start()
 

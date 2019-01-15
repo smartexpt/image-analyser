@@ -115,7 +115,7 @@ class Smartex:
 
             logging.info("USB ports are up - elapsed time (s): {}".format(elapsed.total_seconds()))
 
-            #self.setLEDParams(pi, i-1, j-1)
+
 
             if i != 1:
                 self.camera.initCamera()
@@ -128,7 +128,9 @@ class Smartex:
 
             try:
                 logging.info('Taking image!')
+                self.setLEDParams(pi, i - 1, j - 1)
                 self.camera.saveImage()
+                self.setLEDParams(pi, 0, 0)
                 now_ant = now
                 now = datetime.datetime.now()
                 elapsed = now - now_ant
