@@ -130,7 +130,7 @@ class Smartex:
                 logging.info('Taking image!')
                 self.setLEDParams(pi, i - 1, j - 1)
                 self.camera.saveImage()
-                self.setLEDParams(pi, 1, 1)
+                #self.setLEDParams(pi, 1, 1)
                 now_ant = now
                 now = datetime.datetime.now()
                 elapsed = now - now_ant
