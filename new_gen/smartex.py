@@ -84,8 +84,8 @@ class Smartex:
         j = 1
         pi = pigpio.pi()
         pi1 = pigpio.pi()
-        WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
-        WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
+        #WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
+        #WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
 
         while True:
             begin = datetime.datetime.now()
@@ -130,7 +130,11 @@ class Smartex:
             try:
                 logging.info('Taking image!')
                 #self.setLEDParams(pi, i - 1, j - 1)
+                WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
+                WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
                 self.camera.saveImage()
+                WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], 0)
+                WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], 0)
                 #self.setLEDParams(pi, 1, 1)
                 now_ant = now
                 now = datetime.datetime.now()
