@@ -177,4 +177,4 @@ class WebSockets:
             pi.set_PWM_dutycycle(LED_PIN, realBrightness)
         except Exception as ex:
             logging.exception("Error changing LED brightness!")
-        #sleep(0.4)
+        sleep(0.1)
