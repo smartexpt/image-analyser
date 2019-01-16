@@ -171,10 +171,10 @@ class WebSockets:
 
     @staticmethod
     def changeLEDInt(pi, LED_PIN, realBrightness):
-        sleep(0.4)
+        #sleep(0.4)
         try:
             logging.info("Going to set PWM_dutycycle to " + str(realBrightness) + " in GPIO port " + str(LED_PIN))
             pi.set_PWM_dutycycle(LED_PIN, realBrightness)
         except Exception as ex:
             logging.exception("Error changing LED brightness!")
-        sleep(0.4)
+        #sleep(0.4)

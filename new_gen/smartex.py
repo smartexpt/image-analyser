@@ -83,8 +83,9 @@ class Smartex:
         i = 1
         j = 1
         pi = pigpio.pi()
+        pi1 = pigpio.pi()
         WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
-        WebSockets.changeLEDInt(pi, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
+        WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
 
         while True:
             begin = datetime.datetime.now()
