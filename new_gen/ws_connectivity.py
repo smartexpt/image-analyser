@@ -127,9 +127,9 @@ class WebSockets:
                     self.operationConfigs['deffectDetectionMode'] = (configs['detection'] == 1)
                 if configs.get('gpio', -1) >= 0:
                     self.operationConfigs['outputPort'] = configs['gpio']
-                if configs.get('interval', -1) >= 0:
+                if configs.get('interval', -1) >= 2:
                     self.operationConfigs['interval'] = configs['interval']
-                if configs.get('storage', -1) >= 0:
+                if configs.get('storage', -1):
                     self.operationConfigs['storage'] = configs['storage']
                 if configs.get('frontledgpio', -1) >= 0:
                     self.operationConfigs['frontledgpio'] = configs['frontledgpio']
@@ -143,6 +143,9 @@ class WebSockets:
                 if configs.get('backledint', -1) >= 0:
                     self.operationConfigs['backledint'] = configs['backledint']
                     self.changeLEDInt(self.pi, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
+
+                if configs.get('flash', -1) >= 0:
+                    self.operationConfigs['flash'] = (configs['flash'] == 1)
 
                 self.updateJsonFile()
                 logging.info("Updated operationConfigs!")
