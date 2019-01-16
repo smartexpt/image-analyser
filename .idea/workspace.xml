@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f2e516e-6f6e-422d-a9a7-76f6b90c4677" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/new_gen/ids_camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/ids_camera.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_gen/smartex.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/smartex.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_gen/workers.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/workers.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -61,14 +60,14 @@
           <entry key="Python Console" value="68" />
           <entry key="dummy" value="12" />
           <entry key="json" value="6" />
-          <entry key="py" value="4728" />
+          <entry key="py" value="4740" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="6" />
           <entry key="PLAIN_TEXT" value="12" />
-          <entry key="Python" value="4796" />
+          <entry key="Python" value="4808" />
         </counts>
       </usages-collector>
     </session>
@@ -101,11 +100,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="441">
-              <caret line="121" column="17" selection-start-line="121" selection-start-column="17" selection-end-line="121" selection-end-column="17" />
+              <caret line="172" column="114" lean-forward="true" selection-start-line="169" selection-start-column="15" selection-end-line="172" selection-end-column="114" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
                 <marker date="1547642298323" expanded="true" signature="2825:2831" ph="..." />
@@ -127,15 +126,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_gen/workers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="217">
-              <caret line="37" column="38" lean-forward="true" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
+            <state relative-caret-position="638">
+              <caret line="65" column="36" selection-start-line="65" selection-start-column="36" selection-end-line="65" selection-end-column="36" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1547641755265" expanded="true" signature="338:339" ph="..." />
-                <marker date="1547641755265" expanded="true" signature="2966:2975" ph="..." />
+                <marker date="1547642651475" expanded="true" signature="338:339" ph="..." />
+                <marker date="1547642651475" expanded="true" signature="2876:2885" ph="..." />
               </folding>
             </state>
           </provider>
@@ -164,7 +163,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>saveImage</find>
       <find>sigint_handler</find>
       <find>read</find>
       <find>save_r</find>
@@ -194,6 +192,7 @@
       <find>led</find>
       <find>setLEDParams</find>
       <find>changeLEDInt</find>
+      <find>initCamera</find>
     </findStrings>
     <replaceStrings>
       <replace>print</replace>
@@ -217,10 +216,10 @@
         <option value="$PROJECT_DIR$/new_gen/ar0134/AR0134_960p_Mono.json" />
         <option value="$PROJECT_DIR$/new_gen/ar0134/ar0134.py" />
         <option value="$PROJECT_DIR$/new_gen/ardu_camera.py" />
-        <option value="$PROJECT_DIR$/new_gen/workers.py" />
         <option value="$PROJECT_DIR$/new_gen/ws_connectivity.py" />
         <option value="$PROJECT_DIR$/new_gen/ids_camera.py" />
         <option value="$PROJECT_DIR$/new_gen/smartex.py" />
+        <option value="$PROJECT_DIR$/new_gen/workers.py" />
       </list>
     </option>
   </component>
@@ -604,18 +603,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_gen/workers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="37" column="38" lean-forward="true" selection-start-line="37" selection-start-column="38" selection-end-line="37" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1547641755265" expanded="true" signature="338:339" ph="..." />
-            <marker date="1547641755265" expanded="true" signature="2966:2975" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="215">
@@ -629,11 +616,23 @@
     <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="441">
-          <caret line="121" column="17" selection-start-line="121" selection-start-column="17" selection-end-line="121" selection-end-column="17" />
+          <caret line="172" column="114" lean-forward="true" selection-start-line="169" selection-start-column="15" selection-end-line="172" selection-end-column="114" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <marker date="1547642298323" expanded="true" signature="2825:2831" ph="..." />
             <marker date="1547642298323" expanded="true" signature="8110:8115" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_gen/workers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="638">
+          <caret line="65" column="36" selection-start-line="65" selection-start-column="36" selection-end-line="65" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1547642651475" expanded="true" signature="338:339" ph="..." />
+            <marker date="1547642651475" expanded="true" signature="2876:2885" ph="..." />
           </folding>
         </state>
       </provider>

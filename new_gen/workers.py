@@ -34,6 +34,7 @@ class FabricWorker:
         while True:
             try:
                 obj = self.queue.get()
+                begin_abs = datetime.datetime.now()
                 image_path = obj["path"]
                 fabric = obj["fabric"]
                 fabric["mse"] = 100.0
@@ -45,12 +46,7 @@ class FabricWorker:
                     im2 = cv2.imread(self.img_ant)
                     gray2 = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
                     m = self.mse(gray1, gray2)
-                    #im1 = misc.imresize(misc.imread(image_path), 0.3)  # reading image1
-                    #im2 = misc.imresize(misc.imread(self.img_ant), 0.3)  # reading image2
-                    #im3 = abs(np.int32(im2) - np.int32(im1))
-                    #difavg = np.average(im3)
                     fabric["mse"] = m
-                    #fabric["difavg"] = difavg
                     elapsed = datetime.datetime.now() - begin
                     logging.info("MSE of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
                 except Exception as ex:
@@ -64,6 +60,10 @@ class FabricWorker:
                 except:
                     pass
                 self.img_ant = image_path
+
+                now = datetime.datetime.now()
+                elapsed = now - begin_abs
+                logging.info("Upload finished -elapsed time (s): {}\n".format(elapsed.total_seconds()))
             except Exception as ex:
                 logging.exception("Error uploading fabric object!")
                 aws = AWS(self.operationConfigs)
