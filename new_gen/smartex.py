@@ -83,6 +83,8 @@ class Smartex:
         i = 1
         j = 1
         pi = pigpio.pi()
+        WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
+        WebSockets.changeLEDInt(pi, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
 
         while True:
             begin = datetime.datetime.now()
@@ -115,8 +117,6 @@ class Smartex:
 
             logging.info("USB ports are up - elapsed time (s): {}".format(elapsed.total_seconds()))
 
-
-
             if i != 1:
                 self.camera.initCamera()
 
@@ -128,7 +128,7 @@ class Smartex:
 
             try:
                 logging.info('Taking image!')
-                self.setLEDParams(pi, i - 1, j - 1)
+                #self.setLEDParams(pi, i - 1, j - 1)
                 self.camera.saveImage()
                 #self.setLEDParams(pi, 1, 1)
                 now_ant = now
