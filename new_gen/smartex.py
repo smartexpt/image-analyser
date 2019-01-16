@@ -158,8 +158,7 @@ class Smartex:
                 if agulhaDeffectDetected:
                     defect = 'Agulha'
                     logging.info("Defeito agulha detectado!")
-
-                if lycraDeffectDetected[0]:
+                elif lycraDeffectDetected[0]:
                     defect = lycraDeffectDetected[1]
                     logging.info("Defeito lycra detectado!")
 
