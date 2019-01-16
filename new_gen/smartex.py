@@ -118,8 +118,8 @@ class Smartex:
 
             logging.info("USB ports are up - elapsed time (s): {}".format(elapsed.total_seconds()))
 
-            if i != 1:
-                self.camera.initCamera()
+            #if i != 1:
+                #self.camera.initCamera()
 
             now_ant = now
             now = datetime.datetime.now()

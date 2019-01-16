@@ -14,9 +14,6 @@ class Camera:
 
         while self.initCamera() != self.OP_OK and self.operationConfigs['CAMERA_RETRYS'] > 0:
             logging.warning('Error in initCamera()')
-            self.pijuice.status.SetLedBlink('D2', 2, [255, 0, 0], 50, [255, 0, 0], 50)
-            sleep(1)
-            self.pijuice.status.SetLedState('D2', [0, 0, 0])
             self.operationConfigs['CAMERA_RETRYS'] -= 1
 
     def initCamera(self):
@@ -56,8 +53,8 @@ class Camera:
                                       ueye.sizeof(self.FileParams))
 
         ueye.is_FreeImageMem(self.hcam, self.pccmem, self.memID)
-        sleep(.01)
-        ueye.is_ExitCamera(self.hcam)
+        #sleep(.01)
+        #ueye.is_ExitCamera(self.hcam)
         self.image = np.uint8(ndimage.imread(self.imagePath, flatten=True))
         self.image = self.crop_end(self.image, 0, 150)
 
