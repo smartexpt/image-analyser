@@ -89,32 +89,29 @@ class Smartex:
         pi1 = pigpio.pi()
         WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
         WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
-
+        #self.USBpowerOutput = 'OFF'
         while True:
             begin = datetime.datetime.now()
             logging.info('Beginning iteration # ' + str(i))
             self.UPSpowerInput = self.pijuice.status.GetStatus()['data']['powerInput']
 
-            if i == 1:
-                self.USBpowerOutput = 'OFF'
-
             if self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'ON':
                 logging.warning('UPS not being charged - shutting down camera.\n')
                 powerOffUSBs()
                 self.USBpowerOutput = 'OFF'
-                sleep(1)
+                sleep(3)
                 continue
 
             elif self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'OFF':
                 logging.warning('UPS not being charged - trying again.\n')
-                sleep(1)
+                sleep(2)
                 continue
 
             elif self.UPSpowerInput == 'PRESENT' and self.USBpowerOutput == 'OFF':
                 logging.info('UPS just started being charged - booting camera.\n')
                 powerOnUSBs()
                 self.USBpowerOutput = 'ON'
-                sleep(2.5)
+                sleep(3)
 
             now = datetime.datetime.now()
             elapsed = now - begin
@@ -136,6 +133,10 @@ class Smartex:
                     WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
                     WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
                 #self.setLEDParams(pi, i - 1, j - 1)
+
+                if self.pijuice.status.GetStatus()['data']['powerInput'] == 'NOT_PRESENT':
+                    logging.info("Aborting iteration! No power!")
+                    continue
 
                 self.camera.saveImage()
 
@@ -162,6 +163,9 @@ class Smartex:
                 logging.info("Brightness of " + str(bright) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
             except Exception as ex:
                 logging.exception("Error calculating brightness for " + self.camera.imagePath)
+
+            if bright < 15:
+                continue
 
             if self.operationConfigs['deffectDetectionMode']:
                 logging.info("Analyzing images for defect..")

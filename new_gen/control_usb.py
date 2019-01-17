@@ -16,6 +16,7 @@ def powerOnUSBs():
     print('Booted on USB ports.')
 
 if __name__ == "__main__":
-    powerOffUSBs()
-    sleep(8)
-    powerOnUSBs()
+    pass
+    #powerOffUSBs()
+    #sleep(8)
+    #powerOnUSBs()
