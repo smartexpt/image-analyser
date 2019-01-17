@@ -4,7 +4,7 @@ from threading import Thread
 import uuid
 import os
 import requests
-from PIL import Image
+from PIL import Image, ImageStat
 from boto.s3.key import Key
 import base64
 from io import BytesIO
@@ -39,18 +39,21 @@ class FabricWorker:
                 fabric = obj["fabric"]
                 fabric["mse"] = 100.0
                 paths = self.upload_image(image_path)
-                try:
-                    begin = datetime.datetime.now()
-                    im1 = cv2.imread(image_path)
-                    gray1 = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
-                    im2 = cv2.imread(self.img_ant)
-                    gray2 = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
-                    m = self.mse(gray1, gray2)
-                    fabric["mse"] = m
-                    elapsed = datetime.datetime.now() - begin
-                    logging.info("MSE of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
-                except Exception as ex:
-                    logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
+                if self.img_ant != "":
+                    try:
+                        begin = datetime.datetime.now()
+                        im1 = cv2.imread(image_path)
+                        gray1 = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
+                        im2 = cv2.imread(self.img_ant)
+                        gray2 = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
+                        m = self.mse(gray1, gray2)
+                        fabric["mse"] = m
+                        elapsed = datetime.datetime.now() - begin
+                        logging.info("MSE of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+                        lv = self.brightness(image_path)
+                        logging.info("Brightness of " + str(lv) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+                    except Exception as ex:
+                        logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
                 fabric["imageUrl"] = paths["img_url"]
                 fabric["thumbUrl"] = paths["thumb_url"]
                 self.upload_fabric(fabric)
@@ -73,6 +76,11 @@ class FabricWorker:
                 self.bucket = aws.bucket
                 self.client = webServer.client
                 continue
+
+    def brightness(self, im_file):
+        im = Image.open(im_file).convert('L')
+        stat = ImageStat.Stat(im)
+        return stat.rms[0]
 
     def mse(self, imageA, imageB):
         err = np.sum((imageA.astype("float") - imageB.astype("float")) ** 2)
