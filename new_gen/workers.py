@@ -50,10 +50,15 @@ class FabricWorker:
                         fabric["mse"] = m
                         elapsed = datetime.datetime.now() - begin
                         logging.info("MSE of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
-                        lv = self.brightness(image_path)
-                        logging.info("Brightness of " + str(lv) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
                     except Exception as ex:
                         logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
+                try:
+                    lv = self.brightness(image_path)
+                    elapsed = datetime.datetime.now() - begin
+                    logging.info("Brightness of " + str(lv) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+                except Exception as ex:
+                    logging.exception("Error calculating brightness for " + image_path + " and " + self.img_ant)
+
                 fabric["imageUrl"] = paths["img_url"]
                 fabric["thumbUrl"] = paths["thumb_url"]
                 self.upload_fabric(fabric)
