@@ -103,12 +103,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="163" column="95" lean-forward="true" selection-start-line="163" selection-start-column="95" selection-end-line="163" selection-end-column="95" />
+            <state relative-caret-position="449">
+              <caret line="163" column="93" selection-start-line="163" selection-start-column="93" selection-end-line="163" selection-end-column="93" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1547732661853" expanded="true" signature="2860:2866" ph="..." />
-                <marker date="1547732661853" expanded="true" signature="8779:8784" ph="..." />
+                <marker date="1547732739453" expanded="true" signature="2860:2866" ph="..." />
+                <marker date="1547732739453" expanded="true" signature="8777:8782" ph="..." />
               </folding>
             </state>
           </provider>
@@ -117,8 +117,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="43" column="18" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
+            <state relative-caret-position="348">
+              <caret line="43" column="22" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="22" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -602,16 +602,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="43" column="18" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#22#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/workers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -623,14 +613,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="348">
+          <caret line="43" column="22" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#22#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="163" column="95" lean-forward="true" selection-start-line="163" selection-start-column="95" selection-end-line="163" selection-end-column="95" />
+        <state relative-caret-position="449">
+          <caret line="163" column="93" selection-start-line="163" selection-start-column="93" selection-end-line="163" selection-end-column="93" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1547732661853" expanded="true" signature="2860:2866" ph="..." />
-            <marker date="1547732661853" expanded="true" signature="8779:8784" ph="..." />
+            <marker date="1547732739453" expanded="true" signature="2860:2866" ph="..." />
+            <marker date="1547732739453" expanded="true" signature="8777:8782" ph="..." />
           </folding>
         </state>
       </provider>

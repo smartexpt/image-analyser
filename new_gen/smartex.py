@@ -155,13 +155,13 @@ class Smartex:
             bright = 0
 
             try:
-                bright = self.brightness(self.camera.image_path)
+                bright = self.brightness(self.camera.imagePath)
                 now_ant = now
                 now = datetime.datetime.now()
                 elapsed = now - now_ant
                 logging.info("Brightness of " + str(bright) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
             except Exception as ex:
-                logging.exception("Error calculating brightness for " + self.camera.image_path)
+                logging.exception("Error calculating brightness for " + self.camera.imagePath)
 
             if self.operationConfigs['deffectDetectionMode']:
                 logging.info("Analyzing images for defect..")
