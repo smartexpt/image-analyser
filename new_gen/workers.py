@@ -52,14 +52,6 @@ class FabricWorker:
                         logging.info("MSE of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
                     except Exception as ex:
                         logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
-                try:
-                    begin = datetime.datetime.now()
-                    lv = self.brightness(image_path)
-                    fabric["brightness"] = lv
-                    elapsed = datetime.datetime.now() - begin
-                    logging.info("Brightness of " + str(lv) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
-                except Exception as ex:
-                    logging.exception("Error calculating brightness for " + image_path + " and " + self.img_ant)
 
                 fabric["imageUrl"] = paths["img_url"]
                 fabric["thumbUrl"] = paths["thumb_url"]
@@ -83,11 +75,6 @@ class FabricWorker:
                 self.bucket = aws.bucket
                 self.client = webServer.client
                 continue
-
-    def brightness(self, im_file):
-        im = Image.open(im_file).convert('L')
-        stat = ImageStat.Stat(im)
-        return stat.rms[0]
 
     def mse(self, imageA, imageB):
         err = np.sum((imageA.astype("float") - imageB.astype("float")) ** 2)

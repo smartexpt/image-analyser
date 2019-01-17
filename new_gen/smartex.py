@@ -1,6 +1,9 @@
 import os
 from time import sleep
 import datetime
+
+from PIL import Image, ImageStat
+
 from tracadelas_deteccao import funcao_deteccao_lycra_tracadelas
 from detecao_agulha_v02 import funcao_detecao_agulhas
 import RPi.GPIO as GPIO
@@ -149,6 +152,15 @@ class Smartex:
                 continue
 
             defect = 'None'
+            bright = 0
+            try:
+                bright = self.brightness(self.camera.image_pat)
+                now_ant = now
+                now = datetime.datetime.now()
+                elapsed = now - now_ant
+                logging.info("Brightness of " + str(bright) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+            except Exception as ex:
+                logging.exception("Error calculating brightness for " + self.camera.image_path + " and " + self.img_ant)
 
             if self.operationConfigs['deffectDetectionMode']:
                 logging.info("Analyzing images for defect..")
@@ -178,6 +190,7 @@ class Smartex:
             fabric = {
                 '_id': self.lastID + i,
                 'defect': defect,
+                'brightness': bright,
                 'date': self.camera.rawImageTimeStamp,
                 'imageUrl': "",
                 'thumbUrl': "",
@@ -214,6 +227,10 @@ class Smartex:
                 logging.warning("Reconnecting AWS!")
         self.authenticated = True
 
+    def brightness(self, im_file):
+        im = Image.open(im_file).convert('L')
+        stat = ImageStat.Stat(im)
+        return stat.rms[0]
 
     def blinkLED(self):
         pass
