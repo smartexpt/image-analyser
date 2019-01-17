@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f2e516e-6f6e-422d-a9a7-76f6b90c4677" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/new_gen/control_usb.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/control_usb.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/new_gen/smartex.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/smartex.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -104,12 +103,12 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="137" column="63" selection-start-line="137" selection-start-column="63" selection-end-line="137" selection-end-column="63" />
+            <state relative-caret-position="143">
+              <caret line="91" column="8" lean-forward="true" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="8" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1547747926429" expanded="true" signature="2860:2866" ph="..." />
-                <marker date="1547747926429" expanded="true" signature="9001:9006" ph="..." />
+                <marker date="1547749503637" expanded="true" signature="2860:2866" ph="..." />
+                <marker date="1547749503637" expanded="true" signature="9000:9005" ph="..." />
               </folding>
             </state>
           </provider>
@@ -633,12 +632,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="137" column="63" selection-start-line="137" selection-start-column="63" selection-end-line="137" selection-end-column="63" />
+        <state relative-caret-position="143">
+          <caret line="91" column="8" lean-forward="true" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="8" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1547747926429" expanded="true" signature="2860:2866" ph="..." />
-            <marker date="1547747926429" expanded="true" signature="9001:9006" ph="..." />
+            <marker date="1547749503637" expanded="true" signature="2860:2866" ph="..." />
+            <marker date="1547749503637" expanded="true" signature="9000:9005" ph="..." />
           </folding>
         </state>
       </provider>
