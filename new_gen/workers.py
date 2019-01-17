@@ -53,7 +53,9 @@ class FabricWorker:
                     except Exception as ex:
                         logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
                 try:
+                    begin = datetime.datetime.now()
                     lv = self.brightness(image_path)
+                    fabric["brightness"] = lv
                     elapsed = datetime.datetime.now() - begin
                     logging.info("Brightness of " + str(lv) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
                 except Exception as ex:
