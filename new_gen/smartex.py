@@ -175,7 +175,7 @@ class Smartex:
                     defect = lycraDeffectDetected[1]
                     logging.info("Defeito lycra detectado!")
 
-                if self.operationConfigs['stopMachineMode'] and (lycraDeffectDetected[0] or agulhaDeffectDetected):
+                if self.operationConfigs['stopMachineMode'] and (lycraDeffectDetected[0] or agulhaDeffectDetected) and bright >= 30:
                     logging.info("Stoping the machine!")
                     GPIO.setmode(GPIO.BCM)
                     GPIO.setup(self.operationConfigs['outputPort'], GPIO.OUT, initial=GPIO.LOW)
