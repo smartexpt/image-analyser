@@ -157,7 +157,7 @@ class Smartex:
 
             defect = 'None'
             bright = 0
-            stop = False
+            stop = 0
 
             try:
                 bright = self.brightness(self.camera.imagePath)
