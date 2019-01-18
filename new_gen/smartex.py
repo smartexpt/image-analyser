@@ -100,12 +100,12 @@ class Smartex:
                 logging.warning('UPS not being charged - shutting down camera.\n')
                 powerOffUSBs()
                 self.USBpowerOutput = 'OFF'
-                self.breakIteration()
+                self.breakIteration(begin)
                 continue
 
             elif self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'OFF':
                 logging.warning('UPS not being charged - trying again.\n')
-                self.breakIteration()
+                self.breakIteration(begin)
                 continue
 
             elif self.UPSpowerInput == 'PRESENT' and self.USBpowerOutput == 'OFF':
@@ -152,7 +152,7 @@ class Smartex:
                 logging.info("Image taken and saved - elapsed time (s): {}".format(elapsed.total_seconds()))
             except Exception as ex:
                 logging.exception("Error taking/saving image! Continuing to next iteration..")
-                self.breakIteration()
+                self.breakIteration(begin)
                 continue
 
             defect = 'None'
@@ -171,13 +171,13 @@ class Smartex:
 
             if bright < 15:
                 logging.info("Skipping image with low light " + self.camera.imagePath)
-                self.breakIteration()
+                self.breakIteration(begin)
                 continue
 
             mse = self.calcFabricMSE(self.camera.imagePath)
             if mse < 12:
-                logging.info("Skipping image with, Machine is stoped")
-                self.breakIteration()
+                logging.info("Skipping image. Machine is stoped")
+                self.breakIteration(begin)
                 continue
 
             if self.operationConfigs['deffectDetectionMode']:
