@@ -211,7 +211,7 @@ class Smartex:
                 'defect': defect,
                 'brightness': bright,
                 'mse': mse,
-                'stop': stop,
+                'stoped': stop,
                 'reason': "---",
                 'duration': 0,
                 'date': self.camera.rawImageTimeStamp,
