@@ -155,7 +155,6 @@ class Smartex:
                 logging.info("Image taken and saved - elapsed time (s): {}".format(elapsed.total_seconds()))
             except Exception as ex:
                 logging.exception("Error taking/saving image! Continuing to next iteration..")
-                self.breakIteration(begin)
                 continue
 
             defect = 'None'
@@ -172,7 +171,7 @@ class Smartex:
                 logging.exception("Error calculating brightness for " + self.camera.imagePath)
 
 
-            if bright < 15:
+            if bright < 1:
                 logging.info("Skipping image with low light " + self.camera.imagePath)
                 self.breakIteration(begin)
                 continue
@@ -311,7 +310,6 @@ class Smartex:
 
         logging.info("Breaking iteration| Elapsed time (s): {}".format(elapsed.total_seconds()))
         logging.info("Will sleep for (s): {}".format(sleep_time))
-
         sleep(sleep_time)
         pass
 
