@@ -3,13 +3,13 @@ from time import sleep
 import datetime
 
 from PIL import Image, ImageStat
-
+import numpy as np
+import cv2
 from tracadelas_deteccao import funcao_deteccao_lycra_tracadelas
 from detecao_agulha_v02 import funcao_detecao_agulhas
 import RPi.GPIO as GPIO
 from pijuice import PiJuice
 from pyueye import ueye
-import numpy as np
 from scipy import misc, ndimage
 import ctypes
 from control_usb import powerOffUSBs, powerOnUSBs
@@ -134,15 +134,16 @@ class Smartex:
                     WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
                 #self.setLEDParams(pi, i - 1, j - 1)
 
-                if self.pijuice.status.GetStatus()['data']['powerInput'] == 'NOT_PRESENT':
-                    logging.info("Aborting iteration! No power!")
-                    continue
-
                 self.camera.saveImage()
 
                 if self.operationConfigs['flash']:
                     WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], 0)
                     WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], 0)
+
+                if self.pijuice.status.GetStatus()['data']['powerInput'] == 'NOT_PRESENT':
+                    logging.info("Aborting iteration! No power!")
+                    continue
+
                 #self.setLEDParams(pi, 1, 1)
                 now_ant = now
                 now = datetime.datetime.now()
@@ -165,7 +166,10 @@ class Smartex:
                 logging.exception("Error calculating brightness for " + self.camera.imagePath)
 
             if bright < 15:
+                logging.info("Skipping image with low light " + self.camera.imagePath)
                 continue
+
+            mse = self.calcFabricMSE(self.camera.imagePath)
 
             if self.operationConfigs['deffectDetectionMode']:
                 logging.info("Analyzing images for defect..")
@@ -196,6 +200,7 @@ class Smartex:
                 '_id': self.lastID + i,
                 'defect': defect,
                 'brightness': bright,
+                'mse': mse,
                 'date': self.camera.rawImageTimeStamp,
                 'imageUrl': "",
                 'thumbUrl': "",
@@ -231,6 +236,33 @@ class Smartex:
             while self.aws.connectAWSS3() != self.OP_OK:
                 logging.warning("Reconnecting AWS!")
         self.authenticated = True
+
+    def calcFabricMSE(self, image_path):
+        mse = 100.0
+
+        if self.img_ant != "":
+            try:
+                begin = datetime.datetime.now()
+                im1 = cv2.imread(image_path)
+                gray1 = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
+                im2 = cv2.imread(self.img_ant)
+                gray2 = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
+                m = self.mse(gray1, gray2)
+                mse = m
+                elapsed = datetime.datetime.now() - begin
+                logging.info("MSE of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+            except Exception as ex:
+                logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
+        self.img_ant = image_path
+
+        return mse
+
+    def mse(self, imageA, imageB):
+        err = np.sum((imageA.astype("float") - imageB.astype("float")) ** 2)
+        err /= float(imageA.shape[0] * imageA.shape[1])
+
+        # return the MSE, the lower the error, the more "similar" the two images are
+        return err
 
     def brightness(self, im_file):
         im = Image.open(im_file).convert('L')

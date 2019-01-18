@@ -37,22 +37,7 @@ class FabricWorker:
                 begin_abs = datetime.datetime.now()
                 image_path = obj["path"]
                 fabric = obj["fabric"]
-                fabric["mse"] = 100.0
                 paths = self.upload_image(image_path)
-                if self.img_ant != "":
-                    try:
-                        begin = datetime.datetime.now()
-                        im1 = cv2.imread(image_path)
-                        gray1 = cv2.cvtColor(im1, cv2.COLOR_BGR2GRAY)
-                        im2 = cv2.imread(self.img_ant)
-                        gray2 = cv2.cvtColor(im2, cv2.COLOR_BGR2GRAY)
-                        m = self.mse(gray1, gray2)
-                        fabric["mse"] = m
-                        elapsed = datetime.datetime.now() - begin
-                        logging.info("MSE of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
-                    except Exception as ex:
-                        logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
-
                 fabric["imageUrl"] = paths["img_url"]
                 fabric["thumbUrl"] = paths["thumb_url"]
                 self.upload_fabric(fabric)
@@ -75,13 +60,6 @@ class FabricWorker:
                 self.bucket = aws.bucket
                 self.client = webServer.client
                 continue
-
-    def mse(self, imageA, imageB):
-        err = np.sum((imageA.astype("float") - imageB.astype("float")) ** 2)
-        err /= float(imageA.shape[0] * imageA.shape[1])
-
-        # return the MSE, the lower the error, the more "similar" the two images are
-        return err
 
     def upload_fabric(self, fabric):
         begin = datetime.datetime.now()
