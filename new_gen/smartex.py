@@ -100,12 +100,12 @@ class Smartex:
                 logging.warning('UPS not being charged - shutting down camera.\n')
                 powerOffUSBs()
                 self.USBpowerOutput = 'OFF'
-                self.breakIteration(begin)
+                sleep(3)
                 continue
 
             elif self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'OFF':
                 logging.warning('UPS not being charged - trying again.\n')
-                self.breakIteration(begin)
+                sleep(3)
                 continue
 
             elif self.UPSpowerInput == 'PRESENT' and self.USBpowerOutput == 'OFF':
