@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3f2e516e-6f6e-422d-a9a7-76f6b90c4677" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/new_gen/smartex.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/smartex.py" afterDir="false" />
-    </list>
+    <list default="true" id="3f2e516e-6f6e-422d-a9a7-76f6b90c4677" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,11 +98,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="560">
-              <caret line="285" column="35" lean-forward="true" selection-start-line="285" selection-start-column="35" selection-end-line="285" selection-end-column="35" />
+            <state relative-caret-position="388">
+              <caret line="285" column="21" selection-start-line="285" selection-start-column="12" selection-end-line="285" selection-end-column="21" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
                 <marker date="1547828223350" expanded="true" signature="2870:2876" ph="..." />
@@ -126,11 +124,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_gen/workers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="48" column="41" lean-forward="true" selection-start-line="44" selection-start-column="15" selection-end-line="48" selection-end-column="41" />
+            <state relative-caret-position="357">
+              <caret line="45" column="43" lean-forward="true" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
                 <marker date="1547826688459" expanded="true" signature="349:350" ph="..." />
@@ -174,7 +172,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>show</find>
       <find>hand</find>
       <find>sin</find>
       <find>64</find>
@@ -204,6 +201,7 @@
       <find>self.f</find>
       <find>img_a</find>
       <find>breakIteration</find>
+      <find>os.remove</find>
     </findStrings>
     <replaceStrings>
       <replace>print</replace>
@@ -623,21 +621,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_gen/workers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="48" column="41" lean-forward="true" selection-start-line="44" selection-start-column="15" selection-end-line="48" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1547826688459" expanded="true" signature="349:350" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="285" column="35" lean-forward="true" selection-start-line="285" selection-start-column="35" selection-end-line="285" selection-end-column="35" />
+        <state relative-caret-position="388">
+          <caret line="285" column="21" selection-start-line="285" selection-start-column="12" selection-end-line="285" selection-end-column="21" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <marker date="1547828223350" expanded="true" signature="2870:2876" ph="..." />
@@ -645,6 +632,17 @@
             <marker date="1547828223350" expanded="true" signature="10004:10009" ph="..." />
             <marker date="1547828223350" expanded="true" signature="11081:11086" ph="..." />
             <marker date="1547828223350" expanded="true" signature="11719:11738" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_gen/workers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="45" column="43" lean-forward="true" selection-start-line="45" selection-start-column="43" selection-end-line="45" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1547826688459" expanded="true" signature="349:350" ph="..." />
           </folding>
         </state>
       </provider>
