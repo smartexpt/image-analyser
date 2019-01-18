@@ -100,12 +100,12 @@ class Smartex:
                 logging.warning('UPS not being charged - shutting down camera.\n')
                 powerOffUSBs()
                 self.USBpowerOutput = 'OFF'
-                sleep(3)
+                self.breakIteration()
                 continue
 
             elif self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'OFF':
                 logging.warning('UPS not being charged - trying again.\n')
-                sleep(2)
+                self.breakIteration()
                 continue
 
             elif self.UPSpowerInput == 'PRESENT' and self.USBpowerOutput == 'OFF':
@@ -152,6 +152,7 @@ class Smartex:
                 logging.info("Image taken and saved - elapsed time (s): {}".format(elapsed.total_seconds()))
             except Exception as ex:
                 logging.exception("Error taking/saving image! Continuing to next iteration..")
+                self.breakIteration()
                 continue
 
             defect = 'None'
@@ -167,13 +168,16 @@ class Smartex:
             except Exception as ex:
                 logging.exception("Error calculating brightness for " + self.camera.imagePath)
 
+
             if bright < 15:
                 logging.info("Skipping image with low light " + self.camera.imagePath)
+                self.breakIteration()
                 continue
 
             mse = self.calcFabricMSE(self.camera.imagePath)
             if mse < 12:
                 logging.info("Skipping image with, Machine is stoped")
+                self.breakIteration()
                 continue
 
             if self.operationConfigs['deffectDetectionMode']:
@@ -276,6 +280,21 @@ class Smartex:
         im = Image.open(im_file).convert('L')
         stat = ImageStat.Stat(im)
         return stat.rms[0]
+
+    def breakIteration(self, begin):
+        try:
+            os.remove(self.camera.imagePath)
+        except:
+            pass
+
+        elapsed = datetime.datetime.now() - begin
+        sleep_time = max(self.operationConfigs['interval'] - elapsed.total_seconds(), 0)
+
+        logging.info("Breaking iteration| Elapsed time (s): {}".format(elapsed.total_seconds()))
+        logging.info("Will sleep for (s): {}".format(sleep_time))
+
+        sleep(sleep_time)
+        pass
 
     def blinkLED(self):
         pass
