@@ -3,6 +3,8 @@ from Queue import Queue
 from threading import Thread
 import uuid
 import os
+from time import sleep
+
 import requests
 from PIL import Image, ImageStat
 from boto.s3.key import Key
@@ -54,6 +56,7 @@ class FabricWorker:
                 logging.info("Upload finished -elapsed time (s): {}\n".format(elapsed.total_seconds()))
             except Exception as ex:
                 logging.exception("Error uploading fabric object!")
+                sleep(2)
                 aws = AWS(self.operationConfigs)
                 webServer = WebServer(self.operationConfigs)
                 aws.connectAWSS3()
