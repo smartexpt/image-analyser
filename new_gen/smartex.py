@@ -156,6 +156,7 @@ class Smartex:
 
             defect = 'None'
             bright = 0
+            stop = False
 
             try:
                 bright = self.brightness(self.camera.imagePath)
@@ -171,6 +172,9 @@ class Smartex:
                 continue
 
             mse = self.calcFabricMSE(self.camera.imagePath)
+            if mse < 12:
+                logging.info("Skipping image with, Machine is stoped")
+                continue
 
             if self.operationConfigs['deffectDetectionMode']:
                 logging.info("Analyzing images for defect..")
@@ -202,6 +206,9 @@ class Smartex:
                 'defect': defect,
                 'brightness': bright,
                 'mse': mse,
+                'stop': stop,
+                'reason': "---",
+                'duration': 0,
                 'date': self.camera.rawImageTimeStamp,
                 'imageUrl': "",
                 'thumbUrl': "",
