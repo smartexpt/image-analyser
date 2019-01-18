@@ -177,8 +177,9 @@ class Smartex:
             mse = self.calcFabricMSE(self.camera.imagePath)
             if mse < 12:
                 logging.info("Skipping image. Machine is stoped")
-                self.breakIteration(begin)
-                continue
+                stop = True
+                #self.breakIteration(begin)
+                #continue
 
             if self.operationConfigs['deffectDetectionMode']:
                 logging.info("Analyzing images for defect..")

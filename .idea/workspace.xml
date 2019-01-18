@@ -60,14 +60,14 @@
           <entry key="Python Console" value="68" />
           <entry key="dummy" value="12" />
           <entry key="json" value="6" />
-          <entry key="py" value="5337" />
+          <entry key="py" value="5349" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="6" />
           <entry key="PLAIN_TEXT" value="12" />
-          <entry key="Python" value="5405" />
+          <entry key="Python" value="5417" />
         </counts>
       </usages-collector>
     </session>
@@ -103,15 +103,15 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="320">
-              <caret line="102" column="24" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
+            <state relative-caret-position="419">
+              <caret line="179" column="27" selection-start-line="179" selection-start-column="27" selection-end-line="179" selection-end-column="27" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1547830904284" expanded="true" signature="2870:2876" ph="..." />
-                <marker date="1547830904284" expanded="true" signature="9578:9583" ph="..." />
-                <marker date="1547830904284" expanded="true" signature="9968:9973" ph="..." />
-                <marker date="1547830904284" expanded="true" signature="11045:11050" ph="..." />
-                <marker date="1547830904284" expanded="true" signature="11683:11702" ph="..." />
+                <marker date="1547832613379" expanded="true" signature="2870:2876" ph="..." />
+                <marker date="1547832613379" expanded="true" signature="9608:9613" ph="..." />
+                <marker date="1547832613379" expanded="true" signature="9998:10003" ph="..." />
+                <marker date="1547832613379" expanded="true" signature="11075:11080" ph="..." />
+                <marker date="1547832613379" expanded="true" signature="11713:11732" ph="..." />
               </folding>
             </state>
           </provider>
@@ -174,7 +174,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>CFG_MODE</find>
       <find>index</find>
       <find>ArducamSDK.Py_ArduCam_autoopen</find>
       <find>camera_initFromFile</find>
@@ -196,7 +195,6 @@
       <find>updat</find>
       <find>image_path</find>
       <find>changeLEDInt</find>
-      <find>self.f</find>
       <find>img_a</find>
       <find>breakIteration</find>
       <find>os.remove</find>
@@ -204,6 +202,8 @@
       <find>stop</find>
       <find>usb n</find>
       <find>usb</find>
+      <find>.stop</find>
+      <find>self.f</find>
     </findStrings>
     <replaceStrings>
       <replace>print</replace>
@@ -515,6 +515,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="117">
           <caret line="209" column="10" lean-forward="true" selection-start-line="209" selection-start-column="10" selection-end-line="209" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -636,15 +639,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="320">
-          <caret line="102" column="24" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
+        <state relative-caret-position="419">
+          <caret line="179" column="27" selection-start-line="179" selection-start-column="27" selection-end-line="179" selection-end-column="27" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1547830904284" expanded="true" signature="2870:2876" ph="..." />
-            <marker date="1547830904284" expanded="true" signature="9578:9583" ph="..." />
-            <marker date="1547830904284" expanded="true" signature="9968:9973" ph="..." />
-            <marker date="1547830904284" expanded="true" signature="11045:11050" ph="..." />
-            <marker date="1547830904284" expanded="true" signature="11683:11702" ph="..." />
+            <marker date="1547832613379" expanded="true" signature="2870:2876" ph="..." />
+            <marker date="1547832613379" expanded="true" signature="9608:9613" ph="..." />
+            <marker date="1547832613379" expanded="true" signature="9998:10003" ph="..." />
+            <marker date="1547832613379" expanded="true" signature="11075:11080" ph="..." />
+            <marker date="1547832613379" expanded="true" signature="11713:11732" ph="..." />
           </folding>
         </state>
       </provider>
