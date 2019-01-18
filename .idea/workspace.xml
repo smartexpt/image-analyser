@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3f2e516e-6f6e-422d-a9a7-76f6b90c4677" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/new_gen/smartex.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/smartex.py" afterDir="false" />
-    </list>
+    <list default="true" id="3f2e516e-6f6e-422d-a9a7-76f6b90c4677" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,8 +101,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="619">
-              <caret line="187" column="56" lean-forward="true" selection-start-line="187" selection-start-column="56" selection-end-line="187" selection-end-column="56" />
+            <state relative-caret-position="483">
+              <caret line="230" column="25" selection-start-line="230" selection-start-column="25" selection-end-line="230" selection-end-column="25" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
                 <marker date="1547835869767" expanded="true" signature="2870:2876" ph="..." />
@@ -241,7 +239,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="1441" />
     <option name="y" value="48" />
     <option name="width" value="1920" />
@@ -390,7 +388,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1108742" />
@@ -639,8 +637,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="619">
-          <caret line="187" column="56" lean-forward="true" selection-start-line="187" selection-start-column="56" selection-end-line="187" selection-end-column="56" />
+        <state relative-caret-position="483">
+          <caret line="230" column="25" selection-start-line="230" selection-start-column="25" selection-end-line="230" selection-end-column="25" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
             <marker date="1547835869767" expanded="true" signature="2870:2876" ph="..." />
