@@ -40,6 +40,7 @@ class FabricWorker:
                 paths = self.upload_image(image_path)
                 fabric["imageUrl"] = paths["img_url"]
                 fabric["thumbUrl"] = paths["thumb_url"]
+                logging.info(fabric)
                 self.upload_fabric(fabric)
                 self.queue.task_done()
                 try:
