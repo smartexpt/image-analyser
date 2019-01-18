@@ -91,6 +91,9 @@ class Smartex:
         WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
         self.USBpowerOutput = 'OFF'
         self.img_ant = ""
+        start_stop = 0
+        self.duration = 0
+        self.stoped = False
         while True:
             begin = datetime.datetime.now()
             logging.info('Beginning iteration # ' + str(i))
@@ -175,11 +178,23 @@ class Smartex:
                 continue
 
             mse = self.calcFabricMSE(self.camera.imagePath)
+
             if mse < 12:
-                logging.info("Skipping image. Machine is stoped")
-                stop = True
-                #self.breakIteration(begin)
-                #continue
+                if self.stoped:
+                    logging.info("Skipping image. Machine is stoped")
+                    self.breakIteration(begin)
+                    continue
+                else:
+                    self.stoped = True
+                    stop = 1
+                    start_stop = datetime.datetime.now()
+            elif start_stop != 0:
+                end_stop = datetime.datetime.now()
+                elapsed = end_stop - start_stop
+                logging.info("Paragem de (s): {}\n".format(elapsed.total_seconds()))
+                self.duration = elapsed.total_seconds()
+                start_stop = 0
+                self.stoped = False
 
             if self.operationConfigs['deffectDetectionMode']:
                 logging.info("Analyzing images for defect..")
@@ -213,7 +228,7 @@ class Smartex:
                 'mse': mse,
                 'stoped': stop,
                 'reason': "---",
-                'duration': 0,
+                'duration': self.duration,
                 'date': self.camera.rawImageTimeStamp,
                 'imageUrl': "",
                 'thumbUrl': "",
@@ -227,6 +242,8 @@ class Smartex:
                 'fabric': fabric
             }
             self.fabricWorker.add_work(obj)
+
+            self.duration = 0
 
             elapsed = datetime.datetime.now() - begin
             sleep_time = max(self.operationConfigs['interval'] - elapsed.total_seconds(), 0)
