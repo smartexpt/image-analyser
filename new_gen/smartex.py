@@ -185,14 +185,15 @@ class Smartex:
                     continue
                 else:
                     self.stoped = True
-                    stop = 1
                     start_stop = datetime.datetime.now()
+
             elif start_stop != 0:
                 end_stop = datetime.datetime.now()
                 elapsed = end_stop - start_stop
                 logging.info("Paragem de (s): {}\n".format(elapsed.total_seconds()))
                 self.duration = elapsed.total_seconds()
                 start_stop = 0
+                stop = 1
                 self.stoped = False
 
             if self.operationConfigs['deffectDetectionMode']:
