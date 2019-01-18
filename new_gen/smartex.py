@@ -90,6 +90,7 @@ class Smartex:
         WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
         WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
         self.USBpowerOutput = 'OFF'
+        self.img_ant = ""
         while True:
             begin = datetime.datetime.now()
             logging.info('Beginning iteration # ' + str(i))
