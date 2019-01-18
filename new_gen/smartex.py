@@ -299,11 +299,11 @@ class Smartex:
         return stat.rms[0]
 
     def breakIteration(self, begin):
-        try:
-            os.remove(self.img_ant)
-        except:
-            pass
-        self.img_ant = self.camera.imagePath
+        #try:
+         #   os.remove(self.img_ant)
+        #except:
+        #    pass
+        #self.img_ant = self.camera.imagePath
 
         elapsed = datetime.datetime.now() - begin
         sleep_time = max(self.operationConfigs['interval'] - elapsed.total_seconds(), 0)
