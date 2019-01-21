@@ -101,8 +101,9 @@ class Smartex:
             self.UPSpowerInput = self.pijuice.status.GetStatus()['data']['powerInput']
 
             if self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'ON':
-                self.stoped = True
-                start_stop = datetime.datetime.now()
+                if not self.stoped:
+                    self.stoped = True
+                    start_stop = datetime.datetime.now()
                 logging.warning('UPS not being charged - shutting down camera.\n')
                 powerOffUSBs()
                 self.USBpowerOutput = 'OFF'
