@@ -135,7 +135,8 @@ class Smartex:
                     WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
                     WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
                 #self.setLEDParams(pi, i - 1, j - 1)
-                self.img_ant = self.camera.imagePath
+                if self.camera.imagePath:
+                    self.img_ant = self.camera.imagePath
                 self.camera.saveImage()
 
                 if self.operationConfigs['flash']:
