@@ -124,7 +124,7 @@ class Smartex:
                 elapsed = end_stop - start_stop
                 logging.info("Paragem de (s): {}\n".format(elapsed.total_seconds()))
                 self.duration = elapsed.total_seconds()
-                start_stop = 0
+
 
                 self.stoped = False
 
@@ -143,7 +143,7 @@ class Smartex:
                     'LEDBack': self.operationConfigs['backledint'],
                     'LEDFront': self.operationConfigs['frontledint']
                 }
-
+                start_stop = 0
                 obj = {
                     'path': "",
                     'fabric': fabric
@@ -230,7 +230,7 @@ class Smartex:
                 elapsed = end_stop - start_stop
                 logging.info("Paragem de (s): {}\n".format(elapsed.total_seconds()))
                 self.duration = elapsed.total_seconds()
-                start_stop = 0
+
                 stop = 1
                 self.stoped = False
 
@@ -242,14 +242,14 @@ class Smartex:
                     'stoped': stop,
                     'reason': "---",
                     'duration': self.duration,
-                    'date': self.camera.rawImageTimeStamp,
+                    'date': start_stop,
                     'imageUrl': "",
                     'thumbUrl': "",
                     'deviceID': self.operationConfigs['DEVICE_ID'],
                     'LEDBack': self.operationConfigs['backledint'],
                     'LEDFront': self.operationConfigs['frontledint']
                 }
-
+                start_stop = 0
                 obj = {
                     'path': "",
                     'fabric': fabric
