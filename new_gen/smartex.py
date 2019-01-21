@@ -135,8 +135,10 @@ class Smartex:
                     WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
                     WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
                 #self.setLEDParams(pi, i - 1, j - 1)
-                if self.camera.imagePath:
+                try:
                     self.img_ant = self.camera.imagePath
+                except:
+                    pass
                 self.camera.saveImage()
 
                 if self.operationConfigs['flash']:
@@ -154,6 +156,7 @@ class Smartex:
                 logging.debug("Image taken and saved - elapsed time (s): {}".format(elapsed.total_seconds()))
             except Exception as ex:
                 logging.exception("Error taking/saving image! Continuing to next iteration..")
+                sleep(2)
                 continue
 
             defect = 'None'
