@@ -210,7 +210,7 @@ class Smartex:
                 logging.exception("Error calculating brightness for " + self.camera.imagePath)
 
 
-            if bright < 1:
+            if bright < 16:
                 logging.info("Skipping image with low light " + self.camera.imagePath)
                 self.breakIteration(begin)
                 continue
