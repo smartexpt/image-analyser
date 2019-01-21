@@ -188,6 +188,8 @@ class Smartex:
                 else:
                     self.stoped = True
                     start_stop = datetime.datetime.now()
+                    self.breakIteration(begin)
+                    continue
 
             elif start_stop != 0:
                 end_stop = datetime.datetime.now()
@@ -197,6 +199,31 @@ class Smartex:
                 start_stop = 0
                 stop = 1
                 self.stoped = False
+
+                fabric = {
+                    '_id': self.lastID + i,
+                    'defect': defect,
+                    'brightness': bright,
+                    'mse': mse,
+                    'stoped': stop,
+                    'reason': "---",
+                    'duration': self.duration,
+                    'date': self.camera.rawImageTimeStamp,
+                    'imageUrl': "",
+                    'thumbUrl': "",
+                    'deviceID': self.operationConfigs['DEVICE_ID'],
+                    'LEDBack': self.operationConfigs['backledint'],
+                    'LEDFront': self.operationConfigs['frontledint']
+                }
+
+                obj = {
+                    'path': self.camera.imagePath,
+                    'fabric': fabric
+                }
+                self.fabricWorker.add_work(obj)
+                stop = 0
+                i += 1
+
 
             if self.operationConfigs['deffectDetectionMode']:
                 logging.info("Analyzing images for defect..")
@@ -284,7 +311,6 @@ class Smartex:
                 logging.info("MSE of " + str(m) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
             except Exception as ex:
                 logging.exception("Error calculating mse for " + image_path + " and " + self.img_ant)
-        self.img_ant = image_path
 
         return mse
 
@@ -301,10 +327,10 @@ class Smartex:
         return stat.rms[0]
 
     def breakIteration(self, begin):
-        #try:
-         #   os.remove(self.img_ant)
-        #except:
-        #    pass
+        try:
+            os.remove(self.img_ant)
+        except:
+            pass
         #self.img_ant = self.camera.imagePath
 
         elapsed = datetime.datetime.now() - begin
