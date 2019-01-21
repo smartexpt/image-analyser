@@ -28,7 +28,7 @@ class FabricWorker:
         self.thread.start()
 
     def add_work(self, obj):
-        logging.info("Adding object to worker queue! Queue has now " + str(self.queue.qsize()) + " elements!")
+        logging.debug("Adding object to worker queue! Queue has now " + str(self.queue.qsize()) + " elements!")
         self.queue.put(obj)
 
     def upload(self):
