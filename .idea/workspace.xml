@@ -103,14 +103,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="801">
-              <caret line="223" column="24" selection-start-line="223" selection-start-column="24" selection-end-line="223" selection-end-column="24" />
+            <state relative-caret-position="499">
+              <caret line="279" column="26" lean-forward="true" selection-start-line="279" selection-start-column="26" selection-end-line="279" selection-end-column="26" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1548087801524" expanded="true" signature="2893:2899" ph="..." />
-                <marker date="1548087801524" expanded="true" signature="11275:11280" ph="..." />
-                <marker date="1548087801524" expanded="true" signature="11665:11670" ph="..." />
-                <marker date="1548087801524" expanded="true" signature="12708:12713" ph="..." />
+                <marker date="1548087921860" expanded="true" signature="2893:2899" ph="..." />
+                <marker date="1548087921860" expanded="true" signature="11272:11277" ph="..." />
+                <marker date="1548087921860" expanded="true" signature="11662:11667" ph="..." />
+                <marker date="1548087921860" expanded="true" signature="12705:12710" ph="..." />
               </folding>
             </state>
           </provider>
@@ -193,7 +193,6 @@
       <find>img_a</find>
       <find>os.remove</find>
       <find>true</find>
-      <find>stop</find>
       <find>usb n</find>
       <find>usb</find>
       <find>.stop</find>
@@ -203,6 +202,7 @@
       <find>12</find>
       <find>add</find>
       <find>mse</find>
+      <find>stop</find>
     </findStrings>
     <replaceStrings>
       <replace>print</replace>
@@ -635,14 +635,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="801">
-          <caret line="223" column="24" selection-start-line="223" selection-start-column="24" selection-end-line="223" selection-end-column="24" />
+        <state relative-caret-position="499">
+          <caret line="279" column="26" lean-forward="true" selection-start-line="279" selection-start-column="26" selection-end-line="279" selection-end-column="26" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1548087801524" expanded="true" signature="2893:2899" ph="..." />
-            <marker date="1548087801524" expanded="true" signature="11275:11280" ph="..." />
-            <marker date="1548087801524" expanded="true" signature="11665:11670" ph="..." />
-            <marker date="1548087801524" expanded="true" signature="12708:12713" ph="..." />
+            <marker date="1548087921860" expanded="true" signature="2893:2899" ph="..." />
+            <marker date="1548087921860" expanded="true" signature="11272:11277" ph="..." />
+            <marker date="1548087921860" expanded="true" signature="11662:11667" ph="..." />
+            <marker date="1548087921860" expanded="true" signature="12705:12710" ph="..." />
           </folding>
         </state>
       </provider>

@@ -277,8 +277,8 @@ class Smartex:
             sleep_time = max(self.operationConfigs['interval'] - elapsed.total_seconds(), 0)
 
             logging.info('Iteration # ' + str(i) + " finished!")
-            logging.info("\nTotal elapsed time (s): {}".format(elapsed.total_seconds()))
-            logging.debug("Will sleep for (s): {}".format(sleep_time))
+            logging.info("Total elapsed time (s): {}".format(elapsed.total_seconds()))
+            logging.info("Will sleep for (s): {}".format(sleep_time))
 
             sleep(sleep_time)
             i += 1
