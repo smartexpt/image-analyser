@@ -53,7 +53,7 @@ class FabricWorker:
 
                 now = datetime.datetime.now()
                 elapsed = now - begin_abs
-                logging.info("Upload finished -elapsed time (s): {}\n".format(elapsed.total_seconds()))
+                logging.info("Upload finished - elapsed time (s): {}\n".format(elapsed.total_seconds()))
             except Exception as ex:
                 logging.exception("Error uploading fabric object!")
                 sleep(2)
@@ -71,7 +71,7 @@ class FabricWorker:
         if(r.status_code != 200):
             raise Exception('Bad response status code!')
         elapsed = datetime.datetime.now() - begin
-        logging.info("\nFabric object uploaded - elapsed time (s): {}".format(elapsed.total_seconds()))
+        logging.debug("\nFabric object uploaded - elapsed time (s): {}".format(elapsed.total_seconds()))
 
     def upload_image(self, image_path):
         if self.operationConfigs['storage'] == "ONLINE":
@@ -107,7 +107,7 @@ class FabricWorker:
             'thumb_url': thumb_url
         }
         elapsed = datetime.datetime.now() - begin
-        logging.info("Image uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+        logging.debug("Image uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
 
         os.remove(thumb_path)
         return paths
@@ -147,7 +147,7 @@ class FabricWorker:
             'thumb_url': thumb_url
         }
         elapsed = datetime.datetime.now() - begin
-        logging.info("Image uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+        logging.debug("Image uploaded - elapsed time (s): {}\n".format(elapsed.total_seconds()))
 
 
         return paths
