@@ -224,12 +224,12 @@ class Smartex:
                     continue
                 else:
                     self.stoped = True
-                    start_stop = self.date_ant
+                    start_stop = self.camera.rawImageTimeStamp
                     self.breakIteration(begin)
                     continue
 
             elif start_stop != 0:
-                end_stop = self.date_ant
+                end_stop = self.camera.rawImageTimeStamp
                 elapsed = end_stop - start_stop
                 logging.info("Paragem de (s): {}\n".format(elapsed.total_seconds()))
                 self.duration = elapsed.total_seconds()

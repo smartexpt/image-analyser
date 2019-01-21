@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3f2e516e-6f6e-422d-a9a7-76f6b90c4677" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/new_gen/smartex.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/smartex.py" afterDir="false" />
-    </list>
+    <list default="true" id="3f2e516e-6f6e-422d-a9a7-76f6b90c4677" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,14 +101,14 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="578">
-              <caret line="231" column="40" selection-start-line="231" selection-start-column="40" selection-end-line="231" selection-end-column="40" />
+            <state relative-caret-position="415">
+              <caret line="231" column="56" lean-forward="true" selection-start-line="231" selection-start-column="56" selection-end-line="231" selection-end-column="56" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
-                <marker date="1548097297095" expanded="true" signature="2893:2899" ph="..." />
-                <marker date="1548097297095" expanded="true" signature="12861:12866" ph="..." />
-                <marker date="1548097297095" expanded="true" signature="13251:13256" ph="..." />
-                <marker date="1548097297095" expanded="true" signature="14294:14299" ph="..." />
+                <marker date="1548107654882" expanded="true" signature="2893:2899" ph="..." />
+                <marker date="1548107654882" expanded="true" signature="12893:12898" ph="..." />
+                <marker date="1548107654882" expanded="true" signature="13283:13288" ph="..." />
+                <marker date="1548107654882" expanded="true" signature="14326:14331" ph="..." />
               </folding>
             </state>
           </provider>
@@ -141,7 +139,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/new_gen/ws_connectivity.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2346">
+            <state relative-caret-position="840">
               <caret line="146" column="49" selection-start-line="146" selection-start-column="49" selection-end-line="146" selection-end-column="49" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
@@ -241,10 +239,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1441" />
-    <option name="y" value="48" />
-    <option name="width" value="1920" />
-    <option name="height" value="1012" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1936" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -389,7 +387,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1119403" />
@@ -595,16 +593,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/new_gen/ws_connectivity.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2346">
-          <caret line="146" column="49" selection-start-line="146" selection-start-column="49" selection-end-line="146" selection-end-column="49" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/control_usb.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
@@ -633,16 +621,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/new_gen/ws_connectivity.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="146" column="49" selection-start-line="146" selection-start-column="49" selection-end-line="146" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/new_gen/smartex.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="578">
-          <caret line="231" column="40" selection-start-line="231" selection-start-column="40" selection-end-line="231" selection-end-column="40" />
+        <state relative-caret-position="415">
+          <caret line="231" column="56" lean-forward="true" selection-start-line="231" selection-start-column="56" selection-end-line="231" selection-end-column="56" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
-            <marker date="1548097297095" expanded="true" signature="2893:2899" ph="..." />
-            <marker date="1548097297095" expanded="true" signature="12861:12866" ph="..." />
-            <marker date="1548097297095" expanded="true" signature="13251:13256" ph="..." />
-            <marker date="1548097297095" expanded="true" signature="14294:14299" ph="..." />
+            <marker date="1548107654882" expanded="true" signature="2893:2899" ph="..." />
+            <marker date="1548107654882" expanded="true" signature="12893:12898" ph="..." />
+            <marker date="1548107654882" expanded="true" signature="13283:13288" ph="..." />
+            <marker date="1548107654882" expanded="true" signature="14326:14331" ph="..." />
           </folding>
         </state>
       </provider>
