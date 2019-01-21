@@ -29,6 +29,7 @@ sys.setdefaultencoding('utf-8')
 class Smartex:
     OP_OK = 0
     OP_ERR = -1
+    MSE_THRESHOLD = 12
     pijuice = PiJuice(1, 0x14)
 
     def __init__(self, configsFile='/home/smartex/image-analyser/new_gen/configs.json'):
@@ -120,16 +121,13 @@ class Smartex:
             now = datetime.datetime.now()
             elapsed = now - begin
 
-            logging.info("USB ports are up - elapsed time (s): {}".format(elapsed.total_seconds()))
-
-            #if i != 1:
-                #self.camera.initCamera()
+            logging.debug("USB ports are up - elapsed time (s): {}".format(elapsed.total_seconds()))
 
             now_ant = now
             now = datetime.datetime.now()
             elapsed = now - now_ant
 
-            logging.info("Camera is ready - elapsed time (s): {}".format(elapsed.total_seconds()))
+            logging.debug("Camera is ready - elapsed time (s): {}".format(elapsed.total_seconds()))
 
             try:
                 logging.info('Taking image!')
@@ -137,7 +135,7 @@ class Smartex:
                     WebSockets.changeLEDInt(pi, self.operationConfigs['frontledgpio'], self.operationConfigs['frontledint'])
                     WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
                 #self.setLEDParams(pi, i - 1, j - 1)
-
+                self.img_ant = self.camera.imagePath
                 self.camera.saveImage()
 
                 if self.operationConfigs['flash']:
@@ -152,7 +150,7 @@ class Smartex:
                 now_ant = now
                 now = datetime.datetime.now()
                 elapsed = now - now_ant
-                logging.info("Image taken and saved - elapsed time (s): {}".format(elapsed.total_seconds()))
+                logging.debug("Image taken and saved - elapsed time (s): {}".format(elapsed.total_seconds()))
             except Exception as ex:
                 logging.exception("Error taking/saving image! Continuing to next iteration..")
                 continue
@@ -166,7 +164,7 @@ class Smartex:
                 now_ant = now
                 now = datetime.datetime.now()
                 elapsed = now - now_ant
-                logging.info("Brightness of " + str(bright) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
+                logging.debug("Brightness of " + str(bright) + " - elapsed time (s): {}\n".format(elapsed.total_seconds()))
             except Exception as ex:
                 logging.exception("Error calculating brightness for " + self.camera.imagePath)
 
@@ -178,7 +176,7 @@ class Smartex:
 
             mse = self.calcFabricMSE(self.camera.imagePath)
 
-            if mse < 12:
+            if mse < Smartex.MSE_THRESHOLD:
                 if self.stoped:
                     logging.info("Skipping image. Machine is stoped")
                     self.breakIteration(begin)
@@ -219,7 +217,7 @@ class Smartex:
                 now_ant = now
                 now = datetime.datetime.now()
                 elapsed = now - now_ant
-                logging.info("Detection modules finished -elapsed time (s): {}\n".format(elapsed.total_seconds()))
+                logging.debug("Detection modules finished -elapsed time (s): {}\n".format(elapsed.total_seconds()))
 
             fabric = {
                 '_id': self.lastID + i,
@@ -242,7 +240,6 @@ class Smartex:
                 'fabric': fabric
             }
             self.fabricWorker.add_work(obj)
-
             self.duration = 0
 
             elapsed = datetime.datetime.now() - begin
@@ -250,7 +247,7 @@ class Smartex:
 
             logging.info('Iteration # ' + str(i) + " finished!")
             logging.info("\nTotal elapsed time (s): {}".format(elapsed.total_seconds()))
-            logging.info("Will sleep for (s): {}".format(sleep_time))
+            logging.debug("Will sleep for (s): {}".format(sleep_time))
 
             sleep(sleep_time)
             i += 1
