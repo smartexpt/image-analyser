@@ -229,7 +229,7 @@ class Smartex:
                     continue
 
             elif start_stop != 0:
-                end_stop = datetime.datetime.now()
+                end_stop = self.date_ant
                 elapsed = end_stop - start_stop
                 logging.info("Paragem de (s): {}\n".format(elapsed.total_seconds()))
                 self.duration = elapsed.total_seconds()
