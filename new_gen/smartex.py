@@ -119,37 +119,37 @@ class Smartex:
                 logging.info('UPS just started being charged - booting camera.\n')
                 powerOnUSBs()
                 self.USBpowerOutput = 'ON'
+                if self.stoped:
+                    end_stop = datetime.datetime.now()
+                    elapsed = end_stop - start_stop
+                    logging.info("Paragem de (s): {}\n".format(elapsed.total_seconds()))
+                    self.duration = elapsed.total_seconds()
 
-                end_stop = datetime.datetime.now()
-                elapsed = end_stop - start_stop
-                logging.info("Paragem de (s): {}\n".format(elapsed.total_seconds()))
-                self.duration = elapsed.total_seconds()
 
+                    self.stoped = False
 
-                self.stoped = False
-
-                fabric = {
-                    '_id': self.lastID + i,
-                    'defect': defect,
-                    'brightness': 0,
-                    'mse': 0,
-                    'stoped': 1,
-                    'reason': "Abertura de portas",
-                    'duration': self.duration,
-                    'date': start_stop,
-                    'imageUrl': "",
-                    'thumbUrl': "",
-                    'deviceID': self.operationConfigs['DEVICE_ID'],
-                    'LEDBack': self.operationConfigs['backledint'],
-                    'LEDFront': self.operationConfigs['frontledint']
-                }
-                start_stop = 0
-                obj = {
-                    'path': "",
-                    'fabric': fabric
-                }
-                self.fabricWorker.add_work(obj)
-                i += 1
+                    fabric = {
+                        '_id': self.lastID + i,
+                        'defect': defect,
+                        'brightness': 0,
+                        'mse': 0,
+                        'stoped': 1,
+                        'reason': "Abertura de portas",
+                        'duration': self.duration,
+                        'date': start_stop,
+                        'imageUrl': "",
+                        'thumbUrl': "",
+                        'deviceID': self.operationConfigs['DEVICE_ID'],
+                        'LEDBack': self.operationConfigs['backledint'],
+                        'LEDFront': self.operationConfigs['frontledint']
+                    }
+                    start_stop = 0
+                    obj = {
+                        'path': "",
+                        'fabric': fabric
+                    }
+                    self.fabricWorker.add_work(obj)
+                    i += 1
                 sleep(3)
 
             now = datetime.datetime.now()
