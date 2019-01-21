@@ -39,9 +39,10 @@ class FabricWorker:
                 begin_abs = datetime.datetime.now()
                 image_path = obj["path"]
                 fabric = obj["fabric"]
-                paths = self.upload_image(image_path)
-                fabric["imageUrl"] = paths["img_url"]
-                fabric["thumbUrl"] = paths["thumb_url"]
+                if image_path != "":
+                    paths = self.upload_image(image_path)
+                    fabric["imageUrl"] = paths["img_url"]
+                    fabric["thumbUrl"] = paths["thumb_url"]
                 #logging.info(fabric)
                 self.upload_fabric(fabric)
                 self.queue.task_done()
@@ -128,7 +129,7 @@ class FabricWorker:
         img_url = self.operationConfigs['WS_ENDPOINT'] + 'fabrics/' + name
 
         im = Image.open(self.imagePath)
-        im.thumbnail((128, 128), Image.ANTIALIAS)
+        im.thumbnail((256, 256), Image.ANTIALIAS)
 
         name = "T_" + fuuid + '.png'
         buff = BytesIO()

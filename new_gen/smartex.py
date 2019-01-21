@@ -101,6 +101,8 @@ class Smartex:
             self.UPSpowerInput = self.pijuice.status.GetStatus()['data']['powerInput']
 
             if self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'ON':
+                self.stoped = True
+                start_stop = datetime.datetime.now()
                 logging.warning('UPS not being charged - shutting down camera.\n')
                 powerOffUSBs()
                 self.USBpowerOutput = 'OFF'
@@ -116,6 +118,37 @@ class Smartex:
                 logging.info('UPS just started being charged - booting camera.\n')
                 powerOnUSBs()
                 self.USBpowerOutput = 'ON'
+
+                end_stop = datetime.datetime.now()
+                elapsed = end_stop - start_stop
+                logging.info("Paragem de (s): {}\n".format(elapsed.total_seconds()))
+                self.duration = elapsed.total_seconds()
+                start_stop = 0
+
+                self.stoped = False
+
+                fabric = {
+                    '_id': self.lastID + i,
+                    'defect': defect,
+                    'brightness': 0,
+                    'mse': 0,
+                    'stoped': 1,
+                    'reason': "Abertura de portas",
+                    'duration': self.duration,
+                    'date': start_stop,
+                    'imageUrl': "",
+                    'thumbUrl': "",
+                    'deviceID': self.operationConfigs['DEVICE_ID'],
+                    'LEDBack': self.operationConfigs['backledint'],
+                    'LEDFront': self.operationConfigs['frontledint']
+                }
+
+                obj = {
+                    'path': "",
+                    'fabric': fabric
+                }
+                self.fabricWorker.add_work(obj)
+                i += 1
                 sleep(3)
 
             now = datetime.datetime.now()
@@ -217,13 +250,12 @@ class Smartex:
                 }
 
                 obj = {
-                    'path': self.camera.imagePath,
+                    'path': "",
                     'fabric': fabric
                 }
                 self.fabricWorker.add_work(obj)
                 stop = 0
                 i += 1
-
 
             if self.operationConfigs['deffectDetectionMode']:
                 logging.info("Analyzing images for defect..")
