@@ -92,6 +92,7 @@ class Smartex:
         WebSockets.changeLEDInt(pi1, self.operationConfigs['backledgpio'], self.operationConfigs['backledint'])
         self.USBpowerOutput = 'OFF'
         self.img_ant = ""
+        self.date_ant = datetime.datetime.now()
         start_stop = 0
         reason = "Unknown"
         self.duration = 0
@@ -105,7 +106,7 @@ class Smartex:
                 if not self.stoped:
                     self.stoped = True
                     reason = "Abertura de portas"
-                    start_stop = datetime.datetime.now()
+                    start_stop = self.date_ant
                 logging.warning('UPS not being charged - shutting down camera.\n')
                 powerOffUSBs()
                 self.USBpowerOutput = 'OFF'
@@ -172,6 +173,7 @@ class Smartex:
                 #self.setLEDParams(pi, i - 1, j - 1)
                 try:
                     self.img_ant = self.camera.imagePath
+                    self.date_ant = self.camera.rawImageTimeStamp
                 except:
                     pass
                 self.camera.saveImage()
@@ -222,7 +224,7 @@ class Smartex:
                     continue
                 else:
                     self.stoped = True
-                    start_stop = datetime.datetime.now()
+                    start_stop = self.date_ant
                     self.breakIteration(begin)
                     continue
 
