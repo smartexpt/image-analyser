@@ -93,6 +93,7 @@ class Smartex:
         self.USBpowerOutput = 'OFF'
         self.img_ant = ""
         start_stop = 0
+        reason = "Unknown"
         self.duration = 0
         self.stoped = False
         while True:
@@ -103,6 +104,7 @@ class Smartex:
             if self.UPSpowerInput == 'NOT_PRESENT' and self.USBpowerOutput == 'ON':
                 if not self.stoped:
                     self.stoped = True
+                    reason = "Abertura de portas"
                     start_stop = datetime.datetime.now()
                 logging.warning('UPS not being charged - shutting down camera.\n')
                 powerOffUSBs()
@@ -124,8 +126,6 @@ class Smartex:
                     elapsed = end_stop - start_stop
                     logging.info("Paragem de (s): {}\n".format(elapsed.total_seconds()))
                     self.duration = elapsed.total_seconds()
-
-
                     self.stoped = False
 
                     fabric = {
@@ -134,7 +134,7 @@ class Smartex:
                         'brightness': 0,
                         'mse': 0,
                         'stoped': 1,
-                        'reason': "Abertura de portas",
+                        'reason': reason,
                         'duration': self.duration,
                         'date': start_stop,
                         'imageUrl': "",
@@ -144,6 +144,7 @@ class Smartex:
                         'LEDFront': self.operationConfigs['frontledint']
                     }
                     start_stop = 0
+                    reason = "Unknown"
                     obj = {
                         'path': "",
                         'fabric': fabric
@@ -240,7 +241,7 @@ class Smartex:
                     'brightness': bright,
                     'mse': mse,
                     'stoped': stop,
-                    'reason': "---",
+                    'reason': reason,
                     'duration': self.duration,
                     'date': start_stop,
                     'imageUrl': "",
@@ -250,6 +251,7 @@ class Smartex:
                     'LEDFront': self.operationConfigs['frontledint']
                 }
                 start_stop = 0
+                reason = "Unknown"
                 obj = {
                     'path': "",
                     'fabric': fabric
