@@ -244,7 +244,7 @@ class Smartex:
                     'mse': mse,
                     'stoped': stop,
                     'reason': reason,
-                    'duration': self.duration,
+                    'duration': self.duration+self.operationConfigs['interval'],
                     'date': start_stop,
                     'imageUrl': "",
                     'thumbUrl': "",
