@@ -155,7 +155,7 @@
         <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="422">
-              <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+              <caret line="28" column="92" lean-forward="true" selection-start-line="28" selection-start-column="92" selection-end-line="28" selection-end-column="92" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -662,7 +662,7 @@
     <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="422">
-          <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+          <caret line="28" column="92" lean-forward="true" selection-start-line="28" selection-start-column="92" selection-end-line="28" selection-end-column="92" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
