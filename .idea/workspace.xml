@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3f2e516e-6f6e-422d-a9a7-76f6b90c4677" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/new_gen/ids_camera.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_gen/ids_camera.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -62,14 +61,14 @@
           <entry key="Python Console" value="143" />
           <entry key="dummy" value="12" />
           <entry key="json" value="6" />
-          <entry key="py" value="5873" />
+          <entry key="py" value="5876" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="6" />
           <entry key="PLAIN_TEXT" value="12" />
-          <entry key="Python" value="6016" />
+          <entry key="Python" value="6019" />
         </counts>
       </usages-collector>
     </session>
@@ -156,7 +155,7 @@
         <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="476">
-              <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+              <caret line="28" column="96" selection-start-line="28" selection-start-column="96" selection-end-line="28" selection-end-column="96" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -663,7 +662,7 @@
     <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
-          <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+          <caret line="28" column="96" selection-start-line="28" selection-start-column="96" selection-end-line="28" selection-end-column="96" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
