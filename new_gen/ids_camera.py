@@ -27,6 +27,12 @@ class Camera:
             self.sensorinfo = ueye.SENSORINFO()
             ueye.is_GetSensorInfo(self.hcam, self.sensorinfo)
             auto_res = ueye.is_SetAutoParameter(self.hcam, ueye.IS_SET_ENABLE_AUTO_SHUTTER, ctypes.c_double(1), ctypes.c_double(1))
+            try:
+                auto_res = ueye.GetExposureRange()
+                print auto_res
+            except Exception as Ex:
+                print Ex
+                pass
             print auto_res
             return self.OP_OK
         except Exception as ex:
