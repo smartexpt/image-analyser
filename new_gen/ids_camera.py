@@ -26,9 +26,9 @@ class Camera:
             ueye.is_SetDisplayMode(self.hcam, 0)
             self.sensorinfo = ueye.SENSORINFO()
             ueye.is_GetSensorInfo(self.hcam, self.sensorinfo)
-            #auto_res = ueye.is_SetExposureTime(self.hcam, ctypes.c_double(0), ctypes.c_double(0))
+            res = ueye.is_SetExposureTime(self.hcam, ctypes.c_double(0), ctypes.c_double(0))
             #ueye.is_SetExternalTrigger(self.hcam, ueye.IS_SET_TRIG_LO_HI);
-            res = ueye.is_SetPixelClock(self.hcam, ctypes.c_double(20));
+            #res = ueye.is_SetPixelClock(self.hcam, ctypes.c_double(20));
             #ueye.is_SetExposureTime(self.hcam, ctypes.c_double(70), & dExp);
             #ueye.is_SetFlashDelay(self.hcam, ctypes.c_double(20000), ctypes.c_double(40000));
             #ueye.is_SetFlashStrobe(self.hcam, ueye.IS_SET_FLASH_HI_ACTIVE, ctypes.c_double(0))
