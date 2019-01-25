@@ -61,14 +61,14 @@
           <entry key="Python Console" value="143" />
           <entry key="dummy" value="12" />
           <entry key="json" value="6" />
-          <entry key="py" value="5885" />
+          <entry key="py" value="5891" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="6" />
           <entry key="PLAIN_TEXT" value="12" />
-          <entry key="Python" value="6028" />
+          <entry key="Python" value="6034" />
         </counts>
       </usages-collector>
     </session>
@@ -155,7 +155,7 @@
         <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="252">
-              <caret line="28" column="112" lean-forward="true" selection-start-line="28" selection-start-column="112" selection-end-line="28" selection-end-column="112" />
+              <caret line="28" column="130" selection-start-line="28" selection-start-column="130" selection-end-line="28" selection-end-column="130" />
               <folding>
                 <element signature="e#0#22#0" expanded="true" />
               </folding>
@@ -662,7 +662,7 @@
     <entry file="file://$PROJECT_DIR$/new_gen/ids_camera.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
-          <caret line="28" column="112" lean-forward="true" selection-start-line="28" selection-start-column="112" selection-end-line="28" selection-end-column="112" />
+          <caret line="28" column="130" selection-start-line="28" selection-start-column="130" selection-end-line="28" selection-end-column="130" />
           <folding>
             <element signature="e#0#22#0" expanded="true" />
           </folding>
